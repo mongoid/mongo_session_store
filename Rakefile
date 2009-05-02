@@ -7,19 +7,16 @@ require 'lib/dm_session_store/version'
 task :default => :test
 
 spec = Gem::Specification.new do |s|
-  s.name             = 'dm_session_store'
-  s.version          = DmSessionStore::Version.to_s
-  s.has_rdoc         = true
-  s.extra_rdoc_files = %w(README.rdoc)
-  s.rdoc_options     = %w(--main README.rdoc)
-  s.summary          = "This gem does ... "
-  s.author           = 'First Last'
-  s.email            = 'user@example.com'
-  s.homepage         = 'http://my-site.net'
-  s.files            = %w(README.rdoc Rakefile) + Dir.glob("{lib,test}/**/*")
-  # s.executables    = ['dm_session_store']
+  s.name            = 'dm_session_store'
+  s.version         = DmSessionStore::Version.to_s
+  s.summary         = "Database session store using DataMapper in Rails"
+  s.author          = 'Tony Pitale'
+  s.email           = 'tpitale@gmail.com'
+  s.homepage        = 'http://t.pitale.com'
+  s.files           = %w(README.textile Rakefile) + Dir.glob("lib/**/*")
+  s.test_files      = Dir.glob("test/**/*_test.rb")
   
-  # s.add_dependency('gem_name', '~> 0.0.1')
+  s.add_dependency('dm-core', '~> 0.9.11')
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
@@ -38,3 +35,17 @@ task :github do
   File.open(file, 'w') {|f| f << spec.to_ruby }
   puts "Created gemspec: #{file}"
 end
+
+begin
+  require 'rcov/rcovtask'
+  
+  desc "Generate RCov coverage report"
+  Rcov::RcovTask.new(:rcov) do |t|
+    t.test_files = FileList['test/**/*_test.rb']
+    t.rcov_opts << "-x lib/dm_session_store.rb -x lib/dm_session_store/version.rb"
+  end
+rescue LoadError
+  nil
+end
+
+task :default => 'test'
