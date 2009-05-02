@@ -14,8 +14,8 @@ h2. Usage
 
   In Rails config/environment.rb
 
-    config.gem 'tpitale-dm_session_store, :lib => 'dm_session_store'
-    config.action_controller.session_store = CGI::Session::DMSessionStore
+    <pre><code>config.gem 'tpitale-dm_session_store, :lib => 'dm_session_store'
+    config.action_controller.session_store = CGI::Session::DMSessionStore</code></pre>
 
   Obviously, for this to work, you had better follow one of the many online
   resources for using DataMapper with Rails.
