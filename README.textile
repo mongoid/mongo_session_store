@@ -6,6 +6,9 @@ For those using DataMapper with Rails there was no option for storing sessions
 in a database (most people remove ActiveRecord). This little gem adds the
 required classes to use DataMapper to store sessions in the database.
 
+Now supports Rails >= 2.3.0 in version 0.2.0. If you need support before that,
+try version 0.1.0.
+
 h2. Installation
 
   sudo gem install tpitale-dm_session_store
@@ -15,7 +18,10 @@ h2. Usage
 In Rails config/environment.rb
 
   config.gem 'tpitale-dm_session_store, :lib => 'dm_session_store'
-  config.action_controller.session_store = CGI::Session::DMSessionStore
+
+In the session_store initializer:
+
+  ActionController::Base.session_store = DataMapper::SessionStore
 
 Obviously, for this to work, you had better follow one of the many online
 resources for using DataMapper with Rails.

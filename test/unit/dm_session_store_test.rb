@@ -1,61 +1,35 @@
 require File.join(File.dirname(__FILE__), "..", "test_helper")
-require 'cgi'
-require 'cgi/session'
 
-class CGI
-  class Session
-
-    class DMSessionStoreTest < Test::Unit::TestCase
-      context "The DMSessionStore initialize method" do
-        should "raise CGI:Session::NoSession if session is not a new_session" do
-          DMSessionStore::DMSession.stubs(:find_by_session_id).with("1").returns(nil)
-          session = DMSessionStore::DMSession.new(:session_id => "1")
-          session.stubs(:new_session).with().returns(false)
-          assert_raise CGI::Session::NoSession, "uninitialized session" do
-            DMSessionStore.new(session)
-          end
-        end
+module DataMapper
+  class SessionStoreTest < Test::Unit::TestCase
+    context "An instance of the SessionStore class" do
+      setup do
+        @session_klass = SessionStore::Session
+        @session_store = SessionStore.new('app')
       end
 
-      context "An instance of the DMSessionStore class" do
-        setup do
-          @session = DMSessionStore::DMSession.new(:session_id => "1", :data => {:hello => 'world'})
-          DMSessionStore::DMSession.stubs(:find_by_session_id).with("1").returns(nil)
-          old_session = DMSessionStore::DMSession.new(:session_id => "1")
-          old_session.stubs(:new_session).with().returns(true)
-          DMSessionStore::DMSession.stubs(:new).with(:session_id => "1", :data => {}).returns(@session)
-          @session_store = DMSessionStore.new(old_session)
-        end
+      should "get a session" do
+        env = {}
+        session = stub(:data => 'data')
+        @session_store.expects(:find_session).with(1).returns(session)
+        assert_equal([1, 'data'], @session_store.send(:get_session, env, 1))
+        assert_equal({'rack.session.record' => session}, env)
+      end
 
-        should "have the session" do
-          assert_equal @session, @session_store.model
-        end
+      should "set a session" do
+        env = {}
+        session = stub
+        session.expects(:data=).with({:color => 'yellow'})
+        session.stubs(:save).returns(true)
+        @session_store.expects(:find_session).with(1).returns(session)
+        assert @session_store.send(:set_session, env, 1, {:color => 'yellow'})
+        assert_equal({'rack.session.record' => session}, env)
+      end
 
-        should "return the data from session" do
-          assert_equal({:hello => 'world'}, @session_store.restore)
-        end
-
-        should "save the session" do
-          @session.expects(:save).with().returns(true)
-          assert_equal true, @session_store.update
-        end
-
-        should "save and unreference the session" do
-          @session_store.expects(:update)
-          @session_store.close
-          assert_equal nil, @session_store.model
-        end
-
-        should "destroy and unreference the session" do
-          @session.expects(:destroy)
-          @session_store.delete
-          assert_equal nil, @session_store.model
-        end
-
-        should "log with DataMapper" do
-          DataMapper::Logger.expects(:new).with(STDERR, :fatal).returns('logger')
-          assert_equal 'logger', @session_store.send(:logger)
-        end
+      should "find a session" do
+        @session_klass.expects(:first).with(:session_id => 1).returns(nil)
+        @session_klass.expects(:new).with(:session_id => 1, :data => {}).returns('session')
+        assert_equal 'session', @session_store.send(:find_session, 1)
       end
     end
   end
