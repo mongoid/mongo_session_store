@@ -5,7 +5,7 @@ module DataMapper
     class Session
       include DataMapper::Resource
 
-      property :session_id, String, :size => 32, :nullable => false, :key => true
+      property :session_id, String, :length => 32, :nullable => false, :key => true
       property :data, Object, :default => {}, :lazy => false
       property :created_at, DateTime, :default => Proc.new { |r, p| DateTime.now }
     end
