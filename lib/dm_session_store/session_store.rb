@@ -26,6 +26,7 @@ module DataMapper
 
     def set_session(env, sid, session_data)
       record = env[SESSION_RECORD_KEY] ||= find_session(sid)
+      record.data = nil # force dirtiness
       record.data = session_data
       record.save
     end
