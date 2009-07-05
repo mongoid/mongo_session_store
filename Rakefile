@@ -16,8 +16,8 @@ spec = Gem::Specification.new do |s|
   s.files           = %w(README.textile Rakefile) + Dir.glob("lib/**/*")
   s.test_files      = Dir.glob("test/**/*_test.rb")
   
-  s.add_dependency('dm-core', '~> 0.9.11')
-  s.add_dependency('actionpack', '~> 2.3.0')
+  s.add_dependency('dm-core', '>= 0.9.11')
+  s.add_dependency('actionpack', '>= 2.3.0')
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
