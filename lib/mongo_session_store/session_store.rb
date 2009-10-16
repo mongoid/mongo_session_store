@@ -2,18 +2,20 @@ require 'mongo_mapper'
 
 module MongoMapper
   class SessionStore < ActionController::Session::AbstractStore
+    
     class Session
       include MongoMapper::Document
 
-      key :session_id, String, :required => true#, :key => true
-      #key :data, Hash, :default => {}
-      key :data, String
+      key :session_id, String, :required => true
+      key :data, String, :default => [Marshal.dump({})].pack("m*")
       timestamps!
       
+      #ensure each session_id is unique
       MongoMapper.ensure_index(Session, :session_id, :unique => true)
       MongoMapper.ensure_indexes!
+      
     end
-
+    
     # The class used for session storage.
     cattr_accessor :session_class
     self.session_class = Session
@@ -31,19 +33,18 @@ module MongoMapper
     
     def set_session(env, sid, session_data)
       record = env[SESSION_RECORD_KEY] ||= find_session(sid)
-      record.data = nil # force dirtiness
       record.data = pack(session_data)
-      record.save
-      true
+      #per rack spec: Should return true or false dependant on whether or not the session was saved or not.
+      record.save ? true : false
     end
     
     def find_session(id)
       @@session_class.first(:session_id => id) ||
-        @@session_class.new(:session_id => id, :data => pack({}))
+        @@session_class.new(:session_id => id)
     end
     
-    def pack(session)
-      [Marshal.dump(session)].pack("m*")
+    def pack(data)
+      [Marshal.dump(data)].pack("m*")
     end
 
     def unpack(packed)
