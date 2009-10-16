@@ -1,33 +1,27 @@
-h1. DmSessionStore
+h1. MongoSessionStore
 
 h2. Description
 
-For those using DataMapper with Rails there was no option for storing sessions
-in a database (most people remove ActiveRecord). This little gem adds the
-required classes to use DataMapper to store sessions in the database.
-
-Now supports Rails >= 2.3.0 in version 0.2.0. If you need support before that,
-try version 0.1.0.
+This is a fork of the DataMapper session store, modified to work with MongoDB 
+and MongoMapper plugin. This plugin is still a work in progress...
 
 h2. Installation
 
-  sudo gem install tpitale-dm_session_store
+  TBD
 
 h2. Usage
 
-In Rails config/environment.rb
-
-  config.gem 'tpitale-dm_session_store, :lib => 'dm_session_store'
-
+Clone/submodule to vendor/plugins/mongo_session_store
 In the session_store initializer:
 
-  ActionController::Base.session_store = DataMapper::SessionStore
+  require 'mongo_session_store'
+  ActionController::Base.session_store = MongoMapper::SessionStore
 
-Obviously, for this to work, you had better follow one of the many online
-resources for using DataMapper with Rails.
+Obviously, for this to work, you must already have MongoMapper installed.
 
 h2. License
 
+Copyright (c) 2009 Chris Brickley
 Copyright (c) 2009 Tony Pitale
 
 Permission is hereby granted, free of charge, to any person
