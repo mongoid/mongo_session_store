@@ -11,8 +11,8 @@ and MongoMapper plugin. This plugin is still a work in progress...
 
 == Usage
 
-	1. Clone/submodule to vendor/plugins/mongo_session_store
-	2. In the session_store initializer:
+1. Clone/submodule to vendor/plugins/mongo_session_store
+2. In the session_store initializer:
 
  require 'mongo_session_store'
  ActionController::Base.session_store = MongoMapper::SessionStore
