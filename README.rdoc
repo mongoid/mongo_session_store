@@ -1,25 +1,25 @@
-h1. MongoSessionStore
+= MongoSessionStore
 
-h2. Description
+== Description
 
 This is a fork of the DataMapper session store, modified to work with MongoDB 
 and MongoMapper plugin. This plugin is still a work in progress...
 
-h2. Installation
+== Installation
 
   TBD
 
-h2. Usage
+== Usage
 
-Clone/submodule to vendor/plugins/mongo_session_store
-In the session_store initializer:
+# Clone/submodule to vendor/plugins/mongo_session_store
+# In the session_store initializer:
 
-  require 'mongo_session_store'
-  ActionController::Base.session_store = MongoMapper::SessionStore
+ require 'mongo_session_store'
+ ActionController::Base.session_store = MongoMapper::SessionStore
 
 Obviously, for this to work, you must already have MongoMapper installed.
 
-h2. License
+== License
 
 Copyright (c) 2009 Chris Brickley
 Copyright (c) 2009 Tony Pitale
