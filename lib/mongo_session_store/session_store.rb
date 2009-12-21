@@ -5,13 +5,9 @@ module MongoMapper
     
     class Session
       include MongoMapper::Document
-
-      key :session_id, String, :required => true
       key :data, String, :default => [Marshal.dump({})].pack("m*")
       timestamps!
       
-      #ensure each session_id is unique
-      MongoMapper.ensure_index(Session, :session_id, :unique => true)
       MongoMapper.ensure_indexes!
     end
     
@@ -22,6 +18,10 @@ module MongoMapper
     SESSION_RECORD_KEY = 'rack.session.record'.freeze
 
     private
+      def generate_sid
+        Mongo::ObjectID.new
+      end
+      
       def get_session(env, sid)
         sid ||= generate_sid
         session = find_session(sid)
@@ -37,8 +37,11 @@ module MongoMapper
       end
     
       def find_session(id)
-        @@session_class.first(:session_id => id) ||
-          @@session_class.new(:session_id => id)
+        if id.class == String
+          id=Mongo::ObjectID.from_string(id)
+        end
+        @@session_class.find(id) ||
+          @@session_class.new(:id=>id)
       end
     
       def pack(data)
@@ -49,6 +52,6 @@ module MongoMapper
         return nil unless packed
         Marshal.load(packed.unpack("m*").first)
       end
-    
+      
   end
 end
