@@ -37,9 +37,6 @@ module MongoMapper
       end
     
       def find_session(id)
-        if id.class == String
-          id=Mongo::ObjectID.from_string(id)
-        end
         @@session_class.find(id) ||
           @@session_class.new(:id=>id)
       end
