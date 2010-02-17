@@ -12,10 +12,10 @@ Gem::Specification.new do |s|
   s.date = %q{2010-02-17}
   s.email = %q{nicolas.merouze@gmail.com}
   s.extra_rdoc_files = [
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
-    "README.rdoc",
+    "README.md",
      "lib/mongo_session_store.rb",
      "lib/mongo_session_store/mongo_mapper.rb",
      "lib/mongo_session_store/mongoid.rb"

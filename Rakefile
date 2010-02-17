@@ -10,7 +10,7 @@ begin
     gem.email = "nicolas.merouze@gmail.com"
     gem.homepage = "http://github.com/nmerouze/mongo_session_store"
     gem.authors = ["Nicolas Mérouze", "Tony Pitale", "Chris Brickley"]
-    gem.files = Dir["README.rdoc", "lib/**/*"]
+    gem.files = Dir["README.md", "lib/**/*"]
     
     gem.add_dependency 'actionpack',  '~> 2.3'
     gem.add_development_dependency 'mongo_mapper', '>= 0.6.1'
