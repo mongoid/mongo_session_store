@@ -14,8 +14,8 @@ and MongoMapper plugin. This plugin is still a work in progress...
 1. Clone/submodule to vendor/plugins/mongo_session_store
 2. In the session_store initializer:
 
- require 'mongo_session_store'
- ActionController::Base.session_store = MongoMapper::SessionStore
+ require 'mongo_session_store/mongo_mapper'
+ ActionController::Base.session_store = ActionController::Session::MongoMapperStore
 
 Obviously, for this to work, you must already have MongoMapper installed.
 
