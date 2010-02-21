@@ -16,6 +16,8 @@ begin
     gem.add_development_dependency 'mongo_mapper', '>= 0.6.1'
     gem.add_development_dependency 'mongoid', '~> 1.0'
   end
+  
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end

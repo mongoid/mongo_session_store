@@ -13,10 +13,11 @@ This is a fork of the DataMapper session store, modified to work with MongoMappe
 In config/environment.rb:
 
     config.gem "mongo_mapper"
-    config.gem "mongo_session_store", :lib => "mongo_session_store/mongo_mapper"
+    config.gem "mongo_session_store"
 
 In the session_store initializer:
 
+    require "mongo_session_store/mongo_mapper"
     ActionController::Base.session_store = :mongo_mapper_store
 
 ## Usage with Mongoid
