@@ -8,8 +8,8 @@ module ActionController
         include MongoMapper::Document
         key :data, String, :default => [Marshal.dump({})].pack("m*")
         timestamps!
-
-        MongoMapper.ensure_indexes!
+        
+        ensure_index :updated_at
       end
 
       # The class used for session storage.
