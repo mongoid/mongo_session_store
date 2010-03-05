@@ -3,12 +3,12 @@ require 'mongo_mapper'
 module ActionController
   module Session
     class MongoMapperStore < AbstractStore
-      
+
       class Session
         include MongoMapper::Document
         key :data, String, :default => [Marshal.dump({})].pack("m*")
         timestamps!
-        
+
         ensure_index :updated_at
       end
 
@@ -40,6 +40,8 @@ module ActionController
         def find_session(id)
           @@session_class.find(id) ||
             @@session_class.new(:id=>id)
+        rescue Mongo::InvalidObjectID
+          @@session_class.new(:id => generate_sid)
         end
 
         def pack(data)
@@ -50,7 +52,7 @@ module ActionController
           return nil unless packed
           Marshal.load(packed.unpack("m*").first)
         end
-      
+
     end
   end
 end
