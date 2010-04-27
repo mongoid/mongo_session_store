@@ -9,7 +9,7 @@ module ActionDispatch
         key :data, String, :default => [Marshal.dump({})].pack("m*")
         timestamps!
 
-        ensure_index :updated_at
+        ensure_index :updated_at if MongoMapper.class_variables.include? '@@database'
       end
 
       # The class used for session storage.
