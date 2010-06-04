@@ -33,8 +33,10 @@ module ActionDispatch
         def set_session(env, sid, session_data)
           record = env[SESSION_RECORD_KEY] ||= find_session(sid)
           record.data = pack(session_data)
-          #per rack spec: Should return true or false dependant on whether or not the session was saved or not.
-          record.save ? record.id : false
+          # Rack spec dictates that set_session should return true or false
+          # depending on whether or not the session was saved or not.
+          # However, ActionPack seems to want a session id instead.
+          record.save ? sid : false
         end
 
         def find_session(id)

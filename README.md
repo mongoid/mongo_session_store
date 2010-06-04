@@ -6,31 +6,45 @@ This is a fork of the DataMapper session store, modified to work with MongoMappe
 
 ## Installation
 
+The current version is only compatible with Rails 3
+
     gem install mongo_session_store
+
+However if you want to use it with Rails 2.3.x, you just have to installed the latest 1.x version
+
+    gem install mongo_session_store --version=1.1.2
 
 ## Usage with MongoMapper
 
-In config/environment.rb:
+In your Gemfile:
 
-    config.gem "mongo_mapper"
-    config.gem "mongo_session_store"
+    gem "mongo_mapper-rails3", :require => "mongo_mapper"
+    gem "mongo_session_store"
 
-In the session_store initializer:
+In the session_store initializer (config/initializers/session_store.rb):
 
     require "mongo_session_store/mongo_mapper"
     ActionController::Base.session_store = :mongo_mapper_store
 
 ## Usage with Mongoid
 
-In config/environment.rb:
+In your Gemfile:
 
-    config.gem "mongoid"
-    config.gem "mongo_session_store"
+    gem "mongoid"
+    gem "mongo_session_store"
 
-In the session_store initializer:
+In the session_store initializer (config/initializers/session_store.rb):
 
     require "mongo_session_store/mongoid"
     ActionController::Base.session_store = :mongoid_store
+
+## Contributors
+
+* Nicolas Mérouze
+* Chris Brickley
+* Tony Pitale
+* Nicola Racco
+* Matt Powell
 
 ## License
 
