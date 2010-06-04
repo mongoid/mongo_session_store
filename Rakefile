@@ -13,7 +13,7 @@ begin
     gem.files = Dir["README.md", "lib/**/*"]
     
     gem.add_dependency 'actionpack',  '~> 3.0'
-    gem.add_development_dependency 'mongo_mapper', '>= 0.6.1'
+    gem.add_development_dependency 'mongo_mapper-rails3', '>= 0.7.2'
     gem.add_development_dependency 'mongoid', '~> 2.0'
   end
   
