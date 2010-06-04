@@ -10,7 +10,7 @@ The current version is only compatible with Rails 3
 
     gem install mongo_session_store
 
-However if you want to use it with Rails 2.3.x, you just have to installed the latest 1.x version
+However if you want to use it with Rails 2.3.x, you just have to install the latest 1.x version
 
     gem install mongo_session_store --version=1.1.2
 
