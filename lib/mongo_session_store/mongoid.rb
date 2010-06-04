@@ -1,6 +1,6 @@
 require 'mongoid'
 
-module ActionController
+module ActionDispatch
   module Session
     class MongoidStore < AbstractStore
       
@@ -20,7 +20,7 @@ module ActionController
 
       private
         def generate_sid
-          Mongo::ObjectID.new
+          BSON::ObjectID.new
         end
 
         def get_session(env, sid)
@@ -34,12 +34,13 @@ module ActionController
           record = env[SESSION_RECORD_KEY] ||= find_session(sid)
           record.data = pack(session_data)
           #per rack spec: Should return true or false dependant on whether or not the session was saved or not.
-          record.save ? true : false
+          record.save ? record.id : false
         end
 
         def find_session(id)
-          @@session_class.find(id) ||
-            @@session_class.new(:id=>id)
+          id = BSON::ObjectID.from_string(id.to_s)
+          @@session_class.first(:conditions => { :_id => id }) ||
+            @@session_class.new(:id => id)
         end
 
         def pack(data)

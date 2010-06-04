@@ -1,6 +1,6 @@
 require 'mongo_mapper'
 
-module ActionController
+module ActionDispatch
   module Session
     class MongoMapperStore < AbstractStore
 
