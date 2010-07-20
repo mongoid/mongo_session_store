@@ -23,15 +23,13 @@ module ActionDispatch
 
       private
             
-        def get_session(env, sid) 
-          puts "getting session #{sid}"     
+        def get_session(env, sid)    
           session = find_session(sid)
           env[SESSION_RECORD_KEY] = session
           [sid, unpack(session.data)]
         end
 
         def set_session(env, sid, session_data)
-          puts "setting session #{sid}"  
           record = get_session_model(env, sid)
           record.data = pack(session_data)
 
@@ -42,7 +40,6 @@ module ActionDispatch
         end
 
         def find_session(id)   
-          puts "finding session #{id}"  
           @@session_class.where(:session_id => id).first || @@session_class.new(:session_id => id)
         end
                 
