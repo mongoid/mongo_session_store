@@ -39,10 +39,14 @@ module ActionDispatch
           record.save ? sid : false
         end
 
-        def find_session(id)
-          id = BSON::ObjectID.from_string(id.to_s)
-          @@session_class.first(:conditions => { :_id => id }) ||
-            @@session_class.new(:id => id)
+        def find_session(id)        
+          @@session_class.criteria.id(id) || @@session_class.new
+        end
+        
+        def destroy(env)
+          if sid = current_session_id(env)
+            find_session(sid).destory
+          end
         end
 
         def pack(data)
