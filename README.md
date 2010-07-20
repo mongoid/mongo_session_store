@@ -36,7 +36,7 @@ In your Gemfile:
 In the session_store initializer (config/initializers/session_store.rb):
 
     require "mongo_session_store/mongoid"
-    ActionController::Base.session_store :mongoid_store
+    Rails.application.config.session_store :mongoid_store    
 
 ## Contributors
 
