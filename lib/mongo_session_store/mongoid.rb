@@ -40,7 +40,7 @@ module ActionDispatch
         end
 
         def find_session(id)        
-          @@session_class.criteria.id(id).first || @@session_class.new
+          @@session_class.criteria.id(id).first || @@session_class.new(:_id => id)
         end
         
         def destroy(env)
