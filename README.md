@@ -36,7 +36,7 @@ In your Gemfile:
 In the session_store initializer (config/initializers/session_store.rb):
 
     require "mongo_session_store/mongoid"
-    ActionController::Base.session_store = :mongoid_store
+    ActionController::Base.session_store :mongoid_store
 
 ## Contributors
 
@@ -45,6 +45,7 @@ In the session_store initializer (config/initializers/session_store.rb):
 * Tony Pitale
 * Nicola Racco
 * Matt Powell
+* Ryan Fitzgerald
 
 ## License
 
