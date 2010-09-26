@@ -20,7 +20,7 @@ module ActionDispatch
 
       private
         def generate_sid
-          BSON::ObjectID.new
+          BSON::ObjectId.new
         end
 
         def get_session(env, sid)
@@ -40,7 +40,7 @@ module ActionDispatch
         end
 
         def find_session(id)
-          id = BSON::ObjectID.from_string(id.to_s)
+          id = BSON::ObjectId.from_string(id.to_s)
           @@session_class.first(:conditions => { :_id => id }) ||
             @@session_class.new(:id => id)
         end
