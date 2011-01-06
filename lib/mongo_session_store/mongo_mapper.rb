@@ -6,10 +6,12 @@ module ActionDispatch
 
       class Session
         include MongoMapper::Document
+        key :session_id, String
         key :data, String, :default => [Marshal.dump({})].pack("m*")
         timestamps!
 
         ensure_index :updated_at if MongoMapper.class_variables.include? '@@database'
+        ensure_index :session_id if MongoMapper.class_variables.include? '@@database'
       end
 
       # The class used for session storage.
@@ -20,7 +22,7 @@ module ActionDispatch
 
       private
         def generate_sid
-          BSON::ObjectId.new
+          rand(2**(24*8)).to_s(16)
         end
 
         def get_session(env, sid)
@@ -40,10 +42,7 @@ module ActionDispatch
         end
 
         def find_session(id)
-          @@session_class.find(id) ||
-            @@session_class.new(:id=>id)
-        rescue BSON::InvalidObjectId
-          @@session_class.new(:id => generate_sid)
+          @@session_class.where(:session_id => id).first || @@session_class.new(:session_id => id)
         end
 
         def pack(data)

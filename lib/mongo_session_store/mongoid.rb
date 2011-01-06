@@ -24,7 +24,7 @@ module ActionDispatch
       private
 
         def generate_sid
-          BSON::ObjectId.new
+          rand(2**(24*8)).to_s(16)
         end
 
         def get_session(env, sid)
