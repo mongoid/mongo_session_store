@@ -45,6 +45,12 @@ module ActionDispatch
           @@session_class.where(:session_id => id).first || @@session_class.new(:session_id => id)
         end
 
+        def destroy(env)
+          if sid = current_session_id(env)
+            find_session(sid).destory
+          end
+        end
+
         def pack(data)
           [Marshal.dump(data)].pack("m*")
         end
