@@ -9,11 +9,13 @@ module ActionDispatch
         key :session_id, String
         key :data, String, :default => [Marshal.dump({})].pack("m*")
         timestamps!
+        
 
         ensure_index :updated_at if MongoMapper.class_variables.include? '@@database'
         ensure_index :session_id if MongoMapper.class_variables.include? '@@database'
       end
 
+      
       # The class used for session storage.
       cattr_accessor :session_class
       self.session_class = Session
@@ -33,7 +35,7 @@ module ActionDispatch
         end
 
         def set_session(env, sid, session_data)
-          record = env[SESSION_RECORD_KEY] ||= find_session(sid)
+          record = get_session_model(env, sid)
           record.data = pack(session_data)
           # Rack spec dictates that set_session should return true or false
           # depending on whether or not the session was saved or not.
@@ -45,9 +47,17 @@ module ActionDispatch
           @@session_class.where(:session_id => id).first || @@session_class.new(:session_id => id)
         end
 
+        def get_session_model(env, sid)
+          if env[ENV_SESSION_OPTIONS_KEY][:id].nil?
+            env[SESSION_RECORD_KEY] = find_session(sid)
+          else
+            env[SESSION_RECORD_KEY] ||= find_session(sid)
+          end
+        end
+
         def destroy(env)
           if sid = current_session_id(env)
-            find_session(sid).destory
+            get_session_model(env, sid).destroy
           end
         end
 
