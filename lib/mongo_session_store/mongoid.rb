@@ -22,8 +22,14 @@ module ActionDispatch
       SESSION_RECORD_KEY = 'rack.session.record'.freeze
 
       private
-            
-        def get_session(env, sid)    
+
+        def generate_sid
+          BSON::ObjectId.new
+        end
+
+        def get_session(env, sid)
+          sid ||= generate_sid
+
           session = find_session(sid)
           env[SESSION_RECORD_KEY] = session
           [sid, unpack(session.data)]
