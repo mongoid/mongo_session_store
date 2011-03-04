@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mongo_session_store}
-  s.version = "2.0.0.1"
+  s.version = `cat VERSION`
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nicolas M\303\251rouze", "Tony Pitale", "Chris Brickley"]
