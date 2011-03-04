@@ -7,12 +7,12 @@ module ActionDispatch
       class Session
         include Mongoid::Document
         include Mongoid::Timestamps
+        
+        identity :type => String
 
         field :data, :type => String, :default => [Marshal.dump({})].pack("m*")
-        field :session_id, :type => String
         
         index :updated_at
-        index :session_id
       end
 
       # The class used for session storage.
@@ -46,7 +46,7 @@ module ActionDispatch
         end
 
         def find_session(id)   
-          @@session_class.where(:session_id => id).first || @@session_class.new(:session_id => id)
+          @@session_class.where(:_id => id).first || @@session_class.new(:_id => id)
         end
                 
         def destroy(env)

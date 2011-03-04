@@ -6,13 +6,12 @@ module ActionDispatch
 
       class Session
         include MongoMapper::Document
-        key :session_id, String
+        key :_id, String
         key :data, String, :default => [Marshal.dump({})].pack("m*")
         timestamps!
         
 
         ensure_index :updated_at if MongoMapper.class_variables.include? '@@database'
-        ensure_index :session_id if MongoMapper.class_variables.include? '@@database'
       end
 
       
@@ -44,7 +43,7 @@ module ActionDispatch
         end
 
         def find_session(id)
-          @@session_class.where(:session_id => id).first || @@session_class.new(:session_id => id)
+          @@session_class.where(:_id => id).first || @@session_class.new(:_id => id)
         end
 
         def get_session_model(env, sid)
