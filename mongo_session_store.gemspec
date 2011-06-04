@@ -26,6 +26,6 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Rails session store class implemented for MongoMapper and Mongoid}
 
-  s.add_dependency(%q<actionpack>, ["~> 3.1.rc1"])
+  s.add_dependency(%q<actionpack>, ["> 3.0"])
 end
 
