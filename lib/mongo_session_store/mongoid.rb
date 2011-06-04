@@ -20,11 +20,16 @@ module ActionDispatch
       self.session_class = Session
 
       SESSION_RECORD_KEY = 'rack.session.record'.freeze
+      begin
+        ENV_SESSION_OPTIONS_KEY = Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY
+      rescue NameError
+        # Rack 1.2.x has access to the ENV_SESSION_OPTIONS_KEY
+      end
 
       private
 
         def generate_sid
-          ActiveSupport::SecureRandom.hex(24)
+          SecureRandom.hex(24)
         end
 
         def get_session(env, sid)
@@ -35,7 +40,7 @@ module ActionDispatch
           [sid, unpack(session.data)]
         end
 
-        def set_session(env, sid, session_data)
+        def set_session(env, sid, session_data, options = {})
           record = get_session_model(env, sid)
           record.data = pack(session_data)
 
