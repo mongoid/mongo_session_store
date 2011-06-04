@@ -1,0 +1,70 @@
+PATH
+  remote: .
+  specs:
+    mongo_session_store (2.1.0)
+      actionpack (~> 3.1.rc1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    actionpack (3.1.0.rc1)
+      activemodel (= 3.1.0.rc1)
+      activesupport (= 3.1.0.rc1)
+      builder (~> 3.0.0)
+      erubis (~> 2.7.0)
+      i18n (~> 0.6.0beta1)
+      rack (~> 1.3.0.beta2)
+      rack-cache (~> 1.0.1)
+      rack-mount (~> 0.8.1)
+      rack-test (~> 0.6.0)
+      sprockets (~> 2.0.0.beta.5)
+      tzinfo (~> 0.3.27)
+    activemodel (3.1.0.rc1)
+      activesupport (= 3.1.0.rc1)
+      bcrypt-ruby (~> 2.1.4)
+      builder (~> 3.0.0)
+      i18n (~> 0.6.0beta1)
+    activesupport (3.1.0.rc1)
+      multi_json (~> 1.0)
+    bcrypt-ruby (2.1.4)
+    bson (1.3.1)
+    builder (3.0.0)
+    erubis (2.7.0)
+    hike (1.0.0)
+    i18n (0.6.0)
+    mongo (1.3.1)
+      bson (>= 1.3.1)
+    mongo_mapper (0.9.1)
+      activemodel (~> 3.0)
+      activesupport (~> 3.0)
+      plucky (~> 0.3.8)
+    mongoid (2.0.2)
+      activemodel (~> 3.0)
+      mongo (~> 1.3)
+      tzinfo (~> 0.3.22)
+    multi_json (1.0.3)
+    plucky (0.3.8)
+      mongo (~> 1.3)
+    rack (1.3.0)
+    rack-cache (1.0.2)
+      rack (>= 0.4)
+    rack-mount (0.8.1)
+      rack (>= 1.0.0)
+    rack-test (0.6.0)
+      rack (>= 1.0)
+    rake (0.9.1)
+    sprockets (2.0.0.beta.9)
+      hike (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    tilt (1.3.2)
+    tzinfo (0.3.27)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mongo_mapper (>= 0.9.0)
+  mongo_session_store!
+  mongoid (>= 2.0)
+  rake
