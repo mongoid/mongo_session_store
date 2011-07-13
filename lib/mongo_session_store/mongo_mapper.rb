@@ -28,7 +28,7 @@ module ActionDispatch
 
       private
         def generate_sid
-          ActiveSupport::SecureRandom.hex(24)
+          SecureRandom.hex(24)
         end
 
         def get_session(env, sid)
