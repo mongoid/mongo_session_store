@@ -28,7 +28,8 @@ module ActionDispatch
 
       private
         def generate_sid
-          SecureRandom.hex(24)
+          # 20 random bytes in url-safe base64
+          SecureRandom.base64(20).gsub('=','').gsub('+','-').gsub('/','_')
         end
 
         def get_session(env, sid)
