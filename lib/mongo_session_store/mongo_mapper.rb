@@ -9,9 +9,6 @@ module ActionDispatch
         key :_id, String
         key :data, String, :default => [Marshal.dump({})].pack("m*")
         timestamps!
-        
-
-        ensure_index :updated_at if MongoMapper.class_variables.include? '@@database'
       end
 
       

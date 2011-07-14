@@ -11,8 +11,6 @@ module ActionDispatch
         identity :type => String
 
         field :data, :type => String, :default => [Marshal.dump({})].pack("m*")
-        
-        index :updated_at
       end
 
       # The class used for session storage.
