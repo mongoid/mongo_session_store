@@ -52,11 +52,14 @@ module ActionDispatch
         def find_session(id)   
           @@session_class.where(:_id => id).first || @@session_class.new(:_id => id)
         end
-                
-        def destroy(env)
+        
+        def destroy_session(env, session_id, options)
           if sid = current_session_id(env)
             get_session_model(env, sid).destroy
+            env[SESSION_RECORD_KEY] = nil
           end
+
+          generate_sid unless options[:drop]
         end
         
         def get_session_model(env, sid)
