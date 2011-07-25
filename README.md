@@ -2,52 +2,71 @@
 
 ## Description
 
-This is a fork of the DataMapper session store, modified to work with MongoMapper and Mongoid.  Also included is a generic MongoStore that will work with any (or no!) Mongo ODM.
+MongoSessionStore is a collection of Rails-compatible session stores for MongoMapper, Mongoid, and also a generic Mongo store that works with any (or no!) ODM.
 
 ## Installation
 
-The current version is only compatible with Rails 3
+MongoSessionStore is compatible with Rails 3.0 and 3.1
 
-    gem install mongo_session_store
-
-However if you want to use it with Rails 2.3.x, you just have to install the latest 1.x version
-
-    gem install mongo_session_store --version=1.1.2
-
-## Usage with MongoMapper
+## Usage
 
 In your Gemfile:
 
-    gem "mongo_mapper-rails3", :require => "mongo_mapper"
-    gem "mongo_session_store"
+    gem "mongo_mapper"
+    gem "mongo_session_store", :git => 'git://github.com/brianhempel/mongo_session_store'
 
 In the session_store initializer (config/initializers/session_store.rb):
 
     ActionController::Base.session_store = :mongo_mapper_store
-
-## Usage with Mongoid
-
-In your Gemfile:
-
-    gem "mongoid"
-    gem "mongo_session_store"
-
-In the session_store initializer (config/initializers/session_store.rb):
-
-    Rails.application.config.session_store :mongoid_store
-
-## Usage with any other (or no!) ODM
-
-In your Gemfile:
-
-    gem "mongo" # or an ODM that requires mongo
-    gem "mongo_session_store"
-
-In the session_store initializer (config/initializers/session_store.rb):
-
-    Rails.application.config.session_store :mongo_store
-    # if you're not using MongoMapper or Mongoid, you also need to set a database, e.g.:
+    
+    # or
+    
+    ActionController::Base.session_store = :mongoid_store
+    
+    # or
+    
+    ActionController::Base.session_store = :mongo_store
     ActionDispatch::Session:MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
+    # note: You only need to set the database for the :mongo_store if you aren't using MongoMapper or Mongoid in your project.
+
+If for some reason you want to query your sessions:
+
+    ActionDispatch::Session:MongoMapperStore::Session.where(:updated_at.gt => 2.days.ago)
+
+    # or
+
+    ActionDispatch::Session:MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
+    
+    # or
+    
+    ActionDispatch::Session:MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
+
+## Performance
+
+The following is the benchmark run with bson_ext installed.  Without bson_ext, speeds are about 10x slower.  The benchmark saves 2000 sessions (~12kb each) and then finds/reloads each one.  MongoSessionStore uses Mongo's binary data type, which is ~25% smaller in MongoDB than using base64-encoded strings.
+
+    $ ruby perf/benchmark.rb
+    MongoMapperStore...
+    3.65ms per session save
+    2.25ms per session load
+               Total Size: 23648924
+             Object count: 2000
+      Average object size: 11824.462
+              Index sizes: {"_id_"=>172032}
+    MongoidStore...
+    2.59ms per session save
+    1.33ms per session load
+               Total Size: 23648924
+             Object count: 2000
+      Average object size: 11824.462
+              Index sizes: {"_id_"=>172032}
+    MongoStore...
+    1.42ms per session save
+    1.11ms per session load
+               Total Size: 23648924
+             Object count: 2000
+      Average object size: 11824.462
+              Index sizes: {"_id_"=>204800}
 
 ## Development
 
@@ -67,8 +86,10 @@ To run the tests for a specific store:
 
     MONGO_SESSION_STORE_ORM=mongo_mapper bundle exec rspec spec
     MONGO_SESSION_STORE_ORM=mongoid bundle exec rspec spec    
+    
+## Previous contributors
 
-## Contributors
+MongoSessionStore started as a fork of the DataMapper session store, modified to work with MongoMapper and Mongoid.  Much thanks to all the previous contributors:
 
 * Nicolas Mérouze
 * Chris Brickley
@@ -76,10 +97,10 @@ To run the tests for a specific store:
 * Nicola Racco
 * Matt Powell
 * Ryan Fitzgerald
-* Brian Hempel
 
 ## License
 
+Copyright (c) 2011 Brian Hempel
 Copyright (c) 2010 Nicolas Mérouze
 Copyright (c) 2009 Chris Brickley
 Copyright (c) 2009 Tony Pitale
