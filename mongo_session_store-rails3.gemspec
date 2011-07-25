@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.homepage         = "http://github.com/brianhempel/mongo_session_store"
   s.require_paths    = ["lib"]
   s.rubygems_version = "1.3.7"
-  s.summary          = "Rails 3.0 and 3.1 session stores for MongoMapper, Mongoid, or any other ORM."
+  s.summary          = "Rails 3.0 and 3.1 session stores for MongoMapper, Mongoid, or any other ODM."
 
   s.add_dependency "mongo"
   s.add_dependency "actionpack", ">= 3.0"  
