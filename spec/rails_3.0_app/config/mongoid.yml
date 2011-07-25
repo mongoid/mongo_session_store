@@ -1,10 +1,10 @@
 development:
   host: localhost
-  database: rails31_app_development
+  database: rails30_app_development
 
 test:
   host: localhost
-  database: rails31_app_test
+  database: rails30_app_test
 
 # set these environment variables on your prod server
 production:
