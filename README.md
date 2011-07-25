@@ -11,7 +11,7 @@ MongoSessionStore is compatible with Rails 3.0 and 3.1
 In your Gemfile:
 
     gem "mongo_mapper"
-    gem "mongo_session_store", :git => 'git://github.com/brianhempel/mongo_session_store'
+    gem "mongo_session_store", :git => 'git://github.com/brianhempel/mongo_session_store', :tag => 'v3.0.0'
 
 In the session_store initializer (config/initializers/session_store.rb):
 
@@ -26,6 +26,10 @@ In the session_store initializer (config/initializers/session_store.rb):
     ActionDispatch::Session:MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
 
 Note: If you choose to use the :mongo_store you only need to set its database if you aren't using MongoMapper or Mongoid in your project.
+
+By default, the sessions will be stored in the "sessions" collection in MongoDB.  If you want to use a different collection, you can set that in the initializer:
+
+    MongoSessionStore.collection_name = "client_sessions"
 
 If for some reason you want to query your sessions:
 
