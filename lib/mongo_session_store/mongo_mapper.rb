@@ -60,12 +60,15 @@ begin
           end
 
           def destroy_session(env, session_id, options)
+            destroy(env)
+            generate_sid unless options[:drop]
+          end
+          
+          def destroy(env)
             if sid = current_session_id(env)
               get_session_model(env, sid).destroy
               env[SESSION_RECORD_KEY] = nil
             end
-
-            generate_sid unless options[:drop]
           end
 
           def pack(data)
