@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a fork of the DataMapper session store, modified to work with MongoMapper and Mongoid.
+This is a fork of the DataMapper session store, modified to work with MongoMapper and Mongoid.  Also included is a generic MongoStore that will work with any (or no!) Mongo ODM.
 
 ## Installation
 
@@ -34,7 +34,20 @@ In your Gemfile:
 
 In the session_store initializer (config/initializers/session_store.rb):
 
-    Rails.application.config.session_store :mongoid_store    
+    Rails.application.config.session_store :mongoid_store
+
+## Usage with any other (or no!) ODM
+
+In your Gemfile:
+
+    gem "mongo" # or an ODM that requires mongo
+    gem "mongo_session_store"
+
+In the session_store initializer (config/initializers/session_store.rb):
+
+    Rails.application.config.session_store :mongo_store
+    # if you're not using MongoMapper or Mongoid, you also need to set a database, e.g.:
+    ActionDispatch::Session:MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
 
 ## Development
 

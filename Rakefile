@@ -23,7 +23,7 @@ desc 'Test each session store against Rails 3.0 and Rails 3.1'
 task :test_all do
   # inspired by http://pivotallabs.com/users/jdean/blog/articles/1728-testing-your-gem-against-multiple-rubies-and-rails-versions-with-rvm
   
-  orms = ['mongo_mapper', 'mongoid']
+  orms = ['mongo_mapper', 'mongoid', 'mongo']
   
   set_rails_version('3.0')
   
