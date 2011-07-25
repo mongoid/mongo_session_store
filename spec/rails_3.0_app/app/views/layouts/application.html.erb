@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rails30App</title>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+
+<%= flash[:notice] %>
+<%= flash[:alert] %>
+
+<%= yield %>
+
+</body>
+</html>

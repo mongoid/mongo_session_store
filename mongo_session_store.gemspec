@@ -1,5 +1,3 @@
-MONGO_VERS = '1.3.1' unless defined? MONGO_VERS
-
 Gem::Specification.new do |s|
   s.name = %q{mongo_session_store}
   s.version = `cat VERSION`
@@ -23,12 +21,6 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Rails session store class implemented for MongoMapper and Mongoid}
 
-  s.add_dependency(%q<actionpack>, ["> 3.0"])
-  
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'mongo_mapper', '>= 0.9.0'
-  s.add_development_dependency 'mongoid',      '>= 2.0'
-  s.add_development_dependency 'mongo',         MONGO_VERS
-  s.add_development_dependency 'bson_ext',      MONGO_VERS
+  s.add_dependency(%q<actionpack>, [">= 3.0"])
 end
 

@@ -36,6 +36,25 @@ In the session_store initializer (config/initializers/session_store.rb):
 
     Rails.application.config.session_store :mongoid_store    
 
+## Development
+
+To run all the tests:
+
+    rake
+
+To switch to the Rails 3.0 Gemfile.lock:
+
+    rake use_rails_30
+
+To switch to the Rails 3.1 Gemfile.lock:
+
+    rake use_rails_31
+
+To run the tests for a specific store:
+
+    MONGO_SESSION_STORE_ORM=mongo_mapper bundle exec rspec spec
+    MONGO_SESSION_STORE_ORM=mongoid bundle exec rspec spec    
+
 ## Contributors
 
 * Nicolas Mérouze
@@ -44,6 +63,7 @@ In the session_store initializer (config/initializers/session_store.rb):
 * Nicola Racco
 * Matt Powell
 * Ryan Fitzgerald
+* Brian Hempel
 
 ## License
 

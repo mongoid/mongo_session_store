@@ -3,3 +3,4 @@
 /doc
 /coverage
 Gemfile.lock
+Gemfile_Rails_*.lock
