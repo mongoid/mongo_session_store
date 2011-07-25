@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name = "mongo_session_store"
+  s.name = "mongo_session_store-rails3"
   s.version = `cat VERSION`.strip
 
   s.authors          = ["Brian Hempel", "Nicolas M\303\251rouze", "Tony Pitale", "Chris Brickley"]
