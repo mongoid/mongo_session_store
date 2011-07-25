@@ -4,11 +4,9 @@
 
 MongoSessionStore is a collection of Rails-compatible session stores for MongoMapper, Mongoid, and also a generic Mongo store that works with any (or no!) ODM.
 
-## Installation
+## Usage
 
 MongoSessionStore is compatible with Rails 3.0 and 3.1
-
-## Usage
 
 In your Gemfile:
 
@@ -17,33 +15,32 @@ In your Gemfile:
 
 In the session_store initializer (config/initializers/session_store.rb):
 
-    ActionController::Base.session_store = :mongo_mapper_store
+    # MongoMapper
+    MyApp::Application.config.session_store = :mongo_mapper_store
     
-    # or
+    # Mongoid
+    MyApp::Application.config.session_store = :mongoid_store
     
-    ActionController::Base.session_store = :mongoid_store
-    
-    # or
-    
-    ActionController::Base.session_store = :mongo_store
+    # anything else
+    MyApp::Application.config.session_store = :mongo_store
     ActionDispatch::Session:MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
-    # note: You only need to set the database for the :mongo_store if you aren't using MongoMapper or Mongoid in your project.
+
+Note: If you choose to use the :mongo_store you only need to set its database if you aren't using MongoMapper or Mongoid in your project.
 
 If for some reason you want to query your sessions:
 
+    # MongoMapper
     ActionDispatch::Session:MongoMapperStore::Session.where(:updated_at.gt => 2.days.ago)
 
-    # or
-
+    # Mongoid
     ActionDispatch::Session:MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
     
-    # or
-    
+    # Plain old Mongo
     ActionDispatch::Session:MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 
 ## Performance
 
-The following is the benchmark run with bson_ext installed.  Without bson_ext, speeds are about 10x slower.  The benchmark saves 2000 sessions (~12kb each) and then finds/reloads each one.  MongoSessionStore uses Mongo's binary data type, which is ~25% smaller in MongoDB than using base64-encoded strings.
+The following is the benchmark run with bson_ext installed.  Without bson_ext, speeds are about 10x slower.  The benchmark saves 2000 sessions (~12kb each) and then finds/reloads each one.
 
     $ ruby perf/benchmark.rb
     MongoMapperStore...
