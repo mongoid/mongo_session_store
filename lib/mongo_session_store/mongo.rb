@@ -64,7 +64,7 @@ module ActionDispatch
         end
         
         def self.collection
-          @collection ||= database['action_dispatch.session.mongo_store.sessions']
+          @collection ||= database[MongoSessionStore.collection_name]
         end
         
         def self.reset_collection

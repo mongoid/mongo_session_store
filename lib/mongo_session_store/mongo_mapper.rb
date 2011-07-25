@@ -7,6 +7,7 @@ begin
 
         class Session
           include MongoMapper::Document
+          set_collection_name MongoSessionStore.collection_name
           key :_id, String
           key :data, String, :default => [Marshal.dump({})].pack("m*")
           timestamps!

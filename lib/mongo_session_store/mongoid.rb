@@ -8,6 +8,7 @@ begin
         class Session
           include Mongoid::Document
           include Mongoid::Timestamps
+          self.collection_name = MongoSessionStore.collection_name
         
           identity :type => String
 
