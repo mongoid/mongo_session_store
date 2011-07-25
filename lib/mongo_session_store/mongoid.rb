@@ -12,7 +12,7 @@ begin
         
           identity :type => String
 
-          field :data, :type => String, :default => [Marshal.dump({})].pack("m*")
+          field :data, :type => BSON::Binary, :default => BSON::Binary.new(Marshal.dump({}))
         end
 
         # The class used for session storage.
@@ -73,12 +73,12 @@ begin
           end
 
           def pack(data)
-            [Marshal.dump(data)].pack("m*")
+            BSON::Binary.new(Marshal.dump(data))
           end
 
           def unpack(packed)
             return nil unless packed
-            Marshal.load(packed.unpack("m*").first)
+            Marshal.load(StringIO.new(packed.to_s))
           end
       
       end

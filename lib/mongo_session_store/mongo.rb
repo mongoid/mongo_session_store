@@ -29,7 +29,7 @@ module ActionDispatch
           
           collection.save(
             :_id        => @_id,
-            :data       => @data,
+            :data       => BSON::Binary.new(@data),
             :created_at => @created_at,
             :updated_at => @updated_at
           )
@@ -132,12 +132,12 @@ module ActionDispatch
         end
 
         def pack(data)
-          [Marshal.dump(data)].pack("m*")
+          Marshal.dump(data)
         end
 
         def unpack(packed)
           return nil unless packed
-          Marshal.load(packed.unpack("m*").first)
+          Marshal.load(StringIO.new(packed.to_s))
         end
 
     end

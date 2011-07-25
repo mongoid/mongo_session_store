@@ -9,7 +9,7 @@ begin
           include MongoMapper::Document
           set_collection_name MongoSessionStore.collection_name
           key :_id, String
-          key :data, String, :default => [Marshal.dump({})].pack("m*")
+          key :data, Binary, :default => Marshal.dump({})
           timestamps!
         end
 
@@ -69,12 +69,12 @@ begin
           end
 
           def pack(data)
-            [Marshal.dump(data)].pack("m*")
+            Marshal.dump(data)
           end
 
           def unpack(packed)
             return nil unless packed
-            Marshal.load(packed.unpack("m*").first)
+            Marshal.load(StringIO.new(packed.to_s))
           end
 
       end
