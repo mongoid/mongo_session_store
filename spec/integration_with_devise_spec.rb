@@ -62,6 +62,11 @@ describe Devise::SessionsController do
     i_should_be_logged_in
   end
   
+  it "uses the right session store class" do
+    store = Rails.application.config.session_store
+    store.session_class.to_s.should == "ActionDispatch::Session::#{ENV["MONGO_SESSION_STORE_ORM"].camelize}Store::Session"
+  end
+  
   it "stores the session in the sessions collection" do
     collection = db["sessions"]
     collection.count.should == 0
