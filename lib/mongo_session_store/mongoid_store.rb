@@ -20,11 +20,6 @@ begin
           def pack(data)
             BSON::Binary.new(Marshal.dump(data))
           end
-
-          def unpack(packed)
-            return nil unless packed
-            Marshal.load(StringIO.new(packed.to_s))
-          end
       
       end
     end
