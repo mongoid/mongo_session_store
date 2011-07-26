@@ -7,15 +7,15 @@ module ActionDispatch
       class Session
         attr_accessor :_id, :data, :created_at, :updated_at
         
-        def initialize(options={})
+        def initialize(options = {})
           @_id        = options[:_id]
           @data       = options[:data] || BSON::Binary.new(Marshal.dump({}))
           @created_at = options[:created_at]
           @updated_at = options[:updated_at]
         end
         
-        def self.load(options={})
-          options[:data] = options["data"].to_s if options["data"]
+        def self.load(options = {})
+          options[:data] = options["data"] if options["data"]
           new(options)
         end
         
