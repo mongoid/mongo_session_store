@@ -79,9 +79,9 @@ def benchmark_store(store)
   puts "          Index sizes: #{stats['indexSizes'].inspect}"
 end
 
-mongo_mapper_store = ActionDispatch::Session::MongoMapperStore.new(nil)
-mongoid_store = ActionDispatch::Session::MongoidStore.new(nil)
-mongo_store = ActionDispatch::Session::MongoStore.new(nil)
+mongo_mapper_store = MongoMapperStore.new(nil)
+mongoid_store = MongoidStore.new(nil)
+mongo_store = MongoStore.new(nil)
 
 puts "MongoMapperStore..."
 benchmark_store(mongo_mapper_store)

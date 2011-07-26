@@ -16,5 +16,7 @@ begin
     end
   end
 
+  MongoMapperStore = ActionDispatch::Session::MongoMapperStore
+
 rescue LoadError
 end

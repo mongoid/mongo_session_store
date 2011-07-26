@@ -6,16 +6,16 @@ module MongoSessionStore
   def self.collection_name=(name)
     @collection_name = name
     
-    if defined?(ActionDispatch::Session::MongoStore::Session)
-      ActionDispatch::Session::MongoStore::Session.reset_collection
+    if defined?(MongoStore::Session)
+      MongoStore::Session.reset_collection
     end
 
-    if defined?(ActionDispatch::Session::MongoMapperStore::Session)
-      ActionDispatch::Session::MongoMapperStore::Session.set_collection_name(name)
+    if defined?(MongoMapperStore::Session)
+      MongoMapperStore::Session.set_collection_name(name)
     end
 
-    if defined?(ActionDispatch::Session::MongoidStore::Session)
-      ActionDispatch::Session::MongoidStore::Session.store_in(name)
+    if defined?(MongoidStore::Session)
+      MongoidStore::Session.store_in(name)
     end
   end
 

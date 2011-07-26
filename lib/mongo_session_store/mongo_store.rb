@@ -78,3 +78,5 @@ module ActionDispatch
     end
   end
 end
+
+MongoStore = ActionDispatch::Session::MongoStore

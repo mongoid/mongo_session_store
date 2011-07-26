@@ -23,7 +23,7 @@ In the session_store initializer (config/initializers/session_store.rb):
     
     # anything else
     MyApp::Application.config.session_store = :mongo_store
-    ActionDispatch::Session:MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
+    MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
 
 Note: If you choose to use the :mongo_store you only need to set its database if you aren't using MongoMapper or Mongoid in your project.
 
@@ -34,13 +34,13 @@ By default, the sessions will be stored in the "sessions" collection in MongoDB.
 If for some reason you want to query your sessions:
 
     # MongoMapper
-    ActionDispatch::Session:MongoMapperStore::Session.where(:updated_at.gt => 2.days.ago)
+    MongoMapperStore::Session.where(:updated_at.gt => 2.days.ago)
 
     # Mongoid
-    ActionDispatch::Session:MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
+    MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
     
     # Plain old Mongo
-    ActionDispatch::Session:MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
+    MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 
 ## Performance
 

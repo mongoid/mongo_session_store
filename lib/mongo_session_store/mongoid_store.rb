@@ -29,6 +29,8 @@ begin
       end
     end
   end
+  
+  MongoidStore = ActionDispatch::Session::MongoidStore
 
 rescue LoadError
 end
