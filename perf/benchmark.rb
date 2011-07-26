@@ -5,7 +5,7 @@ require 'bundler/setup'
 Bundler.require(:development)
 
 require 'action_dispatch'
-require File.join(File.dirname(__FILE__),'..','lib','mongo_session_store')
+require File.join(File.dirname(__FILE__),'..','lib','mongo_session_store-rails3')
 
 MongoMapper.database = "test_session_stores"
 Mongoid.database = Mongo::Connection.new.db("test_session_stores")
