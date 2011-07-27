@@ -10,37 +10,45 @@ MongoSessionStore is compatible with Rails 3.0 and 3.1
 
 In your Gemfile:
 
-    gem "mongo_mapper"
-    gem "mongo_session_store-rails3"
+```ruby
+gem "mongo_mapper" # or "Mongoid," or another Mongo ODM, or nothing
+gem "mongo_session_store-rails3"
+```
 
 In the session_store initializer (config/initializers/session_store.rb):
 
-    # MongoMapper
-    MyApp::Application.config.session_store = :mongo_mapper_store
-    
-    # Mongoid
-    MyApp::Application.config.session_store = :mongoid_store
-    
-    # anything else
-    MyApp::Application.config.session_store = :mongo_store
-    MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
+```ruby
+# MongoMapper
+MyApp::Application.config.session_store = :mongo_mapper_store
+
+# Mongoid
+MyApp::Application.config.session_store = :mongoid_store
+
+# anything else
+MyApp::Application.config.session_store = :mongo_store
+MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
+```
 
 Note: If you choose to use the :mongo_store you only need to set its database if you aren't using MongoMapper or Mongoid in your project.
 
 By default, the sessions will be stored in the "sessions" collection in MongoDB.  If you want to use a different collection, you can set that in the initializer:
 
-    MongoSessionStore.collection_name = "client_sessions"
+```ruby
+MongoSessionStore.collection_name = "client_sessions"
+```
 
-If for some reason you want to query your sessions:
+And if for some reason you want to query your sessions:
 
-    # MongoMapper
-    MongoMapperStore::Session.where(:updated_at.gt => 2.days.ago)
+```ruby
+# MongoMapper
+MongoMapperStore::Session.where(:updated_at.gt => 2.days.ago)
 
-    # Mongoid
-    MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
-    
-    # Plain old Mongo
-    MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
+# Mongoid
+MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
+
+# Plain old Mongo
+MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
+```
 
 ## Performance
 
