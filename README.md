@@ -94,7 +94,8 @@ To switch to the Rails 3.1 Gemfile.lock:
 To run the tests for a specific store:
 
     MONGO_SESSION_STORE_ORM=mongo_mapper bundle exec rspec spec
-    MONGO_SESSION_STORE_ORM=mongoid bundle exec rspec spec    
+    MONGO_SESSION_STORE_ORM=mongoid bundle exec rspec spec
+    MONGO_SESSION_STORE_ORM=mongo bundle exec rspec spec    
     
 ## Previous contributors
 
