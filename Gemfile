@@ -4,9 +4,9 @@ MONGO_VERS = '1.3.1' unless defined? MONGO_VERS
 
 RAILS_VERS = case ENV['RAILS_VERS']
              when '3.0'
-               '~>3.0'
+               '~>3.0.0'
              when '3.1'
-               '>3.1.0.pre'
+               '~>3.1.0'
              when nil
                nil
              else
