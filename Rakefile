@@ -17,6 +17,8 @@ def set_rails_version(rails_vers)
   end
 end
 
+@rails_versions = ['3.0', '3.1', '3.2']
+
 task :default => :test_all
 
 desc 'Test each session store against Rails 3.0 and Rails 3.1'
@@ -24,26 +26,25 @@ task :test_all do
   # inspired by http://pivotallabs.com/users/jdean/blog/articles/1728-testing-your-gem-against-multiple-rubies-and-rails-versions-with-rvm
   
   orms = ['mongo_mapper', 'mongoid', 'mongo']
-  
-  set_rails_version('3.0')
-  
-  orms.each do |orm|
-    run_with_output "export MONGO_SESSION_STORE_ORM=#{orm}; bundle exec rspec spec"
-  end
 
-  set_rails_version('3.1')
+  @rails_versions.each do |rails_version|
+
+    set_rails_version(rails_version)
   
-  orms.each do |orm|
-    run_with_output "export MONGO_SESSION_STORE_ORM=#{orm}; bundle exec rspec spec"
+    orms.each do |orm|
+      run_with_output "export MONGO_SESSION_STORE_ORM=#{orm}; bundle exec rspec spec"
+    end
+
   end
 end
 
-desc 'Set Rails version to 3.0'
-task :use_rails_30 do
-  set_rails_version('3.0')
-end
 
-desc 'Set Rails version to 3.1'
-task :use_rails_31 do
-  set_rails_version('3.1')
+
+@rails_versions.each do |rails_version|
+
+  desc "Set Rails version to #{rails_version}"
+  task :"use_rails_#{rails_version.gsub('.', '')}" do
+    set_rails_version(rails_version)
+  end
+
 end
