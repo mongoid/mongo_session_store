@@ -9,7 +9,7 @@ end
 
 def set_rails_version(rails_vers)
   unless File.exists?("Gemfile_Rails_#{rails_vers}.lock")
-    run_with_output "export RAILS_VERS=#{rails_vers}; bundle update rails"
+    run_with_output "export RAILS_VERS=#{rails_vers}; bundle update"
     run_with_output "cp Gemfile.lock Gemfile_Rails_#{rails_vers}.lock"
   else
     run_with_output "rm Gemfile.lock"
