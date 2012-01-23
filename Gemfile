@@ -1,6 +1,6 @@
 source :rubygems
 
-MONGO_VERS = '1.4.0' unless defined? MONGO_VERS
+MONGO_VERS = '1.5.2' unless defined? MONGO_VERS
 
 RAILS_VERS = case ENV['RAILS_VERS']
              when '3.0'
@@ -19,8 +19,8 @@ gemspec
 
 group :development, :test do
   gem 'rake'
-  gem 'mongo_mapper', '>= 0.9.0'
-  gem 'mongoid',      '>= 2.0'
+  gem 'mongo_mapper', '>= 0.10.1'
+  gem 'mongoid',      '>= 2.2.5'
   gem 'mongo',         MONGO_VERS
   gem 'bson_ext',      MONGO_VERS
   
