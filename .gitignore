@@ -4,3 +4,5 @@
 /coverage
 Gemfile.lock
 Gemfile_Rails_*.lock
+*.gem
+.rvmrc
