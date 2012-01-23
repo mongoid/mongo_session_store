@@ -8,7 +8,7 @@ RAILS_VERS = case ENV['RAILS_VERS']
              when '3.1'
                '~>3.1.0'
              when '3.2'
-               '3.2.0.rc1'
+               '~>3.2.0'
              when nil
                nil
              else
