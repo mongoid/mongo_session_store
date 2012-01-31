@@ -6,7 +6,7 @@ MongoSessionStore is a collection of Rails-compatible session stores for MongoMa
 
 ## Usage
 
-MongoSessionStore is compatible with Rails 3.0 and 3.1
+MongoSessionStore is compatible with Rails 3.0, 3.1, and 3.2.
 
 In your Gemfile:
 
@@ -83,13 +83,11 @@ To run all the tests:
 
     rake
 
-To switch to the Rails 3.0 Gemfile.lock:
+To switch to the Gemfile.lock for a certain Rails version:
 
     rake use_rails_30
-
-To switch to the Rails 3.1 Gemfile.lock:
-
     rake use_rails_31
+    rake use_rails_32
 
 To run the tests for a specific store:
 
