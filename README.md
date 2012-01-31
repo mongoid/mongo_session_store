@@ -108,7 +108,7 @@ MongoSessionStore started as a fork of the DataMapper session store, modified to
 
 ## License
 
-Copyright (c) 2011 Brian Hempel
+Copyright (c) 2011-2012 Brian Hempel
 Copyright (c) 2010 Nicolas Mérouze
 Copyright (c) 2009 Chris Brickley
 Copyright (c) 2009 Tony Pitale
