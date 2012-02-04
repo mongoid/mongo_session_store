@@ -10,7 +10,12 @@ module ActionDispatch
         include Mongoid::Timestamps
         self.collection_name = MongoSessionStore.collection_name
 
-        identity :type => String
+        if respond_to?(:identity)
+          # pre-Mongoid 3
+          identity :type => String
+        else
+          field :_id, :type => String
+        end
 
         field :data, :type => BSON::Binary, :default => BSON::Binary.new(Marshal.dump({}))
       end
