@@ -31,3 +31,10 @@ RSpec.configure do |config|
 end
 
 puts "Testing #{ENV["MONGO_SESSION_STORE_ORM"]}_store on Rails #{Rails.version}..."
+
+case ENV["MONGO_SESSION_STORE_ORM"]
+when "mongo_mapper"
+  puts "MongoMapper version: #{MongoMapper::Version}"
+when "mongoid"
+  puts "Mongoid version: #{Mongoid::VERSION}"
+end
