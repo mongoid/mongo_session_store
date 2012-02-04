@@ -1,6 +1,8 @@
+require File.expand_path('../lib/mongo_session_store/version', __FILE__)
+
 Gem::Specification.new do |s|
   s.name = "mongo_session_store-rails3"
-  s.version = `cat VERSION`.strip
+  s.version = MongoSessionStore::VERSION
 
   s.authors          = ["Brian Hempel", "Nicolas M\303\251rouze", "Tony Pitale", "Chris Brickley"]
   s.email            = ["plasticchicken@gmail.com"]

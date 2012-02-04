@@ -3,6 +3,8 @@ require 'securerandom'
 $:.unshift File.dirname(__FILE__)
 
 module MongoSessionStore
+  autoload :VERSION,          'mongo_session_store/version'
+
   def self.collection_name=(name)
     @collection_name = name
     
@@ -27,6 +29,6 @@ module MongoSessionStore
   self.collection_name = "sessions"
 end
 
-autoload :MongoMapperStore,'mongo_session_store/mongo_mapper_store'
-autoload :MongoidStore, 'mongo_session_store/mongoid_store'
-autoload :MongoStore, 'mongo_session_store/mongo_store'
+autoload :MongoMapperStore, 'mongo_session_store/mongo_mapper_store'
+autoload :MongoidStore,     'mongo_session_store/mongoid_store'
+autoload :MongoStore,       'mongo_session_store/mongo_store'
