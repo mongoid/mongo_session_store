@@ -3,7 +3,7 @@ require 'securerandom'
 $:.unshift File.dirname(__FILE__)
 
 module MongoSessionStore
-  autoload :VERSION,          'mongo_session_store/version'
+  autoload :VERSION, 'mongo_session_store/version'
 
   def self.collection_name=(name)
     @collection_name = name
