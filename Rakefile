@@ -5,6 +5,8 @@ def run_with_output(command)
   puts "Running: #{command}"
   
   Process.wait( fork { exec command } )
+
+  $?.success?
 end
 
 def set_rails_version(rails_vers)
@@ -27,14 +29,28 @@ task :test_all do
   
   orms = ['mongo_mapper', 'mongoid', 'mongo']
 
+  @failed_suites = []
+
   @rails_versions.each do |rails_version|
 
     set_rails_version(rails_version)
   
     orms.each do |orm|
-      run_with_output "export MONGO_SESSION_STORE_ORM=#{orm}; bundle exec rspec spec"
+      unless run_with_output "export MONGO_SESSION_STORE_ORM=#{orm}; bundle exec rspec spec"
+        @failed_suites << "Rails #{rails_version} / #{orm}"
+      end
     end
+  end
 
+  if @failed_suites.any?
+    puts "\033[0;31mFailed:"
+    puts @failed_suites.join("\n")
+    print "\033[0m"
+    exit(1)
+  else
+    print "\033[0;32mAll passed! Success! "
+    "Yahoooo!!!".chars.each { |c| sleep 0.4; print c; STDOUT.flush }
+    puts "\033[0m"
   end
 end
 
