@@ -19,6 +19,8 @@ module MongoSessionStore
     if defined?(MongoidStore::Session)
       MongoidStore::Session.store_in(name)
     end
+
+    @collection_name
   end
 
   def self.collection_name
