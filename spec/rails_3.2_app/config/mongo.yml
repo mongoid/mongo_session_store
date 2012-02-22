@@ -4,15 +4,15 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: rails31_app_development
+  database: rails32_app_development
 
 test:
   <<: *defaults
-  database: rails31_app_test
+  database: rails32_app_test
 
 # set these environment variables on your prod server
 production:
   <<: *defaults
-  database: rails31_app
+  database: rails32_app
   username: <%= ENV['MONGO_USERNAME'] %>
   password: <%= ENV['MONGO_PASSWORD'] %>

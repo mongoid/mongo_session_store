@@ -11,7 +11,7 @@ require "active_resource/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, :test) if defined?(Bundler)
 
-module Rails31App
+module Rails32App
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
