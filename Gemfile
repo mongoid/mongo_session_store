@@ -19,36 +19,42 @@ gemspec
 
 group :development, :test do
   gem 'rake'
-  gem 'mongo_mapper', '>= 0.10.1'
+  if !ENV['MONGO_SESSION_STORE_ORM'] || ENV['MONGO_SESSION_STORE_ORM'] == 'mongo_mapper'
+    gem 'mongo_mapper', '>= 0.10.1'
+  end
 
-  # this is hack-tastic :{
-  # ENV['RAILS_VERS'] is only provided when we run
-  # bundle update, but not when running the specs proper
-  # we need an older version of mongoid for Rails 3.0
-  # and bundler won't cherry-pick a matching gem version
-  # out of a git repo like it will out of the rubygems repo
-  if ENV['RAILS_VERS'] == '3.0' || RUBY_VERSION[0..2] == "1.8"
-    # bundle updating for Rails 3.0
-    # OR we're still on Ruby 1.8
-    gem 'mongoid',      '>= 2.2.5'
-  elsif ENV['RAILS_VERS']
-    # bundle updating for Rails 3.1 or 3.2 on Ruby 1.9
-    gem 'mongoid',      '>= 2.2.5', :git => 'git://github.com/mongoid/mongoid.git'
-  elsif File.read('Gemfile.lock') =~ /^    rails \(3.0.\d+\)/
-    # we're running tests on Rails 3.0 on Ruby 1.9
-    gem 'mongoid',      '>= 2.2.5'
-  else
-    # we're running tests on Rails 3.1 or 3.2 on Ruby 1.9
-    gem 'mongoid',      '>= 2.2.5', :git => 'git://github.com/mongoid/mongoid.git'
+  if !ENV['MONGO_SESSION_STORE_ORM'] || ENV['MONGO_SESSION_STORE_ORM'] == 'mongoid'
+    # this is hack-tastic :{
+    # ENV['RAILS_VERS'] is only provided when we run
+    # bundle update, but not when running the specs proper
+    # we need an older version of mongoid for Rails 3.0
+    # and bundler won't cherry-pick a matching gem version
+    # out of a git repo like it will out of the rubygems repo
+    if ENV['RAILS_VERS'] == '3.0' || RUBY_VERSION[0..2] == "1.8"
+      # bundle updating for Rails 3.0
+      # OR we're still on Ruby 1.8
+      gem 'mongoid',      '>= 2.2.5'
+    elsif ENV['RAILS_VERS']
+      # bundle updating for Rails 3.1 or 3.2 on Ruby 1.9
+      gem 'mongoid',      '>= 2.2.5', :git => 'git://github.com/mongoid/mongoid.git'
+    elsif File.read('Gemfile.lock') =~ /^    rails \(3.0.\d+\)/
+      # we're running tests on Rails 3.0 on Ruby 1.9
+      gem 'mongoid',      '>= 2.2.5'
+    else
+      # we're running tests on Rails 3.1 or 3.2 on Ruby 1.9
+      gem 'mongoid',      '>= 2.2.5', :git => 'git://github.com/mongoid/mongoid.git'
+    end
   end
 
   gem 'mongo',         MONGO_VERS
   gem 'bson_ext',      MONGO_VERS
   
   gem 'system_timer', :platforms => :ruby_18
+  gem 'rbx-require-relative', '0.0.5', :platforms => :ruby_18
   gem 'ruby-debug',   :platforms => :ruby_18
   gem 'ruby-debug19', :platforms => :ruby_19
 
+  gem 'sqlite3' # for devise User storage
   RAILS_VERS ? gem('rails', RAILS_VERS) : gem('rails')
   gem 'rspec-rails'
   gem 'devise'

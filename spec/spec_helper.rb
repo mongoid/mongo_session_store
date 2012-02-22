@@ -23,10 +23,17 @@ def drop_collections_in(database)
 end
 
 RSpec.configure do |config|
+  config.before :all do
+    unless User.table_exists?
+      load Rails.root.join('db', 'schema.rb')
+    end
+  end
+
   config.before :each do
     drop_collections_in(Mongoid.database) if defined?(Mongoid)
     drop_collections_in(MongoMapper.database) if defined?(MongoMapper)
     drop_collections_in(db)
+    User.delete_all
   end
 end
 
