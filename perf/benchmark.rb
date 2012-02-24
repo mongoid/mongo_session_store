@@ -1,18 +1,17 @@
 require 'benchmark'
 require 'rubygems'
 require 'bundler/setup'
-
-Bundler.require(:development)
-
 require 'action_dispatch'
-require File.join(File.dirname(__FILE__),'..','lib','mongo_session_store-rails3')
+require File.expand_path('../../lib/mongo_session_store-rails3', __FILE__)
 
 MongoMapper.database = "test_session_stores"
-Mongoid.database = Mongo::Connection.new.db("test_session_stores")
+# get around Mongoid's unnecessary "requires MongoDB 2.0.0" error which is NOT triggered when loading from mongo.yml!
+Mongoid.config.from_hash('database' => "test_session_stores", 'logger' => false)
 
 RUNS = 2000
 
 def benchmark(test_name, &block)
+  sleep 2 # cool off for my poor laptop
   time = Benchmark.realtime do
     RUNS.times do 
       yield
