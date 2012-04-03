@@ -54,7 +54,15 @@ group :development, :test do
   gem 'ruby-debug',   :platforms => :ruby_18
   gem 'ruby-debug19', :platforms => :ruby_19
 
-  gem 'sqlite3' # for devise User storage
+  if RUBY_PLATFORM == 'java'
+    gem 'jdbc-sqlite3'
+    gem 'activerecord-jdbc-adapter'
+    gem 'activerecord-jdbcsqlite3-adapter'
+    gem 'jruby-openssl'
+    gem 'jruby-rack'
+  else
+    gem 'sqlite3' # for devise User storage
+  end
   RAILS_VERS ? gem('rails', RAILS_VERS) : gem('rails')
   gem 'rspec-rails'
   gem 'devise'
