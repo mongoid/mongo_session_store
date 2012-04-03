@@ -11,6 +11,8 @@ begin
           include Mongoid::Timestamps
           self.collection_name = MongoSessionStore.collection_name
 
+          attr_accessible :_id, :data
+
           if respond_to?(:identity)
             # pre-Mongoid 3
             identity :type => String
