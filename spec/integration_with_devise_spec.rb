@@ -43,6 +43,7 @@ describe Devise::SessionsController do
     response.status.should == 302
     get response.redirect_url
     response.body.squish.should =~ /You are logged in as person@example.com/
+    response.body.squish.should =~ /You have signed up successfully/
   end
   
   it "allows user logout" do
@@ -51,6 +52,7 @@ describe Devise::SessionsController do
     logout
     response.status.should == 302
     i_should_not_be_logged_in
+    response.body.squish.should =~ /Signed out successfully/
   end
   
   it "allows user login" do
@@ -60,6 +62,7 @@ describe Devise::SessionsController do
     login
     response.status.should == 302
     i_should_be_logged_in
+    response.body.squish.should =~ /Signed in successfully/
   end
   
   it "uses the right session store class" do
