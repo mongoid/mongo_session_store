@@ -39,9 +39,11 @@ describe Devise::SessionsController do
   end
   
   it "allows user creation" do
+    User.count.should == 0
     create_user
     response.status.should == 302
     get response.redirect_url
+    User.count.should == 1
     response.body.squish.should =~ /You are logged in as person@example.com/
     response.body.squish.should =~ /You have signed up successfully/
   end
