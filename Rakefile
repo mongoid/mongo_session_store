@@ -19,11 +19,11 @@ def set_rails_version(rails_vers)
   end
 end
 
-@rails_versions = ['3.0', '3.1', '3.2']
+@rails_versions = ['3.1', '3.2']
 
 task :default => :test_all
 
-desc 'Test each session store against Rails 3.0 and Rails 3.1'
+desc 'Test each session store against Rails 3.1 and Rails 3.2'
 task :test_all do
   # inspired by http://pivotallabs.com/users/jdean/blog/articles/1728-testing-your-gem-against-multiple-rubies-and-rails-versions-with-rvm
   

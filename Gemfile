@@ -3,8 +3,6 @@ source :rubygems
 MONGO_VERS = '1.5.2' unless defined? MONGO_VERS
 
 RAILS_VERS = case ENV['RAILS_VERS']
-             when '3.0'
-               '~>3.0.0'
              when '3.1'
                '~>3.1.0'
              when '3.2'
@@ -12,7 +10,7 @@ RAILS_VERS = case ENV['RAILS_VERS']
              when nil
                nil
              else
-               raise "Invalid RAILS_VERS.  Available versions are 3.0, 3.1, and 3.2."
+               raise "Invalid RAILS_VERS.  Available versions are 3.1, and 3.2."
              end
 
 gemspec
