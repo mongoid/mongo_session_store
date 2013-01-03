@@ -1,4 +1,4 @@
-# MongoSessionStore
+# MongoSessionStore [![Build Status](https://travis-ci.org/brianhempel/mongo_session_store.png?branch=master)](https://travis-ci.org/brianhempel/mongo_session_store)
 
 ## Description
 
