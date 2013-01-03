@@ -26,8 +26,9 @@ task :default => :test_all
 desc 'Test each session store against Rails 3.1 and Rails 3.2'
 task :test_all do
   # inspired by http://pivotallabs.com/users/jdean/blog/articles/1728-testing-your-gem-against-multiple-rubies-and-rails-versions-with-rvm
-  
+
   orms = ['mongo_mapper', 'mongoid', 'mongo']
+  orms.delete('mongoid') if RUBY_VERSION < "1.9"
 
   @failed_suites = []
 

@@ -1,20 +1,13 @@
 development:
-  host: localhost
-  database: rails31_app_development
+  sessions:
+    default:
+      database: rails31_app_development
+      hosts:
+        - localhost:27017
 
 test:
-  host: localhost
-  database: rails31_app_test
-
-# set these environment variables on your prod server
-production:
-  host: <%= ENV['MONGOID_HOST'] %>
-  port: <%= ENV['MONGOID_PORT'] %>
-  username: <%= ENV['MONGOID_USERNAME'] %>
-  password: <%= ENV['MONGOID_PASSWORD'] %>
-  database: <%= ENV['MONGOID_DATABASE'] %>
-  # slaves:
-  #   - host: slave1.local
-  #     port: 27018
-  #   - host: slave2.local
-  #     port: 27019
+  sessions:
+    default:
+      database: rails31_app_test
+      hosts:
+        - localhost:27017
