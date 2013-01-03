@@ -27,11 +27,11 @@ group :development, :test do
 
   gem 'mongo',         MONGO_VERS
   gem 'bson_ext',      MONGO_VERS
-  
+
   gem 'system_timer', :platforms => :ruby_18
   gem 'rbx-require-relative', '0.0.5', :platforms => :ruby_18
-  gem 'ruby-debug',   :platforms => :ruby_18
-  gem 'debugger',     :platforms => :ruby_19
+  gem 'ruby-debug',   :platforms => :ruby_18 unless ENV['TRAVIS']
+  gem 'debugger',     :platforms => :ruby_19 unless ENV['TRAVIS']
 
   if RUBY_PLATFORM == 'java'
     gem 'jdbc-sqlite3'
