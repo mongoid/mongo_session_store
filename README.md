@@ -6,7 +6,7 @@ MongoSessionStore is a collection of Rails-compatible session stores for MongoMa
 
 ## Usage
 
-MongoSessionStore is compatible with Rails 3.1 and 3.2.
+MongoSessionStore is compatible with Rails 3.1 and 3.2. (Use [version 3.0.6](https://rubygems.org/gems/mongo_session_store-rails3/versions/3.0.6) if you need Rails 3.0 support.)
 
 In your Gemfile:
 
@@ -49,6 +49,8 @@ MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
 # Plain old Mongo
 MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 ```
+
+Note that Mongoid 2 is no longer supported. Use [version 3.0.6](https://rubygems.org/gems/mongo_session_store-rails3/versions/3.0.6) if you use Mongoid and cannot upgrade to Mongoid 3.
 
 ## Performance
 
