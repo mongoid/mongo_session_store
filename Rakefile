@@ -3,10 +3,7 @@ require 'rake'
 
 def run_with_output(command)
   puts "Running: #{command}"
-  
-  Process.wait( fork { exec command } )
-
-  $?.success?
+  system(command)
 end
 
 def set_rails_version(rails_vers)

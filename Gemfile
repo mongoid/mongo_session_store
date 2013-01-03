@@ -22,11 +22,11 @@ group :development, :test do
   end
 
   if !ENV['MONGO_SESSION_STORE_ORM'] || ENV['MONGO_SESSION_STORE_ORM'] == 'mongoid'
-    gem 'mongoid', '~> 3.0', :platforms => :ruby_19
+    gem 'mongoid', '~> 3.0', :platforms => [:ruby_19, :jruby]
   end
 
   gem 'mongo',         MONGO_VERS
-  gem 'bson_ext',      MONGO_VERS
+  gem 'bson_ext',      MONGO_VERS, :platforms => :ruby
 
   gem 'system_timer', :platforms => :ruby_18
   gem 'rbx-require-relative', '0.0.5', :platforms => :ruby_18
