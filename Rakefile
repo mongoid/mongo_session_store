@@ -1,5 +1,7 @@
 require 'rubygems'
 require 'rake'
+require 'bundler'
+Bundler::GemHelper.install_tasks
 
 def run_with_output(command)
   puts "Running: #{command}"
