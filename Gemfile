@@ -43,6 +43,7 @@ group :development, :test do
     gem 'sqlite3' # for devise User storage
   end
   RAILS_VERS ? gem('rails', RAILS_VERS) : gem('rails')
-  gem 'rspec-rails'
+
+  gem 'rspec-rails', '2.12.0'
   gem 'devise'
 end
