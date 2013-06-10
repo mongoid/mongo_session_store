@@ -32,6 +32,19 @@ module MongoSessionStore
   self.collection_name = "sessions"
 end
 
-require 'mongo_session_store/mongo_mapper_store'
-require 'mongo_session_store/mongoid_store'
-require 'mongo_session_store/mongo_store'
+# we don't use autoloading because of thread concerns
+# hence, this mess
+load_errors = []
+
+%w(mongo_mapper_store mongoid_store mongo_store).each do |store_name|
+  begin
+    require "mongo_session_store/#{store_name}"
+  rescue LoadError => e
+    load_errors << e
+  end
+end
+
+if load_errors.count == 3
+  message = "Could not load any session store!\n" + load_errors.map(&:message).join("\n")
+  raise LoadError, message
+end
