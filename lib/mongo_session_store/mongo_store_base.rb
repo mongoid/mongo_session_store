@@ -12,12 +12,12 @@ module ActionDispatch
       def self.session_class
         self::Session
       end
-            
+
       private
         def session_class
           self.class.session_class
         end
-      
+
         def generate_sid
           # 20 random bytes in url-safe base64
           SecureRandom.base64(20).gsub('=','').gsub('+','-').gsub('/','_')
@@ -38,7 +38,7 @@ module ActionDispatch
           # However, ActionPack seems to want a session id instead.
           record.save ? sid : false
         end
-        
+
         def find_session(id)
           session_class.where(:_id => id).first || session_class.new(:_id => id)
         end
@@ -55,7 +55,7 @@ module ActionDispatch
           destroy(env)
           generate_sid unless options[:drop]
         end
-        
+
         def destroy(env)
           if sid = current_session_id(env)
             get_session_model(env, sid).destroy
