@@ -2,6 +2,8 @@
 # four configuration values can also be set straight in your models.
 Devise.setup do |config|
 
+  config.secret_key = '8325d1c1e7e6ac4b97859ec8807aa14355045ea6a7b531d24a4c4559b3754d4b1125519e51ecce66e0eb6e7545b4a40dd3bb18383f2b6015d4d22fd9ea4109a3'
+
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
   config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
