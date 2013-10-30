@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 MONGO_VERS = '1.8.0' unless defined? MONGO_VERS
 
