@@ -15,7 +15,7 @@ RAILS_VERS = case ENV['RAILS_VERS']
                raise "Invalid RAILS_VERS.  Available versions are 3.2 and 4.0."
              end
 
-gemspec
+gemspec :name => 'mongo_session_store-rails4'
 
 group :development, :test do
   gem 'rake'

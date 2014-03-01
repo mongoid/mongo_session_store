@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'rake'
 require 'bundler'
-Bundler::GemHelper.install_tasks
+Bundler::GemHelper.install_tasks :name => 'mongo_session_store-rails4'
 
 def run_with_output(command)
   puts "Running: #{command}"
