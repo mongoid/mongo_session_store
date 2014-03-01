@@ -38,8 +38,6 @@ MyApp::Application.config.session_store :mongo_store
 MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
 ```
 
-Note: If you choose to use `:mongo_store` you only need to set its database if you aren't using MongoMapper or Mongoid in your project.
-
 By default, the sessions will be stored in the "sessions" collection in MongoDB.  If you want to use a different collection, you can set that in the initializer:
 
 ```ruby

@@ -50,10 +50,6 @@ module ActionDispatch
         def self.database
           if @database
             @database
-          elsif defined?(MongoMapper)
-            MongoMapper.database
-          elsif defined?(Mongoid)
-            Mongoid.database
           else
             raise "MongoStore needs a database, e.g. MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')"
           end
