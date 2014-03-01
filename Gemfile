@@ -1,41 +1,39 @@
 source 'https://rubygems.org'
 
-MONGO_VERS = '1.9.2' unless defined? MONGO_VERS
-
 RAILS_VERS = case ENV['RAILS_VERS']
              when '3.1'
-               '~>3.1.0'
+               '~>3.1'
              when '3.2'
-               '~>3.2.0'
+               '~>3.2'
+             when '4.0'
+               '~>4.0'
              when nil
                nil
              else
-               raise "Invalid RAILS_VERS.  Available versions are 3.1, and 3.2."
+               raise "Invalid RAILS_VERS.  Available versions are 3.2 and 4.0."
              end
 
 gemspec
 
-not_ruby_18 = [:ruby_19, :jruby, :ruby_20, :ruby_21]
-
 group :development, :test do
   gem 'rake'
-  if !ENV['MONGO_SESSION_STORE_ORM'] || ENV['MONGO_SESSION_STORE_ORM'] == 'mongo_mapper'
-    gem 'mongo_mapper', '>= 0.10.1'
+  if ENV['MONGO_SESSION_STORE_ORM'] == 'mongo_mapper'
+    gem 'mongo_mapper', '>= 0.13.0.beta2'
   end
 
-  if !ENV['MONGO_SESSION_STORE_ORM'] || ENV['MONGO_SESSION_STORE_ORM'] == 'mongoid'
-    gem 'mongoid', '~> 3.0', :platforms => not_ruby_18
+  if ENV['MONGO_SESSION_STORE_ORM'] == 'mongoid'
+    if ENV['RAILS_VERS'] =~ /4\.\d/
+      gem 'mongoid', '>= 4.0.0.beta1'
+    else
+      gem 'mongoid', '>= 3.1.0'
+    end
   end
 
-  if !ENV['MONGO_SESSION_STORE_ORM'] || ENV['MONGO_SESSION_STORE_ORM'] == 'mongo'
-    gem 'mongo', MONGO_VERS
+  if ENV['MONGO_SESSION_STORE_ORM'] == 'mongo'
+    gem 'mongo'
   end
-  gem 'bson_ext', MONGO_VERS, :platforms => :ruby
 
-  gem 'system_timer', :platforms => :ruby_18
-  gem 'rbx-require-relative', '0.0.5', :platforms => :ruby_18
-  gem 'ruby-debug',   :platforms => :ruby_18 unless ENV['TRAVIS']
-  gem 'debugger',     :platforms => :ruby_19 unless ENV['TRAVIS']
+  gem 'debugger', :platforms => [:ruby_19, :ruby_20, :ruby_21] unless ENV['TRAVIS']
 
   if RUBY_PLATFORM == 'java'
     gem 'jdbc-sqlite3'
@@ -49,5 +47,5 @@ group :development, :test do
   RAILS_VERS ? gem('rails', RAILS_VERS) : gem('rails')
 
   gem 'rspec-rails', '2.12.0'
-  gem 'devise', (RUBY_VERSION == "1.8.7" ? '< 3.2' : '>= 2.2')
+  gem 'devise'
 end

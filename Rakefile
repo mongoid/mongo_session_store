@@ -8,35 +8,35 @@ def run_with_output(command)
   system(command)
 end
 
-def set_rails_version(rails_vers)
-  unless File.exists?("Gemfile_Rails_#{rails_vers}_#{RUBY_VERSION}.lock")
-    run_with_output "export RAILS_VERS=#{rails_vers}; bundle update"
-    run_with_output "cp Gemfile.lock Gemfile_Rails_#{rails_vers}_#{RUBY_VERSION}.lock"
+def set_versions(rails_vers, orm)
+  success = true
+  unless File.exists?("Gemfile_Rails_#{rails_vers}_#{orm}_#{RUBY_VERSION}.lock")
+    success &&= run_with_output("export RAILS_VERS=#{rails_vers}; export MONGO_SESSION_STORE_ORM=#{orm}; bundle update")
+    success &&= run_with_output("cp Gemfile.lock Gemfile_Rails_#{rails_vers}_#{orm}_#{RUBY_VERSION}.lock")
   else
-    run_with_output "rm Gemfile.lock"
-    run_with_output "cp Gemfile_Rails_#{rails_vers}_#{RUBY_VERSION}.lock Gemfile.lock"
+    success &&= run_with_output("rm Gemfile.lock")
+    success &&= run_with_output("cp Gemfile_Rails_#{rails_vers}_#{orm}_#{RUBY_VERSION}.lock Gemfile.lock")
   end
+  success
 end
 
-@rails_versions = ['3.1', '3.2']
+@rails_versions = ['3.1', '3.2', '4.0']
+@orms = ['mongo_mapper', 'mongoid', 'mongo']
 
 task :default => :test_all
 
-desc 'Test each session store against Rails 3.1 and Rails 3.2'
+desc 'Test each session store against Rails 3.1, 3.2, and 4.0'
 task :test_all do
   # inspired by http://pivotallabs.com/users/jdean/blog/articles/1728-testing-your-gem-against-multiple-rubies-and-rails-versions-with-rvm
 
-  orms = ['mongo_mapper', 'mongoid', 'mongo']
-  orms.delete('mongoid') if RUBY_VERSION < "1.9"
 
   @failed_suites = []
 
   @rails_versions.each do |rails_version|
+    @orms.each do |orm|
+      success = set_versions(rails_version, orm)
 
-    set_rails_version(rails_version)
-  
-    orms.each do |orm|
-      unless run_with_output "export MONGO_SESSION_STORE_ORM=#{orm}; bundle exec rspec spec"
+      unless success && run_with_output("export RAILS_VERS=#{rails_version}; export MONGO_SESSION_STORE_ORM=#{orm}; bundle exec rspec spec")
         @failed_suites << "Rails #{rails_version} / #{orm}"
       end
     end
@@ -54,13 +54,17 @@ task :test_all do
   end
 end
 
-
-
 @rails_versions.each do |rails_version|
+  @orms.each do |orm|
+    desc "Set Rails version to #{rails_version} with #{orm}"
+    task :"use_#{rails_version.gsub('.', '')}_#{orm}" do
+      set_versions(rails_version, orm)
+    end
 
-  desc "Set Rails version to #{rails_version}"
-  task :"use_rails_#{rails_version.gsub('.', '')}" do
-    set_rails_version(rails_version)
+    desc "Rebundle for #{rails_version} with #{orm}"
+    task :"rebundle_#{rails_version.gsub('.', '')}_#{orm}" do
+      run_with_output "rm Gemfile_Rails_#{rails_version}_#{orm}_#{RUBY_VERSION}.lock Gemfile.lock"
+      set_versions(rails_version, orm)
+    end
   end
-
 end
