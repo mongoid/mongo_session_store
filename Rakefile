@@ -56,9 +56,16 @@ end
 
 @rails_versions.each do |rails_version|
   @orms.each do |orm|
-    desc "Set Rails version to #{rails_version} with #{orm}"
+    desc "Set Gemfile.lock to #{rails_version} with #{orm}"
     task :"use_#{rails_version.gsub('.', '')}_#{orm}" do
       set_versions(rails_version, orm)
+    end
+
+    desc "Test against #{rails_version} with #{orm}"
+    task :"test_#{rails_version.gsub('.', '')}_#{orm}" do
+      set_versions(rails_version, orm)
+      success = run_with_output("export RAILS_VERS=#{rails_version}; export MONGO_SESSION_STORE_ORM=#{orm}; bundle exec rspec spec")
+      exit(1) unless success
     end
 
     desc "Rebundle for #{rails_version} with #{orm}"

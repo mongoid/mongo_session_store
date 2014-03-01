@@ -64,16 +64,16 @@ To run all the tests:
 
     rake
 
-To switch to the Gemfile.lock for a certain Rails version:
+To run the tests for a specific store (examples):
 
-    rake use_rails_31
-    rake use_rails_32
+    rake test_31_mongo
+    rake test_32_mongoid
+    rake test_40_mongoid
+    rake test_41_mongo_mapper
 
-To run the tests for a specific store:
+To see a list of all options for running tests, run
 
-    MONGO_SESSION_STORE_ORM=mongo_mapper bundle exec rspec spec
-    MONGO_SESSION_STORE_ORM=mongoid bundle exec rspec spec
-    MONGO_SESSION_STORE_ORM=mongo bundle exec rspec spec    
+    rake -T
     
 ## Previous contributors
 
