@@ -4,13 +4,15 @@
 
 MongoSessionStore is a collection of Rails-compatible session stores for MongoMapper and Mongoid, but also included is a generic Mongo store that works with any (or no!) Mongo ODM.
 
-MongoSessionStore is tested [on Travis CI](https://travis-ci.org/brianhempel/mongo_session_store) against Ruby 1.8.7, 1.9.3, 2.0.0, and JRuby. As of this writing, it also works on Rubinius in 1.9.
+MongoSessionStore is tested [on Travis CI](https://travis-ci.org/brianhempel/mongo_session_store) against Ruby 1.9.3, 2.0.0, 2.1.1, JRuby, and Rubinius.
 
 If this gem doesn't work for you, you might next try [mongo_sessions](https://github.com/biilmann/mongo_sessions).
 
+See the [Changelog](#changelog) if you need support for an older version of Ruby, Rails, or Mongoid.
+
 ## Usage
 
-MongoSessionStore is compatible with Rails 3.1 and 3.2. (Use [version 3.0.6](https://rubygems.org/gems/mongo_session_store-rails3/versions/3.0.6) if you need Rails 3.0 support.)
+MongoSessionStore is compatible with Rails 3.1 through 4.1.
 
 In your Gemfile:
 
@@ -18,7 +20,8 @@ In your Gemfile:
 gem "mongo_mapper"
 # or gem "mongoid"
 # or gem "mongo"
-gem "mongo_session_store-rails3"
+gem "mongo_session_store-rails4"
+# or gem "mongo_session_store-rails3"
 ```
 
 In the session_store initializer (config/initializers/session_store.rb):
@@ -56,7 +59,13 @@ MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
 MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 ```
 
-Note that Mongoid 2 is no longer supported. Use [version 3.0.6](https://rubygems.org/gems/mongo_session_store-rails3/versions/3.0.6) if you use Mongoid and cannot upgrade to Mongoid 3.
+## Changelog
+
+5.0.0 introduces Rails 4.0 and 4.1 support and Mongoid 4 support alongside the existing Rails 3.1, 3.2 and Mongoid 3 support. Ruby 1.8.7 support is dropped. The database is no longer set automatically for the MongoStore when MongoMapper or Mongoid is present. You have to set the database manually whenever you choose to use the vanilla MongoStore.
+
+The last version to support Ruby 1.8.7 is [version 4.1.1](https://rubygems.org/gems/mongo_session_store-rails3/versions/4.1.1).
+
+The last version to support Rails 3.0 or Mongoid 2 is [version 3.0.6](https://rubygems.org/gems/mongo_session_store-rails3/versions/3.0.6).
 
 ## Development
 
@@ -88,7 +97,7 @@ MongoSessionStore started as a fork of the DataMapper session store, modified to
 
 ## License
 
-Copyright (c) 2011-2012 Brian Hempel
+Copyright (c) 2011-2014 Brian Hempel
 Copyright (c) 2010 Nicolas Mérouze
 Copyright (c) 2009 Chris Brickley
 Copyright (c) 2009 Tony Pitale
