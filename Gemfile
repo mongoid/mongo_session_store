@@ -7,6 +7,8 @@ RAILS_VERS = case ENV['RAILS_VERS']
                '~>3.2'
              when '4.0'
                '~>4.0'
+             when '4.1'
+               '~>4.1.0.rc1'
              when nil
                nil
              else
@@ -45,6 +47,7 @@ group :development, :test do
     gem 'sqlite3' # for devise User storage
   end
   RAILS_VERS ? gem('rails', RAILS_VERS) : gem('rails')
+  gem 'minitest' if ENV['RAILS_VERS'] == '4.1'
 
   gem 'rspec-rails', '2.12.0'
   gem 'devise'
