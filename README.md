@@ -4,7 +4,7 @@
 
 MongoSessionStore is a collection of Rails-compatible session stores for MongoMapper and Mongoid, but also included is a generic Mongo store that works with any (or no!) Mongo ODM.
 
-MongoSessionStore is tested [on Travis CI](https://travis-ci.org/brianhempel/mongo_session_store) against Ruby 1.9.3, 2.0.0, 2.1.1, JRuby, and Rubinius with Rails 3.1 through 4.1.
+MongoSessionStore is tested [on Travis CI](https://travis-ci.org/brianhempel/mongo_session_store) against Ruby 1.9.3, 2.0.0, 2.1.1, and JRuby with Rails 3.1 through 4.1.
 
 Mongoid users: This gem is compatible with both Mongoid 3 and 4.
 
