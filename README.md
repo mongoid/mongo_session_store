@@ -58,33 +58,6 @@ MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 
 Note that Mongoid 2 is no longer supported. Use [version 3.0.6](https://rubygems.org/gems/mongo_session_store-rails3/versions/3.0.6) if you use Mongoid and cannot upgrade to Mongoid 3.
 
-## Performance
-
-The following is the benchmark run with bson_ext installed.  Without bson_ext, speeds are about 10x slower.  The benchmark saves 2000 sessions (~12kb each) and then finds/reloads each one.
-
-    $ ruby perf/benchmark.rb
-    MongoMapperStore...
-    3.65ms per session save
-    2.25ms per session load
-               Total Size: 23648924
-             Object count: 2000
-      Average object size: 11824.462
-              Index sizes: {"_id_"=>172032}
-    MongoidStore...
-    2.59ms per session save
-    1.33ms per session load
-               Total Size: 23648924
-             Object count: 2000
-      Average object size: 11824.462
-              Index sizes: {"_id_"=>172032}
-    MongoStore...
-    1.42ms per session save
-    1.11ms per session load
-               Total Size: 23648924
-             Object count: 2000
-      Average object size: 11824.462
-              Index sizes: {"_id_"=>204800}
-
 ## Development
 
 To run all the tests:
