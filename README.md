@@ -4,7 +4,9 @@
 
 MongoSessionStore is a collection of Rails-compatible session stores for MongoMapper and Mongoid, but also included is a generic Mongo store that works with any (or no!) Mongo ODM.
 
-MongoSessionStore is tested [on Travis CI](https://travis-ci.org/brianhempel/mongo_session_store) against Ruby 1.9.3, 2.0.0, 2.1.1, JRuby, and Rubinius.
+MongoSessionStore is tested [on Travis CI](https://travis-ci.org/brianhempel/mongo_session_store) against Ruby 1.9.3, 2.0.0, 2.1.1, JRuby, and Rubinius with Rails 3.1 through 4.1.
+
+Mongoid users: This gem is compatible with both Mongoid 3 and 4.
 
 If this gem doesn't work for you, you might next try [mongo_sessions](https://github.com/biilmann/mongo_sessions).
 
@@ -59,7 +61,7 @@ MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 
 ## Changelog
 
-5.0.0 introduces Rails 4.0 and 4.1 support and Mongoid 4 support alongside the existing Rails 3.1, 3.2 and Mongoid 3 support. Ruby 1.8.7 support is dropped. The database is no longer set automatically for the MongoStore when MongoMapper or Mongoid is present. You have to set the database manually whenever you choose to use the vanilla MongoStore.
+5.0.0 introduces Rails 4.0 and 4.1 support and Mongoid 4 support alongside the existing Rails 3.1, 3.2, and Mongoid 3 support. Ruby 1.8.7 support is dropped. The database is no longer set automatically for the MongoStore when MongoMapper or Mongoid is present. You have to set the database manually whenever you choose to use the vanilla MongoStore.
 
 The last version to support Ruby 1.8.7 is [version 4.1.1](https://rubygems.org/gems/mongo_session_store-rails3/versions/4.1.1).
 
