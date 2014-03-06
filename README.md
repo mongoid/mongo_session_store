@@ -61,6 +61,8 @@ MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 
 ## Changelog
 
+5.0.1 suppresses a warning from Mongoid 4 when setting the _id field type to String.
+
 5.0.0 introduces Rails 4.0 and 4.1 support and Mongoid 4 support alongside the existing Rails 3.1, 3.2, and Mongoid 3 support. Ruby 1.8.7 support is dropped. The database is no longer set automatically for the MongoStore when MongoMapper or Mongoid is present. You have to set the database manually whenever you choose to use the vanilla MongoStore.
 
 The last version to support Ruby 1.8.7 is [version 4.1.1](https://rubygems.org/gems/mongo_session_store-rails3/versions/4.1.1).
