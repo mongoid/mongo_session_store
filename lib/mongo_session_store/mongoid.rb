@@ -18,6 +18,12 @@ module ActionDispatch
 
       SESSION_RECORD_KEY = 'rack.session.record'.freeze
 
+      def destroy(env)
+        session = @@session_class.first(:conditions => { :_id => env[SESSION_RECORD_KEY].id })
+        session.destroy
+        env[SESSION_RECORD_KEY] = nil
+      end
+
       private
         def generate_sid
           BSON::ObjectId.new
