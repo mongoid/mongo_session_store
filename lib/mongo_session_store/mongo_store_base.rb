@@ -1,3 +1,5 @@
+require 'action_dispatch/middleware/session/abstract_store'
+
 module ActionDispatch
   module Session
     class MongoStoreBase < AbstractStore
@@ -24,16 +26,13 @@ module ActionDispatch
         end
 
         def get_session(env, sid)
-          session = find_session(sid)
-          unless session
-            session, sid = build_session
-          end
-          env[SESSION_RECORD_KEY] = session
-          [sid, unpack(session.data)]
+          sid, record = find_or_initialize_session(sid)
+          env[SESSION_RECORD_KEY] = record
+          [sid, unpack(record.data)]
         end
 
         def set_session(env, sid, session_data, options = {})
-          record, id = get_session_model(env, sid)
+          id, record = get_session_record(env, sid)
           record.data = pack(session_data)
           # Rack spec dictates that set_session should return true or false
           # depending on whether or not the session was saved or not.
@@ -41,28 +40,17 @@ module ActionDispatch
           record.save ? id : false
         end
 
-        def find_session(id)
-          id && session_class.where(:_id => id).first
+        def find_or_initialize_session(id)
+          session = (id && session_class.where(:_id => id).first) || session_class.new(:_id => generate_sid)
+          [session._id, session]
         end
 
-        def build_session
-          id = generate_sid
-          return [session_class.new(:_id => id), id]
-        end
-
-        def get_session_model(env, sid)
-          if env[ENV_SESSION_OPTIONS_KEY][:id].nil?
-            env[SESSION_RECORD_KEY] = find_session(sid)
-          else
-            env[SESSION_RECORD_KEY] ||= find_session(sid)
+        def get_session_record(env, sid)
+          if env[ENV_SESSION_OPTIONS_KEY][:id].nil? || !env[SESSION_RECORD_KEY]
+            sid, env[SESSION_RECORD_KEY] = find_or_initialize_session(sid)
           end
 
-          if !env[SESSION_RECORD_KEY]
-            record, sid = build_session
-            env[SESSION_RECORD_KEY] = record
-          end
-
-          [env[SESSION_RECORD_KEY], sid]
+          [sid, env[SESSION_RECORD_KEY]]
         end
 
         def destroy_session(env, session_id, options)
@@ -72,7 +60,8 @@ module ActionDispatch
 
         def destroy(env)
           if sid = current_session_id(env)
-            get_session_model(env, sid).first.destroy
+            _, record = get_session_record(env, sid)
+            record.destroy
             env[SESSION_RECORD_KEY] = nil
           end
         end
