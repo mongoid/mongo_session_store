@@ -2,11 +2,11 @@ source 'https://rubygems.org'
 
 RAILS_VERS = case ENV['RAILS_VERS']
              when '3.1'
-               '~>3.1'
+               '~>3.1.12'
              when '3.2'
-               '~>3.2'
+               '~>3.2.18'
              when '4.0'
-               '~>4.0'
+               '~>4.0.5'
              when '4.1'
                '~>4.1.2.rc2'
              when nil
@@ -24,10 +24,12 @@ group :development, :test do
   end
 
   if ENV['MONGO_SESSION_STORE_ORM'] == 'mongoid'
-    if ENV['RAILS_VERS'] =~ /4\.\d/
+    if ENV['RAILS_VERS'] =~ /^4\.\d/
       gem 'mongoid', '>= 4.0.0.beta1'
-    else
+    elsif ENV['RAILS_VERS'] =~ /^3\.2\d/
       gem 'mongoid', '>= 3.1.0'
+    else
+      gem 'mongoid', '>= 3.0.0'
     end
   end
 
