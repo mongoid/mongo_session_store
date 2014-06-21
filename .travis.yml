@@ -7,11 +7,11 @@ rvm:
   - ruby-head
   - jruby-19mode
   - jruby-head
-  - rbx
+  - rbx-2.2.9
 matrix:
   allow_failures:
     - rvm: jruby-head
     - rvm: ruby-head
-    - rvm: rbx
+    - rvm: rbx-2.2.9
 services:
   - mongodb
