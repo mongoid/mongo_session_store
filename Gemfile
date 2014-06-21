@@ -35,7 +35,7 @@ group :development, :test do
     gem 'mongo'
   end
 
-  gem 'debugger', :platforms => [:ruby_19, :ruby_20, :ruby_21] unless ENV['TRAVIS']
+  gem 'pry'
 
   if RUBY_PLATFORM == 'java'
     gem 'jdbc-sqlite3'
