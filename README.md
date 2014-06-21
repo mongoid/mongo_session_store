@@ -1,10 +1,10 @@
-# MongoSessionStore [![Build Status](https://travis-ci.org/brianhempel/mongo_session_store.png?branch=master)](https://travis-ci.org/brianhempel/mongo_session_store)
+# MongoSessionStore [![Build Status](https://travis-ci.org/brianhempel/mongo_session_store.png?branch=master)](https://travis-ci.org/brianhempel/mongo_session_store) [![Gem Version](https://badge.fury.io/rb/mongo_session_store-rails4.svg)](http://badge.fury.io/rb/mongo_session_store-rails4)
 
 ## Description
 
 MongoSessionStore is a collection of Rails-compatible session stores for MongoMapper and Mongoid, but also included is a generic Mongo store that works with any (or no!) Mongo ODM.
 
-MongoSessionStore is tested [on Travis CI](https://travis-ci.org/brianhempel/mongo_session_store) against Ruby 1.9.3, 2.0.0, 2.1.1, and JRuby with Rails 3.1 through 4.1.
+MongoSessionStore is tested [on Travis CI](https://travis-ci.org/brianhempel/mongo_session_store) against Ruby 1.9.3, 2.0.0, 2.1.2, and JRuby with Rails 3.1 through 4.1.
 
 Mongoid users: This gem is compatible with both Mongoid 3 and 4.
 
@@ -60,6 +60,8 @@ MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 ```
 
 ## Changelog
+
+5.1.0 generates a new session ID when a session is not found. Previously, when a session ID is provided in the request but the session was not found (because for example, it was removed from Mongo by a sweeper job) a new session with the provided ID would be created. This would cause a write error if two simultaneous requests both create a session with the same ID and both try to insert a new document with that ID.
 
 5.0.1 suppresses a warning from Mongoid 4 when setting the _id field type to String.
 
