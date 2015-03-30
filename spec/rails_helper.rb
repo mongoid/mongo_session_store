@@ -12,7 +12,7 @@ def db
   elsif defined?(MongoMapper)
     MongoMapper.database
   elsif defined?(Mongo)
-    Mongo::Connection.new[database_name]
+    Mongo::Client.new(['127.0.0.1:27017'], database: database_name).database
   end
 end
 

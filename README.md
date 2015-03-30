@@ -37,7 +37,7 @@ MyApp::Application.config.session_store :mongoid_store
 
 # anything else
 MyApp::Application.config.session_store :mongo_store
-MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')
+MongoStore::Session.database = Mongo::Client.new(['127.0.0.1:27017'], database: \"my_app_development\")
 ```
 
 By default, the sessions will be stored in the "sessions" collection in MongoDB.  If you want to use a different collection, you can set that in the initializer:
@@ -60,6 +60,8 @@ MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 ```
 
 ## Changelog
+
+6.0.0 supports the Mongo 2.0 driver for the generic MongoStore. The other stores are unchanged.
 
 5.1.0 generates a new session ID when a session is not found. Previously, when a session ID is provided in the request but the session was not found (because for example, it was removed from Mongo by a sweeper job) a new session with the provided ID would be created. This would cause a write error if two simultaneous requests both create a session with the same ID and both try to insert a new document with that ID.
 
@@ -87,7 +89,7 @@ To run the tests for a specific store (examples):
 To see a list of all options for running tests, run
 
     rake -T
-    
+
 ## Previous contributors
 
 MongoSessionStore started as a fork of the DataMapper session store, modified to work with MongoMapper and Mongoid.  Much thanks to all the previous contributors:

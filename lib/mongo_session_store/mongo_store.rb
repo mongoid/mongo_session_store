@@ -9,7 +9,7 @@ module ActionDispatch
 
         def initialize(options = {})
           @_id        = options[:_id]
-          @data       = options[:data] || BSON::Binary.new(Marshal.dump({}))
+          @data       = options[:data] || BSON::Binary.new(Marshal.dump({}), :generic)
           @created_at = options[:created_at]
           @updated_at = options[:updated_at]
         end
@@ -19,20 +19,25 @@ module ActionDispatch
           new(options)
         end
 
+        def scope
+          collection.find(:_id => _id)
+        end
+
         def destroy
-          collection.remove :_id => _id
+          scope.delete_one
         end
 
         def save
           @created_at ||= Time.now
           @updated_at   = Time.now
-          
-          collection.save(
-            :_id        => @_id,
-            :data       => BSON::Binary.new(@data),
+
+          attributes = {
+            :data       => BSON::Binary.new(@data, :generic),
             :created_at => @created_at,
             :updated_at => @updated_at
-          )
+          }
+
+          scope.replace_one(attributes, upsert: true)
         end
 
         def data=(stuff)
@@ -51,7 +56,7 @@ module ActionDispatch
           if @database
             @database
           else
-            raise "MongoStore needs a database, e.g. MongoStore::Session.database = Mongo::Connection.new.db('my_app_development')"
+            raise "MongoStore needs a database, e.g. MongoStore::Session.database = Mongo::Client.new(['127.0.0.1:27017'], database: \"my_app_development\")"
           end
         end
 

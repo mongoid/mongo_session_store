@@ -72,7 +72,8 @@ module ActionDispatch
 
         def unpack(packed)
           return nil unless packed
-          Marshal.load(StringIO.new(packed.to_s))
+          data = packed.respond_to?(:data) ? packed.data : packed.to_s
+          Marshal.load(StringIO.new(data))
         end
 
     end
