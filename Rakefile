@@ -29,6 +29,22 @@ desc 'Test each session store against Rails 3.1, 3.2, 4.0, 4.1, and 4.2'
 task :test_all do
   # inspired by http://pivotallabs.com/users/jdean/blog/articles/1728-testing-your-gem-against-multiple-rubies-and-rails-versions-with-rvm
 
+  # Wait for mongod to start on Travis.
+  # From the Mongo Ruby Driver gem.
+  if ENV['TRAVIS']
+    require 'mongo'
+    client = Mongo::Client.new(['127.0.0.1:27017'])
+    begin
+      puts "Waiting for MongoDB..."
+      client.command(Mongo::Server::Monitor::STATUS)
+    rescue Mongo::ServerSelector::NoServerAvailable => e
+      sleep(2)
+      # 1 Retry
+      puts "Waiting for MongoDB..."
+      client.cluster.scan!
+      client.command(Mongo::ServerSelector::NoServerAvailable)
+    end
+  end
 
   @failed_suites = []
 

@@ -21,11 +21,11 @@ gemspec :name => 'mongo_session_store-rails4'
 
 group :development, :test do
   gem 'rake'
-  if ENV['MONGO_SESSION_STORE_ORM'] == 'mongo_mapper'
-    gem 'mongo_mapper', '>= 0.13.1'
-  end
 
-  if ENV['MONGO_SESSION_STORE_ORM'] == 'mongoid'
+  case ENV['MONGO_SESSION_STORE_ORM']
+  when 'mongo_mapper'
+    gem 'mongo_mapper', '>= 0.13.1'
+  when 'mongoid'
     if ENV['RAILS_VERS'] =~ /^4\.\d/
       gem 'mongoid', '>= 4.0.2'
     elsif ENV['RAILS_VERS'] =~ /^3\.2\d/
@@ -33,10 +33,10 @@ group :development, :test do
     else
       gem 'mongoid', '>= 3.0.0'
     end
-  end
-
-  if ENV['MONGO_SESSION_STORE_ORM'] == 'mongo'
+  when 'mongo'
     gem 'mongo'
+  else
+    gem 'mongo' # So rake test_all can wait for Mongo to start
   end
 
   gem 'pry'
@@ -50,6 +50,7 @@ group :development, :test do
   else
     gem 'sqlite3' # for devise User storage
   end
+
   if RAILS_VERS
     gem 'rails', RAILS_VERS
   else
