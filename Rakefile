@@ -20,12 +20,12 @@ def set_versions(rails_vers, orm)
   success
 end
 
-@rails_versions = ['3.1', '3.2', '4.0', '4.1']
+@rails_versions = ['3.1', '3.2', '4.0', '4.1', '4.2']
 @orms = ['mongo_mapper', 'mongoid', 'mongo']
 
 task :default => :test_all
 
-desc 'Test each session store against Rails 3.1, 3.2, 4.0, and 4.1'
+desc 'Test each session store against Rails 3.1, 3.2, 4.0, 4.1, and 4.2'
 task :test_all do
   # inspired by http://pivotallabs.com/users/jdean/blog/articles/1728-testing-your-gem-against-multiple-rubies-and-rails-versions-with-rvm
 

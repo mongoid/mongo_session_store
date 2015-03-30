@@ -8,11 +8,13 @@ RAILS_VERS = case ENV['RAILS_VERS']
              when '4.0'
                '~>4.0.5'
              when '4.1'
-               '~>4.1.2.rc2'
+               '~>4.1.10'
+             when '4.2'
+               '~>4.2.1'
              when nil
                nil
              else
-               raise "Invalid RAILS_VERS.  Available versions are 3.2 and 4.0."
+               raise "Invalid RAILS_VERS.  Available versions are 3.1, 3.2, 4.0, 4.1, and 4.2."
              end
 
 gemspec :name => 'mongo_session_store-rails4'
@@ -48,8 +50,12 @@ group :development, :test do
   else
     gem 'sqlite3' # for devise User storage
   end
-  RAILS_VERS ? gem('rails', RAILS_VERS) : gem('rails')
-  gem 'minitest' if ENV['RAILS_VERS'] == '4.1'
+  if RAILS_VERS
+    gem 'rails', RAILS_VERS
+    gem 'minitest' if ENV['RAILS_VERS'] >= '4.1'
+  else
+    gem 'rails'
+  end
 
   gem 'rspec-rails', '2.12.0'
   gem 'devise'

@@ -1,0 +1,10 @@
+You are logged
+<% if user_signed_in? %>
+    in as <%= current_user.email %>.
+    <form method="post" action="<%= destroy_user_session_path %>">
+        <input type="hidden" name="_method" value="delete" />
+        <input type="submit" value="Sign out" />
+    </form>
+<% else %>
+    out.  <%= link_to "Sign in", new_user_session_path %>
+<% end %>
