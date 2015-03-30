@@ -52,10 +52,10 @@ group :development, :test do
   end
   if RAILS_VERS
     gem 'rails', RAILS_VERS
-    gem 'minitest' if ENV['RAILS_VERS'] >= '4.1'
   else
     gem 'rails'
   end
+  gem 'test-unit'
 
   gem 'rspec-rails', '2.12.0'
   gem 'devise'
