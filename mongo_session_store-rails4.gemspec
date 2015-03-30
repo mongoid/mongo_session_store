@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.license          = "MIT"
   s.require_paths    = ["lib"]
   s.rubygems_version = "1.3.7"
-  s.summary          = "Rails session stores for MongoMapper, Mongoid, or any other ODM. Rails 3.1, 3.2, 4.0, and 4.1 compatible."
+  s.summary          = "Rails session stores for MongoMapper, Mongoid, or any other ODM. Rails 3.1, 3.2, 4.0, 4.1, and 4.2 compatible."
 
   s.add_dependency "actionpack", ">= 3.1"
 end
