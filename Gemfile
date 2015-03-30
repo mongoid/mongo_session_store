@@ -20,12 +20,12 @@ gemspec :name => 'mongo_session_store-rails4'
 group :development, :test do
   gem 'rake'
   if ENV['MONGO_SESSION_STORE_ORM'] == 'mongo_mapper'
-    gem 'mongo_mapper', '>= 0.13.0.beta2'
+    gem 'mongo_mapper', '>= 0.13.1'
   end
 
   if ENV['MONGO_SESSION_STORE_ORM'] == 'mongoid'
     if ENV['RAILS_VERS'] =~ /^4\.\d/
-      gem 'mongoid', '>= 4.0.0.beta1'
+      gem 'mongoid', '>= 4.0.2'
     elsif ENV['RAILS_VERS'] =~ /^3\.2\d/
       gem 'mongoid', '>= 3.1.0'
     else
