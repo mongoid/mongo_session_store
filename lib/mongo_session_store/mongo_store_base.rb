@@ -4,11 +4,7 @@ module ActionDispatch
   module Session
     class MongoStoreBase < AbstractStore
       SESSION_RECORD_KEY = "rack.session.record".freeze
-      begin
-        ENV_SESSION_OPTIONS_KEY = Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY
-      rescue NameError
-        # Rack 1.2.x has access to the ENV_SESSION_OPTIONS_KEY
-      end
+      ENV_SESSION_OPTIONS_KEY = Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY
 
       def self.session_class
         self::Session
