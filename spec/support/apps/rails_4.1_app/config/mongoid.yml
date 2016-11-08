@@ -1,12 +1,12 @@
 development:
-  sessions:
+  clients:
     default:
       database: rails41_app_development
       hosts:
         - localhost:27017
 
 test:
-  sessions:
+  clients:
     default:
       database: rails41_app_test
       hosts:

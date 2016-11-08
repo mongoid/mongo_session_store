@@ -1,4 +1,4 @@
-Rails.application.configure do
+Rails40App::Application.configure do
   config.cache_classes = false
 
   config.eager_load = false

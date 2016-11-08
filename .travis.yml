@@ -1,8 +1,15 @@
 language: ruby
 cache: bundler
 rvm:
+  - "2.0.0"
+  - "2.1.0"
+  - "2.2.0"
   - "2.3.0"
 gemfile:
+  - "gemfiles/rails-4.0-mongo.gemfile"
+  - "gemfiles/rails-4.0-mongoid.gemfile"
+  - "gemfiles/rails-4.1-mongo.gemfile"
+  - "gemfiles/rails-4.1-mongoid.gemfile"
   - "gemfiles/rails-4.2-mongo.gemfile"
   - "gemfiles/rails-4.2-mongoid.gemfile"
 
