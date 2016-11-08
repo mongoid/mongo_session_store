@@ -1,10 +1,7 @@
-.DS_Store
-/pkg
 /doc
 /coverage
 Gemfile.lock
-Gemfile_Rails_*.lock
+gemfiles/*.lock
+spec/support/apps/rails_*/tmp/
+spec/support/apps/rails_*/db/*.sqlite3
 *.gem
-.rvmrc
-*.swo
-*.swp

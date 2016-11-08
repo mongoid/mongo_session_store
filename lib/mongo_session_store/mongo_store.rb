@@ -1,5 +1,5 @@
-require 'mongo'
-require 'mongo_session_store/mongo_store_base'
+require "mongo"
+require "mongo_session_store/mongo_store_base"
 
 module ActionDispatch
   module Session
@@ -46,10 +46,6 @@ module ActionDispatch
 
         def self.where(query = {})
           collection.find(query).map { |doc| load(doc) }
-        end
-
-        def self.last
-          where.last
         end
 
         def self.database

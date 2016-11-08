@@ -1,0 +1,13 @@
+development:
+  clients:
+    default:
+      database: rails42_app_development
+      hosts:
+        - 127.0.0.1:27017
+
+test:
+  clients:
+    default:
+      database: rails42_app_test
+      hosts:
+        - 127.0.0.1:27017
