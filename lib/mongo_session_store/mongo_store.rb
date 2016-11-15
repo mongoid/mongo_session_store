@@ -9,39 +9,21 @@ module ActionDispatch
 
         def initialize(options = {})
           @_id        = options[:_id]
-          @data       = options[:data] || BSON::Binary.new(Marshal.dump({}), :generic)
+          @data       = options[:data]
           @created_at = options[:created_at]
           @updated_at = options[:updated_at]
         end
 
         def self.load(options = {})
           options[:data] = options["data"] if options["data"]
+          options[:data] = unpack(options[:data])
           new(options)
         end
 
-        def scope
-          collection.find(:_id => _id)
-        end
-
-        def destroy
-          scope.delete_one
-        end
-
-        def save
-          @created_at ||= Time.now
-          @updated_at   = Time.now
-
-          attributes = {
-            :data       => BSON::Binary.new(@data, :generic),
-            :created_at => @created_at,
-            :updated_at => @updated_at
-          }
-
-          scope.replace_one(attributes, upsert: true)
-        end
-
-        def data=(stuff)
-          @data = stuff.to_s
+        def self.unpack(packed)
+          return unless packed
+          data = packed.respond_to?(:data) ? packed.data : packed.to_s
+          Marshal.load(StringIO.new(data))
         end
 
         def self.where(query = {})
@@ -70,6 +52,37 @@ module ActionDispatch
 
         def collection
           self.class.collection
+        end
+
+        def scope
+          collection.find(:_id => _id)
+        end
+
+        def destroy
+          scope.delete_one
+        end
+
+        def save
+          @created_at ||= Time.now
+          @updated_at   = Time.now
+
+          attributes = {
+            :data       => pack(data),
+            :created_at => @created_at,
+            :updated_at => @updated_at
+          }
+
+          scope.replace_one(attributes, upsert: true)
+        end
+
+        private
+
+        def pack(data)
+          BSON::Binary.new(Marshal.dump(data), :generic)
+        end
+
+        def unpack(packed)
+          self.class.unpack(packed)
         end
       end
     end

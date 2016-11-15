@@ -23,12 +23,12 @@ module ActionDispatch
       def get_session(env, sid)
         id, record = find_or_initialize_session(sid)
         env[SESSION_RECORD_KEY] = record
-        [id, unpack(record.data)]
+        [id, record.data]
       end
 
       def set_session(env, sid, session_data, options = {})
         id, record = get_session_record(env, sid)
-        record.data = pack(session_data)
+        record.data = session_data
         # Rack spec dictates that set_session should return true or false
         # depending on whether or not the session was saved or not.
         # However, ActionPack seems to want a session id instead.
@@ -59,16 +59,6 @@ module ActionDispatch
           record.destroy
           env[SESSION_RECORD_KEY] = nil
         end
-      end
-
-      def pack(data)
-        Marshal.dump(data)
-      end
-
-      def unpack(packed)
-        return unless packed
-        data = packed.respond_to?(:data) ? packed.data : packed.to_s
-        Marshal.load(StringIO.new(data))
       end
     end
   end

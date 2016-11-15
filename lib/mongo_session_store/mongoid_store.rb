@@ -10,39 +10,41 @@ module ActionDispatch
         include Mongoid::Document
         include Mongoid::Timestamps
 
+        attr_writer :data
+
         store_in :collection => MongoSessionStore.collection_name
 
-        field :data, :type => BINARY_CLASS, :default => -> { marshaled_binary({}) }
+        field :_data, :type => BINARY_CLASS, :default => -> { pack({}) }
 
-        def marshaled_binary(data)
-          self.class.marshaled_binary(data)
+        def data
+          @data ||= unpack(self._data)
         end
 
-        def self.marshaled_binary(data)
+        def self.pack(data)
           if BINARY_CLASS.to_s == "BSON::Binary"
             BSON::Binary.new(Marshal.dump(data), :generic)
           else
             Moped::BSON::Binary.new(:generic, Marshal.dump(data))
           end
         end
-      end
 
-      private
+        private
 
-      def pack(data)
-        session_class.marshaled_binary(data)
-      end
+        before_save do
+          self._data = pack(data)
+        end
 
-      def unpack(packed)
-        return nil unless packed
-        Marshal.load(extract_data(packed))
-      end
+        def pack(data)
+          self.class.pack(data)
+        end
 
-      def extract_data(packed)
-        if packed.class.to_s == "BSON::Binary"
-          packed.data
-        else
-          packed.to_s
+        def unpack(packed)
+          return unless packed
+          if packed.respond_to? :data
+            Marshal.load(packed.data)
+          else
+            Marshal.load(packed.to_s)
+          end
         end
       end
     end
