@@ -21,9 +21,9 @@ module ActionDispatch
       end
 
       def get_session(env, sid)
-        sid, record = find_or_initialize_session(sid)
+        id, record = find_or_initialize_session(sid)
         env[SESSION_RECORD_KEY] = record
-        [sid, unpack(record.data)]
+        [id, unpack(record.data)]
       end
 
       def set_session(env, sid, session_data, options = {})
