@@ -25,6 +25,4 @@ if defined?(Mongoid)
   require "mongo_session_store/mongoid_store"
 elsif defined?(Mongo)
   require "mongo_session_store/mongo_store"
-else
-  raise "Could not load any session store! No Mongo or Mongoid found."
 end

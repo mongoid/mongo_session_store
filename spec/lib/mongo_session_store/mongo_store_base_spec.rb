@@ -80,6 +80,19 @@ describe ActionDispatch::Session::MongoStoreBase do
         expect(env_record._id).to eq sid
       end
     end
+
+    context "with custom session class" do
+      let(:store_class) { TestStore }
+
+      it "returns a session record from the custom session class" do
+        sid, session_data = store.send(:get_session, env, nil)
+
+        expect(sid).to be_kind_of(String)
+        expect(session_data).to be_nil
+        expect(session_record).to be_kind_of(session_class)
+        expect(session_record._id.to_s).to eq sid
+      end
+    end
   end
 
   describe "#set_session" do
