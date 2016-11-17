@@ -10,22 +10,10 @@ RSpec.configure do |config|
 
   config.before :suite do
     Rails.logger.level = 4
-    unless User.table_exists?
-      load Rails.root.join("db", "schema.rb")
-    end
+    load Rails.root.join("db", "schema.rb") unless User.table_exists?
   end
 
   config.before :each do
-    drop_collections_in(test_database)
     User.delete_all
   end
-end
-
-puts "Testing #{mongo_orm}_store on Rails #{Rails.version}..."
-
-case mongo_orm
-when "mongoid"
-  puts "Mongoid version: #{Mongoid::VERSION}"
-when "mongo"
-  puts "Mongo version: #{Mongo::VERSION}"
 end

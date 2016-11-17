@@ -1,5 +1,6 @@
 require "mongo"
 require "mongoid" if Gem.loaded_specs["mongoid"]
+require "mongo_session_store"
 require "support/helpers/test_database_helper"
 
 def mongo_orm
@@ -20,20 +21,24 @@ RSpec.configure do |config|
     if mongo_orm == "mongoid"
       Mongoid.logger.level = Logger::INFO
       Mongoid.configure do |c|
-        c.load_configuration({
+        c.load_configuration(
           "clients" => {
             "default" => {
               "database" => TestDatabaseHelper.test_database_name,
               "hosts" => ["127.0.0.1:27017"]
             }
           }
-        })
+        )
       end
     else
       MongoStore::Session.database = Mongo::Client.new(
-        ['127.0.0.1:27017'],
-        database: TestDatabaseHelper.test_database_name
+        ["127.0.0.1:27017"],
+        :database => TestDatabaseHelper.test_database_name
       )
     end
+  end
+
+  config.before do
+    drop_collections_in(test_database)
   end
 end

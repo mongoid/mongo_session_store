@@ -37,7 +37,7 @@ module ActionDispatch
 
       def find_or_initialize_session(id)
         session = (id && session_class.where(:_id => id).first) || session_class.new(:_id => generate_sid)
-        [session._id, session]
+        [session._id.to_s, session]
       end
 
       def get_session_record(env, sid)
