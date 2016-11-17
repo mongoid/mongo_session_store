@@ -1,4 +1,6 @@
 module TestDatabaseHelper
+  module_function
+
   def test_database
     case mongo_orm
     when "mongoid"
@@ -12,9 +14,7 @@ module TestDatabaseHelper
     database.collections.select { |c| c.name !~ /^system/ }.each(&:drop)
   end
 
-  private
-
   def test_database_name
-    Rails.application.class.to_s.underscore.sub(/\/.*/, "") + "_" + Rails.env
+    "test_database"
   end
 end

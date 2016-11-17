@@ -4,8 +4,8 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: rails42_app_development
+  database: test_database
 
 test:
   <<: *defaults
-  database: rails42_app_test
+  database: test_database

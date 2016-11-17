@@ -4,10 +4,8 @@ require "rails"
 rails_version = Gem.loaded_specs["rails"].version.to_s[/^\d\.\d/]
 require "support/apps/rails_#{rails_version}_app/config/environment"
 require "rspec/rails"
-require "support/helpers/test_database_helper"
 
 RSpec.configure do |config|
-  config.include TestDatabaseHelper
   config.infer_spec_type_from_file_location!
 
   config.before :suite do
