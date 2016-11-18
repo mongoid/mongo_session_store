@@ -8,10 +8,9 @@ module MongoSessionStore
 
     if defined?(MongoStore::Session)
       MongoStore::Session.reset_collection
-    end
-
-    if defined?(MongoidStore::Session)
-      MongoidStore::Session.store_in :collection => MongoSessionStore.collection_name
+    elsif defined?(MongoidStore::Session)
+      MongoidStore::Session.store_in \
+        :collection => MongoSessionStore.collection_name
     end
 
     @collection_name

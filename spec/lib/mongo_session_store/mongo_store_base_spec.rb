@@ -177,7 +177,10 @@ describe ActionDispatch::Session::MongoStoreBase do
     let(:store) { store_class.new(nil) }
     let(:session_class) { store_class::Session }
     let(:env) do
-      { "rack.session" => double(:id => id), Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY => {} }
+      {
+        "rack.session" => double(:id => id),
+        Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY => {}
+      }
     end
 
     context "without existing session" do

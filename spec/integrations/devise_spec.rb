@@ -2,19 +2,17 @@ require "rails_helper"
 
 describe Devise::SessionsController, :type => :request do
   def create_user
-    post "/users", {
-       "user[email]"                 => "person@example.com",
-       "user[password]"              => "secret",
-       "user[password_confirmation]" => "secret"
-    }
+    post "/users",
+      "user[email]" => "person@example.com",
+      "user[password]" => "secret",
+      "user[password_confirmation]" => "secret"
   end
 
   def sign_in
-    post "/users/sign_in", {
-       "user[email]"                 => "person@example.com",
-       "user[password]"              => "secret",
-       "user[password_confirmation]" => "secret"
-    }
+    post "/users/sign_in",
+      "user[email]" => "person@example.com",
+      "user[password]" => "secret",
+      "user[password_confirmation]" => "secret"
   end
 
   def sign_out
