@@ -29,6 +29,7 @@ module ActionDispatch
       def set_session(env, sid, session_data, _options = {})
         id, record = get_session_record(env, sid)
         record.data = session_data
+        yield if block_given?
         # Rack spec dictates that set_session should return true or false
         # depending on whether or not the session was saved or not.
         # However, ActionPack seems to want a session id instead.

@@ -119,6 +119,16 @@ describe ActionDispatch::Session::MongoStoreBase do
         expect(subject).to eq(id.to_s)
       end
 
+      it "yields" do
+        yielded_variable = :not_called
+        block =
+          proc do
+            yielded_variable = :called
+          end
+        store.send(:set_session, env, id, {}, &block)
+        expect(yielded_variable).to eq(:called)
+      end
+
       context "with session record in the ENV" do
         let(:env) do
           {
