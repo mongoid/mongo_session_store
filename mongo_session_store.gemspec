@@ -11,13 +11,12 @@ Gem::Specification.new do |s|
   s.homepage         = "http://github.com/appsignal/mongo_session_store"
   s.license          = "MIT"
   s.require_paths    = ["lib"]
-  s.rubygems_version = "1.3.7"
-  s.summary          = "Rails session stores for Mongoid, or any other ODM. Rails 4.0+ compatible."
+  s.summary          = "Rails session stores for Mongoid, or any other ODM. Rails 4 compatible."
 
-  s.add_dependency "actionpack", ">= 4.0"
-  s.add_dependency "mongo", ">= 1.0"
-  s.add_development_dependency "rspec-rails", "3.5.2"
-  s.add_development_dependency "pry"
-  s.add_development_dependency "rake"
+  s.add_dependency "actionpack", "~> 4.0"
+  s.add_dependency "mongo", "~> 2.0"
+  s.add_development_dependency "rspec-rails", "~> 3"
+  s.add_development_dependency "pry", "~> 0.10"
+  s.add_development_dependency "rake", "~> 11"
   s.add_development_dependency "rubocop", "0.45.0"
 end
