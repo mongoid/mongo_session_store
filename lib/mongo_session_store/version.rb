@@ -1,3 +1,3 @@
 module MongoSessionStore
-  VERSION = "7.0.0.foo".freeze
+  VERSION = "7.0.0".freeze
 end
