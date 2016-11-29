@@ -1,11 +1,11 @@
 require File.expand_path("../lib/mongo_session_store/version", __FILE__)
 
 Gem::Specification.new do |s|
-  s.name = "mongo_session_store"
+  s.name = "mongo_session_store-rails"
   s.version = MongoSessionStore::VERSION
 
   s.authors          = ["Tom de Bruijn", "Brian Hempel", "Nicolas M\303\251rouze", "Tony Pitale", "Chris Brickley"]
-  s.email            = ["plasticchicken@gmail.com"]
+  s.email            = ["tom@tomdebruijn.com.com"]
   s.files            = `git ls-files`.split("\n")
   s.test_files       = `git ls-files -- {spec,perf}/*`.split("\n")
   s.homepage         = "http://github.com/appsignal/mongo_session_store"

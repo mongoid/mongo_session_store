@@ -22,4 +22,4 @@ end
 desc "Run the mongo_session_store gem test suite."
 RSpec::Core::RakeTask.new :test => :mongo_prepare
 
-task :default => :test_all
+task :default => :test

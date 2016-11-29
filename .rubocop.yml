@@ -3,6 +3,7 @@ AllCops:
   Include:
     - "Gemfile"
   Exclude:
+    - "lib/mongo_session_store-rails.rb"
     - "gemfiles/vendor/**/*"
     - "perf/benchmark.rb"
     - "spec/support/apps/**/*"
