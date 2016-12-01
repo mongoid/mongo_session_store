@@ -55,6 +55,24 @@ if mongo_orm == "mongoid"
       end
     end
 
+    describe "#reload" do
+      it "reloads the record and reset the data attribute cache" do
+        # Create record
+        session = described_class.create :data => { :original => "true" }
+        expect(session.data).to eq(:original => "true")
+
+        # Update record in another object
+        database_record = described_class.find(session.id)
+        database_record.update_attributes!(:data => { :updated => "true" })
+        expect(database_record.data).to eq(:updated => "true")
+
+        # Reload original object
+        session.reload
+        # Should have updated values
+        expect(session.data).to eq(:updated => "true")
+      end
+    end
+
     describe ".collection_name" do
       # Where the name comes from:
       # - "test_database" set in spec_helper

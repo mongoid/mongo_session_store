@@ -21,6 +21,11 @@ module ActionDispatch
           @data ||= unpack(_data)
         end
 
+        def reload
+          @data = nil
+          super
+        end
+
         private
 
         before_save do
