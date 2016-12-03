@@ -103,6 +103,25 @@ BUNDLE_GEMFILE=gemfiles/rails-4.2-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-4.2-mongoid.gemfile bundle exec rake
 ```
 
+## Performance benchmark
+
+The repository includes a performance benchmark. It runrs against all available
+included stores and outputs the results.
+
+```
+ruby perf/benchmark.rb
+```
+
+## Releases
+
+To create a new release checkou the `master` branch and make sure it's in the
+right state to release. Run the `release` Rake task and follow the
+instructions.
+
+```
+rake release
+```
+
 ## Previous contributors
 
 MongoSessionStore started as a fork of the DataMapper session store, modified
