@@ -1,6 +1,6 @@
 require "mongo"
 require "mongoid" if Gem.loaded_specs["mongoid"]
-require "mongo_session_store-rails"
+require "mongo_session_store"
 require "support/helpers/test_database_helper"
 
 def mongo_orm

@@ -1,6 +1,6 @@
 # MongoSessionStore
 
-[![Build Status](https://travis-ci.org/appsignal/mongo_session_store.png?branch=master)](https://travis-ci.org/appsignal/mongo_session_store) [![Gem Version](https://badge.fury.io/rb/mongo_session_store-rails.svg)](http://badge.fury.io/rb/mongo_session_store-rails)
+[![Build Status](https://travis-ci.org/mongoid/mongo_session_store.png?branch=master)](https://travis-ci.org/mongoid/mongo_session_store) [![Gem Version](https://badge.fury.io/rb/mongo_session_store.svg)](http://badge.fury.io/rb/mongo_session_store)
 
 ## Description
 
@@ -17,7 +17,7 @@ In your Gemfile:
 ```ruby
 gem "mongoid"
 # or gem "mongo"
-gem "mongo_session_store-rails"
+gem "mongo_session_store"
 ```
 
 In the session_store initializer:
@@ -125,8 +125,7 @@ rake release
 ## Previous contributors
 
 MongoSessionStore started as a fork of the DataMapper session store, modified
-to work with MongoMapper and Mongoid. Much thanks to all the previous
-contributors:
+to work with MongoMapper and Mongoid. Much thanks to all contributors:
 
 * Nicolas Mérouze
 * Chris Brickley
