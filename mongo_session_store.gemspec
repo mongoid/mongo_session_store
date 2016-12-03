@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version = MongoSessionStore::VERSION
 
   s.authors          = ["Tom de Bruijn", "Brian Hempel", "Nicolas M\303\251rouze", "Tony Pitale", "Chris Brickley"]
-  s.email            = ["tom@tomdebruijn.com.com"]
+  s.email            = ["tom@tomdebruijn.com"]
   s.files            = `git ls-files`.split("\n")
   s.test_files       = `git ls-files -- {spec,perf}/*`.split("\n")
   s.homepage         = "http://github.com/appsignal/mongo_session_store"
