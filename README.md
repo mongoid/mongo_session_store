@@ -1,6 +1,6 @@
 # MongoSessionStore
 
-[![Build Status](https://travis-ci.org/mongoid/mongo_session_store.png?branch=master)](https://travis-ci.org/mongoid/mongo_session_store)
+[![Build Status](https://travis-ci.org/mongoid/mongo_session_store.svg?branch=master)](https://travis-ci.org/mongoid/mongo_session_store)
 [![Gem Version](https://badge.fury.io/rb/mongo_session_store.svg)](http://badge.fury.io/rb/mongo_session_store)
 [![Code Climate](https://codeclimate.com/github/mongoid/mongo_session_store/badges/gpa.svg)](https://codeclimate.com/github/mongoid/mongo_session_store)
 
