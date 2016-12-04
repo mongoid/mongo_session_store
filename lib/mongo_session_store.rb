@@ -6,18 +6,17 @@ module MongoSessionStore
   def self.collection_name=(name)
     @collection_name = name
 
-    if defined?(MongoStore::Session)
-      MongoStore::Session.reset_collection
-    elsif defined?(MongoidStore::Session)
+    if defined?(MongoidStore::Session)
       MongoidStore::Session.store_in \
         :collection => MongoSessionStore.collection_name
     end
 
+    if defined?(MongoStore::Session)
+      MongoStore::Session.reset_collection
+    end
+
     @collection_name
   end
-
-  # default collection name for all the stores
-  self.collection_name = "sessions"
 end
 
 if defined?(Mongoid)
@@ -25,3 +24,6 @@ if defined?(Mongoid)
 elsif defined?(Mongo)
   require "mongo_session_store/mongo_store"
 end
+
+# Default collection name for all the stores.
+MongoSessionStore.collection_name = "sessions"
