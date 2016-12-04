@@ -1,4 +1,8 @@
-.DS_Store
-/pkg
 /doc
 /coverage
+Gemfile.lock
+gemfiles/*.lock
+spec/support/apps/rails_*/tmp/
+spec/support/apps/rails_*/db/*.sqlite3
+*.gem
+/tmp/

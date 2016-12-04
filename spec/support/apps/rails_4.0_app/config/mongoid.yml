@@ -1,0 +1,13 @@
+development:
+  clients:
+    default:
+      database: rails40_app_development
+      hosts:
+        - localhost:27017
+
+test:
+  clients:
+    default:
+      database: rails40_app_test
+      hosts:
+        - localhost:27017
