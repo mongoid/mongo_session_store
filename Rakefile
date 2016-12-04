@@ -1,5 +1,6 @@
 require "rspec/core/rake_task"
 
+desc "Prepare MongoDB connection"
 task :mongo_prepare do
   # Wait for mongod to start on Travis.
   # From the Mongo Ruby Driver gem.
@@ -9,8 +10,8 @@ task :mongo_prepare do
     begin
       puts "Waiting for MongoDB..."
       client.command("ismaster" => 1)
-    rescue Mongo::Error::NoServerAvailable => e
-      sleep(2)
+    rescue Mongo::Error::NoServerAvailable
+      sleep 2
       # 1 Retry
       puts "Waiting for MongoDB..."
       client.cluster.scan!
@@ -22,9 +23,10 @@ end
 desc "Run the mongo_session_store gem test suite."
 RSpec::Core::RakeTask.new :test => :mongo_prepare
 
+desc "Release a new version of the mongo_session_store gem"
 task :release do
   GEMSPEC_NAME = "mongo_session_store"
-  GEM_NAME = "mongo_session_store-rails"
+  GEM_NAME = "mongo_session_store"
   VERSION_FILE = "lib/mongo_session_store/version.rb"
 
   def reload_version
@@ -84,4 +86,5 @@ task :release do
   end
 end
 
+desc "Default task for Rake. Runs test suite."
 task :default => :test
