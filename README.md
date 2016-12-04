@@ -52,38 +52,6 @@ MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
 MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
 ```
 
-## Changelog
-
-7.0.0 Drops explicit MongoMapper support, but can be readded manually with a
-custom session class. Drops explicit JRuby support. Moved session data packing
-and unpacking to the session models themselves. Adds more tests to internals.
-
-6.0.0 supports the Mongo Ruby Driver 2.0 for the generic MongoStore. The other
-stores are unchanged. Tests added for Rails 4.2. Tests against MongoDB 3.0.1 on
-Travis CI.
-
-5.1.0 generates a new session ID when a session is not found. Previously, when
-a session ID is provided in the request but the session was not found (because
-for example, it was removed from Mongo by a sweeper job) a new session with the
-provided ID would be created. This would cause a write error if two
-simultaneous requests both create a session with the same ID and both try to
-insert a new document with that ID.
-
-5.0.1 suppresses a warning from Mongoid 4 when setting the _id field type to
-String.
-
-5.0.0 introduces Rails 4.0 and 4.1 support and Mongoid 4 support alongside the
-existing Rails 3.1, 3.2, and Mongoid 3 support. Ruby 1.8.7 support is dropped.
-The database is no longer set automatically for the MongoStore when MongoMapper
-or Mongoid is present. You have to set the database manually whenever you
-choose to use the vanilla MongoStore.
-
-The last version to support Ruby 1.8.7 is [version
-4.1.1](https://rubygems.org/gems/mongo_session_store-rails3/versions/4.1.1).
-
-The last version to support Rails 3.0 or Mongoid 2 is [version
-3.0.6](https://rubygems.org/gems/mongo_session_store-rails3/versions/3.0.6).
-
 ## Development
 
 To run all the tests:
