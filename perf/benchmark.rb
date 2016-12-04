@@ -11,20 +11,6 @@ require File.expand_path("../../lib/mongo_session_store", __FILE__)
 Mongo::Logger.logger.level = Logger::FATAL
 Mongoid.logger.level = Logger::FATAL
 
-MongoSessionStore.collection_name = "session_collection"
-MongoStore::Session.database =
-  Mongo::Client.new(["127.0.0.1:27017"], :database => "test_database")
-Mongoid.configure do |c|
-  c.load_configuration(
-    "clients" => {
-      "default" => {
-        "database" => "test_database",
-        "hosts" => ["127.0.0.1:27017"]
-      }
-    }
-  )
-end
-
 RUNS = 2000
 
 def benchmark(test_name)
@@ -83,11 +69,27 @@ def benchmark_store(store)
     end
   end
 
-  stats = database.command(:collstats => MongoSessionStore.collection_name).documents.first
+  database = collection.database
+  stats = database.command(:collstats => collection.name).documents.first
+  puts "Collection: #{collection.namespace}"
   puts "           Total Size: #{stats["size"]}"
   puts "         Object count: #{stats["count"]}"
   puts "  Average object size: #{stats["avgObjSize"]}"
   puts "          Index sizes: #{stats["indexSizes"].inspect}"
+end
+
+MongoSessionStore.collection_name = "session_collection"
+MongoStore::Session.database =
+  Mongo::Client.new(["127.0.0.1:27017"], :database => "mongo_test_database")
+Mongoid.configure do |c|
+  c.load_configuration(
+    "clients" => {
+      "default" => {
+        "database" => "mongoid_test_database",
+        "hosts" => ["127.0.0.1:27017"]
+      }
+    }
+  )
 end
 
 puts "MongoidStore..."
