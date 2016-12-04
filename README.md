@@ -6,23 +6,30 @@
 
 ## Description
 
-MongoSessionStore is a Rails-compatible session store for Mongo using either
-Mongoid or the Ruby MongoDB driver. It also allows for custom Mongo session
-store that works with any (or no!) Mongo ODM.
+MongoSessionStore is a [Rails][rails]-compatible session store for
+[MongoDB][mongodb] using either [Mongoid][mongoid] or the [MongoDB Ruby
+Driver][mongo]. It also allows for custom Mongo session store that works with
+any (or no!) Mongo ODM.
 
-## Usage
+MongoSessionStore version 3 is compatible with Rails 4.0 through 4.2. For Rails
+3 support please check out issue [#17][issue-rails3] for options and let us
+know if you need support.
 
-MongoSessionStore is compatible with Rails 4.0 through 4.2.
+## Installation
 
-In your Gemfile:
+Add the `mongo_session_store` gem to your `Gemfile`.
+Use either the `mongo` or `mongoid` gems in combination with this gem.
 
 ```ruby
+# Gemfile
+
 gem "mongoid"
 # or gem "mongo"
 gem "mongo_session_store"
 ```
 
-In the session_store initializer:
+Configure the session store in the session_store initializer in your Rails
+project.
 
 ```ruby
 # config/initializers/session_store.rb
@@ -30,39 +37,49 @@ In the session_store initializer:
 # Mongoid
 MyApp::Application.config.session_store :mongoid_store
 
-# anything else
+# MongoDB Ruby Driver/anything else
 MongoStore::Session.database = Mongo::Client.new(["127.0.0.1:27017"], database: "my_app_development")
 MyApp::Application.config.session_store :mongo_store
 ```
 
+## Configuration
+
 By default, the sessions will be stored in the "sessions" collection in
 MongoDB. If you want to use a different collection, you can set that in the
-initializer:
+session_store initializer.
 
 ```ruby
 # config/initializers/session_store.rb
 MongoSessionStore.collection_name = "client_sessions"
 ```
 
-And if you want to query your sessions:
+## Usage
+
+By default nothing has to be done outside the [installation](#installation) of
+the gem.
+
+It's possible to query your sessions.
 
 ```ruby
 # Mongoid
 MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
 
-# Plain old Mongo
-MongoStore::Session.where('updated_at' => { '$gt' => 2.days.ago })
+# MongoDB Ruby Driver
+MongoStore::Session.where("updated_at" => { "$gt" => 2.days.ago })
 ```
 
 ## Development
 
-To run all the tests:
+### Testing
+
+To run the tests for a specific store. You must first set a `BUNDLE_GEMFILE` in
+the environment.
 
 ```sh
-rake
+bundle exec rake
 ```
 
-To run the tests for a specific store:
+Examples:
 
 ```sh
 BUNDLE_GEMFILE=gemfiles/rails-4.0-mongo.gemfile bundle exec rake
@@ -73,29 +90,31 @@ BUNDLE_GEMFILE=gemfiles/rails-4.2-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-4.2-mongoid.gemfile bundle exec rake
 ```
 
-## Performance benchmark
+### Performance benchmark
 
-The repository includes a performance benchmark. It runrs against all available
+The repository includes a performance benchmark. It runs against all available
 included stores and outputs the results.
 
 ```
-ruby perf/benchmark.rb
+bundle exec ruby perf/benchmark.rb
 ```
 
-## Releases
+### Releases
 
-To create a new release checkou the `master` branch and make sure it's in the
+To create a new release checkout the `master` branch and make sure it's in the
 right state to release. Run the `release` Rake task and follow the
 instructions.
 
 ```
-rake release
+bundle exec rake release
 ```
 
-## Previous contributors
+## Contributors
 
 MongoSessionStore started as a fork of the DataMapper session store, modified
-to work with MongoMapper and Mongoid. Much thanks to all contributors:
+to work with MongoMapper, Mongoid and the Mongo Ruby Driver.
+
+Much thanks to all contributors:
 
 * Nicolas Mérouze
 * Chris Brickley
@@ -104,7 +123,15 @@ to work with MongoMapper and Mongoid. Much thanks to all contributors:
 * Matt Powell
 * Ryan Fitzgerald
 * Brian Hempel
+* Tom de Bruijn
 
 ## License
 
 Released under the MIT license. See the [LICENSE](LICENSE) file.
+
+[mongodb]: https://www.mongodb.com/
+[mongo]: https://github.com/mongodb/mongo-ruby-driver
+[mongoid]: http://mongoid.org/
+[rails]: http://rubyonrails.org/
+
+[issue-rails3]: https://github.com/mongoid/mongo_session_store/issues/17
