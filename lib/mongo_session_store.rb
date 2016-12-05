@@ -11,9 +11,7 @@ module MongoSessionStore
         :collection => MongoSessionStore.collection_name
     end
 
-    if defined?(MongoStore::Session)
-      MongoStore::Session.reset_collection
-    end
+    MongoStore::Session.reset_collection if defined?(MongoStore::Session)
 
     @collection_name
   end
