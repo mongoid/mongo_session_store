@@ -14,6 +14,8 @@
 * Move session data packing and unpacking to session models. This allows queried documents to unpack session data themselves - [@tombruijn](https://github.com/tombruijn).
 * Test more internal code - [@tombruijn](https://github.com/tombruijn).
 * Allow for easier custom classes and expanded behavior of Mongoid and Mongo session stores - [@tombruijn](https://github.com/tombruijn).
+* [#24](https://github.com/mongoid/mongo_session_store/pull/24): Add Danger, PR linter - [@tombruijn](https://github.com/tombruijn), [@dblock](https://github.com/dblock).
+* [#27](https://github.com/mongoid/mongo_session_store/pull/27): Run tests against Ruby 2.3.1 and MongoDB 3.2 only - [@dblock](https://github.com/dblock).
 * Your contribution here.
 
 ## 2.0.0
