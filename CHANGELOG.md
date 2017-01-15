@@ -16,6 +16,7 @@
 * Allow for easier custom classes and expanded behavior of Mongoid and Mongo session stores - [@tombruijn](https://github.com/tombruijn).
 * [#24](https://github.com/mongoid/mongo_session_store/pull/24): Add Danger, PR linter - [@tombruijn](https://github.com/tombruijn), [@dblock](https://github.com/dblock).
 * [#27](https://github.com/mongoid/mongo_session_store/pull/27): Run tests against Ruby 2.3.1 and MongoDB 3.2 only - [@dblock](https://github.com/dblock).
+* [#28](https://github.com/mongoid/mongo_session_store/pull/28): Support Ruby 2.4 - [@tombruijn](https://github.com/tombruijn).
 * [#29](https://github.com/mongoid/mongo_session_store/pull/29): Use rails default session id generation - [@tombruijn](https://github.com/tombruijn).
 * Your contribution here.
 
