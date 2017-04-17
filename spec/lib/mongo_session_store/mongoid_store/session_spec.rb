@@ -1,9 +1,6 @@
 require "spec_helper"
 
 if mongo_orm == "mongoid"
-  require "mongo_session_store"
-  require "mongo_session_store/mongoid_store"
-
   describe MongoidStore::Session do
     before { described_class.collection.drop }
 

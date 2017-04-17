@@ -8,6 +8,13 @@ def mongo_orm
   defined?(Mongoid) ? "mongoid" : "mongo"
 end
 
+case mongo_orm
+when "mongo"
+  require "mongo_session_store/mongo_store"
+when "mongoid"
+  require "mongo_session_store/mongoid_store"
+end
+
 RSpec.configure do |config|
   config.include TestDatabaseHelper
   config.include SessionIdHelper

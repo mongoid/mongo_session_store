@@ -1,9 +1,6 @@
 require "spec_helper"
 
 if mongo_orm == "mongo"
-  require "mongo_session_store"
-  require "mongo_session_store/mongo_store"
-
   describe MongoStore::Session do
     before { described_class.collection.drop }
 
