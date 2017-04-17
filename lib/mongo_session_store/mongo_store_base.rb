@@ -16,10 +16,6 @@ module ActionDispatch
         self.class.session_class
       end
 
-      def generate_sid
-        BSON::ObjectId.new.to_s
-      end
-
       def get_session(env, sid)
         id, record = find_or_initialize_session(sid)
         env[SESSION_RECORD_KEY] = record
@@ -40,7 +36,7 @@ module ActionDispatch
         existing_session = (id && session_class.where(:_id => id).first)
         session = existing_session if existing_session
         session ||= session_class.new(:_id => generate_sid)
-        [session._id.to_s, session]
+        [session._id, session]
       end
 
       def get_session_record(env, sid)
