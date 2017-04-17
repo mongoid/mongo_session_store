@@ -62,11 +62,11 @@ if mongo_orm == "mongo"
       end
 
       context "with matching records" do
-        let(:session) { described_class.new(:_id => BSON::ObjectId.new).tap(&:save) }
+        let(:session) { described_class.new(:_id => generate_sid).tap(&:save) }
         let(:id) { session._id }
         before do
           # Noise
-          described_class.new(:_id => BSON::ObjectId.new).tap(&:save)
+          described_class.new(:_id => generate_sid).tap(&:save)
         end
 
         it "returns session model objects" do
@@ -83,14 +83,14 @@ if mongo_orm == "mongo"
       context "without data" do
         let(:attributes) do
           {
-            :_id => BSON::ObjectId.new,
+            :_id => generate_sid,
             :created_at => created_at,
             :updated_at => updated_at
           }
         end
 
         it "creates a session object with empty data" do
-          expect(session._id).to be_kind_of(BSON::ObjectId)
+          expect(session._id).to be_kind_of(String)
           expect(session.data).to eq({})
           expect(session.created_at).to eq(created_at)
           expect(session.updated_at).to eq(updated_at)
@@ -100,7 +100,7 @@ if mongo_orm == "mongo"
       context "with data key as a symbol" do
         let(:attributes) do
           {
-            :_id => BSON::ObjectId.new,
+            :_id => generate_sid,
             :data => BSON::Binary.new(Marshal.dump(:foo => "bar"), :generic),
             :created_at => created_at,
             :updated_at => updated_at
@@ -108,7 +108,7 @@ if mongo_orm == "mongo"
         end
 
         it "creates a session object with correct data" do
-          expect(session._id).to be_kind_of(BSON::ObjectId)
+          expect(session._id).to be_kind_of(String)
           expect(session.data).to eq(:foo => "bar")
           expect(session.created_at).to eq(created_at)
           expect(session.updated_at).to eq(updated_at)
@@ -118,7 +118,7 @@ if mongo_orm == "mongo"
       context "with data key as a string" do
         let(:attributes) do
           {
-            :_id => BSON::ObjectId.new,
+            :_id => generate_sid,
             "data" => BSON::Binary.new(Marshal.dump(:foo => "bar"), :generic),
             :created_at => created_at,
             :updated_at => updated_at
@@ -126,7 +126,7 @@ if mongo_orm == "mongo"
         end
 
         it "creates a session object with correct data" do
-          expect(session._id).to be_kind_of(BSON::ObjectId)
+          expect(session._id).to be_kind_of(String)
           expect(session.data).to eq(:foo => "bar")
           expect(session.created_at).to eq(created_at)
           expect(session.updated_at).to eq(updated_at)
@@ -135,7 +135,7 @@ if mongo_orm == "mongo"
     end
 
     describe "#save" do
-      let(:id) { BSON::ObjectId.new }
+      let(:id) { generate_sid }
       subject { described_class.collection.find(:_id => id).first }
 
       describe "_id attribute" do
@@ -235,7 +235,7 @@ if mongo_orm == "mongo"
     end
 
     describe "#destroy" do
-      let(:id) { BSON::ObjectId.new }
+      let(:id) { generate_sid }
       let(:session) { described_class.new(:_id => id) }
       before { session.save }
 

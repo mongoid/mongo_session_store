@@ -2,6 +2,7 @@ require "mongo"
 require "mongoid" if Gem.loaded_specs["mongoid"]
 require "mongo_session_store"
 require "support/helpers/test_database_helper"
+require "support/helpers/session_id_helper"
 
 def mongo_orm
   defined?(Mongoid) ? "mongoid" : "mongo"
@@ -9,6 +10,7 @@ end
 
 RSpec.configure do |config|
   config.include TestDatabaseHelper
+  config.include SessionIdHelper
 
   config.order = "random"
   config.mock_with :rspec do |c|

@@ -99,10 +99,10 @@ describe ActionDispatch::Session::MongoStoreBase do
     let(:store_class) { mongo_orm == "mongoid" ? MongoidStore : MongoStore }
     let(:store) { store_class.new(nil) }
     let(:session_class) { store_class::Session }
-    subject { store.send(:set_session, env, BSON::ObjectId.new, {}) }
+    subject { store.send(:set_session, env, generate_sid, {}) }
 
     context "with existing session record" do
-      let(:id) { BSON::ObjectId.new }
+      let(:id) { generate_sid }
       let!(:session_record) { session_class.new(:_id => id).tap(&:save) }
       let(:env) do
         {
@@ -182,7 +182,7 @@ describe ActionDispatch::Session::MongoStoreBase do
   end
 
   describe "#destroy_session" do
-    let(:id) { BSON::ObjectId.new }
+    let(:id) { generate_sid }
     let(:store_class) { mongo_orm == "mongoid" ? MongoidStore : MongoStore }
     let(:store) { store_class.new(nil) }
     let(:session_class) { store_class::Session }
