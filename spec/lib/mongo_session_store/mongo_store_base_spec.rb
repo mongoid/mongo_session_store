@@ -10,6 +10,8 @@ class TestStore < ActionDispatch::Session::MongoStoreBase
 end
 
 describe ActionDispatch::Session::MongoStoreBase do
+  let(:session_options_key) { described_class::ENV_SESSION_OPTIONS_KEY }
+
   describe ".session_class" do
     let(:store_class) { TestStore }
     let(:store) { store_class.new(nil) }
@@ -107,7 +109,7 @@ describe ActionDispatch::Session::MongoStoreBase do
       let(:env) do
         {
           "rack.session" => double(:id => id),
-          Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY => { :id => id }
+          session_options_key => { :id => id }
         }
       end
       subject { store.send(:set_session, env, id, {}) }
@@ -133,7 +135,7 @@ describe ActionDispatch::Session::MongoStoreBase do
         let(:env) do
           {
             "rack.session" => double(:id => id),
-            Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY => { :id => id },
+            session_options_key => { :id => id },
             "rack.session.record" => session_record
           }
         end
@@ -151,7 +153,7 @@ describe ActionDispatch::Session::MongoStoreBase do
       let :env do
         {
           "rack.session" => {},
-          Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY => {}
+          session_options_key => {}
         }
       end
 
@@ -189,7 +191,7 @@ describe ActionDispatch::Session::MongoStoreBase do
     let(:env) do
       {
         "rack.session" => double(:id => id),
-        Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY => {}
+        session_options_key => {}
       }
     end
 
@@ -237,7 +239,7 @@ describe ActionDispatch::Session::MongoStoreBase do
         let(:env) do
           {
             "rack.session" => double(:id => id),
-            Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY => { :id => id },
+            session_options_key => { :id => id },
             "rack.session.record" => session_record
           }
         end

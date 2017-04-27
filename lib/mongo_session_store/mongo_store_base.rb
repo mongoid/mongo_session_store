@@ -4,7 +4,12 @@ module ActionDispatch
   module Session
     class MongoStoreBase < AbstractStore
       SESSION_RECORD_KEY = "rack.session.record".freeze
-      ENV_SESSION_OPTIONS_KEY = Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY
+      ENV_SESSION_OPTIONS_KEY =
+        if defined? Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY
+          Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY
+        else
+          Rack::RACK_SESSION_OPTIONS
+        end
 
       def self.session_class
         self::Session
@@ -16,10 +21,18 @@ module ActionDispatch
         self.class.session_class
       end
 
+      def find_session(req, sid)
+        get_session(req.env, sid)
+      end
+
       def get_session(env, sid)
         id, record = find_or_initialize_session(sid)
         env[SESSION_RECORD_KEY] = record
         [id, record.data]
+      end
+
+      def write_session(req, sid, session_data, options)
+        set_session(req.env, sid, session_data, options)
       end
 
       def set_session(env, sid, session_data, _options = {})
@@ -47,13 +60,16 @@ module ActionDispatch
         [sid, env[SESSION_RECORD_KEY]]
       end
 
-      def destroy_session(env, _session_id, options)
-        destroy(env)
+      def delete_session(req, sid, options)
+        destroy_session(req.env, sid, options)
+      end
+
+      def destroy_session(env, sid, options)
+        destroy(env, sid)
         generate_sid unless options[:drop]
       end
 
-      def destroy(env)
-        sid = current_session_id(env)
+      def destroy(env, sid)
         return unless sid
 
         _, record = get_session_record(env, sid)
