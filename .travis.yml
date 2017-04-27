@@ -3,8 +3,9 @@ language: ruby
 cache: bundler
 
 rvm:
-  - 2.3.1
   - 2.1.10
+  - 2.3.1
+  - 2.4.1
 
 gemfile:
   - gemfiles/rails-4.0-mongo.gemfile
@@ -23,6 +24,15 @@ matrix:
     - rvm: 2.3.1
       gemfile: gemfiles/rails-4.2-mongo.gemfile
       script: bundle exec danger
+  exclude:
+    - rvm: 2.4.1
+      gemfile: gemfiles/rails-4.0-mongo.gemfile
+    - rvm: 2.4.1
+      gemfile: gemfiles/rails-4.0-mongoid.gemfile
+    - rvm: 2.4.1
+      gemfile: gemfiles/rails-4.1-mongo.gemfile
+    - rvm: 2.4.1
+      gemfile: gemfiles/rails-4.1-mongoid.gemfile
 
 services: mongodb
 
