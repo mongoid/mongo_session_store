@@ -1,0 +1,13 @@
+development:
+  clients:
+    default:
+      database: test_database
+      hosts:
+        - 127.0.0.1:27017
+
+test:
+  clients:
+    default:
+      database: test_database
+      hosts:
+        - 127.0.0.1:27017

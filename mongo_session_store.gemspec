@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.summary          = "Rails session stores for Mongoid, or any other ODM. Rails 4 compatible."
   s.required_ruby_version = ">= 1.9"
 
-  s.add_dependency "actionpack", "~> 4.0"
+  s.add_dependency "actionpack", ">= 4.0"
   s.add_dependency "mongo", "~> 2.0"
 
   s.add_development_dependency "rspec-rails", "~> 3"
