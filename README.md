@@ -88,6 +88,8 @@ BUNDLE_GEMFILE=gemfiles/rails-4.1-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-4.1-mongoid.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-4.2-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-4.2-mongoid.gemfile bundle exec rake
+BUNDLE_GEMFILE=gemfiles/rails-5.0-mongo.gemfile bundle exec rake
+BUNDLE_GEMFILE=gemfiles/rails-5.0-mongoid.gemfile bundle exec rake
 ```
 
 ### Performance benchmark
