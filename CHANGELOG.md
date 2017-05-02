@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0 (unreleased)
+
+* [#31](https://github.com/mongoid/mongo_session_store/pull/31): Add Rails 5 support - [@tombruijn](https://github.com/tombruijn).
+
 ## 3.0.0 (unreleased)
 
 * Drop Ruby 1.8, 1.9 and 2.0 support - [@tombruijn](https://github.com/tombruijn).
@@ -18,7 +22,6 @@
 * [#27](https://github.com/mongoid/mongo_session_store/pull/27): Run tests against Ruby 2.3.1 and MongoDB 3.2 only - [@dblock](https://github.com/dblock).
 * [#28](https://github.com/mongoid/mongo_session_store/pull/28): Support Ruby 2.4 - [@tombruijn](https://github.com/tombruijn).
 * [#29](https://github.com/mongoid/mongo_session_store/pull/29): Use rails default session id generation - [@tombruijn](https://github.com/tombruijn).
-* [#31](https://github.com/mongoid/mongo_session_store/pull/31): Add Rails 5 support - [@tombruijn](https://github.com/tombruijn).
 * Your contribution here.
 
 ## 2.0.0
