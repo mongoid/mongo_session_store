@@ -1,9 +1,12 @@
 # Changelog
 
+## 3.2.0 (unreleased)
+
+* Your contribution here.
+
 ## 3.1.0
 
 * [#31](https://github.com/mongoid/mongo_session_store/pull/31): Add Rails 5 support - [@tombruijn](https://github.com/tombruijn).
-* Your contribution here.
 
 ## 3.0.0
 
