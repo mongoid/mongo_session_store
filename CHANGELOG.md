@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.0 (unreleased)
+## 3.0.0
 
 * Drop Ruby 1.8, 1.9 and 2.0 support - [@tombruijn](https://github.com/tombruijn).
 * Drop explicit MongoMapper support - [@tombruijn](https://github.com/tombruijn).
