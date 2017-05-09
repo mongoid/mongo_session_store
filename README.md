@@ -11,7 +11,7 @@ MongoSessionStore is a [Rails][rails]-compatible session store for
 Driver][mongo]. It also allows for custom Mongo session store that works with
 any (or no!) Mongo ODM.
 
-MongoSessionStore version 3 is compatible with Rails 4.0 through 4.2. For Rails
+MongoSessionStore version 3 is compatible with Rails 4.0 through 5.1. For Rails
 3 support please check out issue [#17][issue-rails3] for options and let us
 know if you need support.
 
@@ -90,6 +90,8 @@ BUNDLE_GEMFILE=gemfiles/rails-4.2-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-4.2-mongoid.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-5.0-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-5.0-mongoid.gemfile bundle exec rake
+BUNDLE_GEMFILE=gemfiles/rails-5.1-mongo.gemfile bundle exec rake
+BUNDLE_GEMFILE=gemfiles/rails-5.1-mongoid.gemfile bundle exec rake
 ```
 
 ### Performance benchmark

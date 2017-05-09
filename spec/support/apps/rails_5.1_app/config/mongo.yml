@@ -1,0 +1,11 @@
+defaults: &defaults
+  host: 127.0.0.1
+  port: 27017
+
+development:
+  <<: *defaults
+  database: test_database
+
+test:
+  <<: *defaults
+  database: test_database
