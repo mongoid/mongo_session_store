@@ -1,18 +1,33 @@
 require "rails_helper"
 
+current_rails_version = Gem::Version.new(Gem.loaded_specs["rails"].version)
+rails_5_version = Gem::Version.new("5.0.0")
+IS_RAILS_5 = current_rails_version > rails_5_version
+
 describe Devise::SessionsController, :type => :request do
+  def rails5?
+    IS_RAILS_5
+  end
+
+  def prepare_request_params(params)
+    params = { :params => params } if rails5?
+    params
+  end
+
   def create_user
-    post "/users",
+    post "/users", prepare_request_params(
       "user[email]" => "person@example.com",
       "user[password]" => "secret",
       "user[password_confirmation]" => "secret"
+    )
   end
 
   def sign_in
-    post "/users/sign_in",
+    post "/users/sign_in", prepare_request_params(
       "user[email]" => "person@example.com",
       "user[password]" => "secret",
       "user[password_confirmation]" => "secret"
+    )
   end
 
   def sign_out
