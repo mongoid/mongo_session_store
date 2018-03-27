@@ -1,4 +1,6 @@
 module MongoSessionStore
+  class Error < StandardError; end
+
   def self.collection_name
     @collection_name
   end
