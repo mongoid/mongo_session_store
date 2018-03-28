@@ -3,6 +3,7 @@
 ## 3.2.0 (unreleased)
 
 * [#32](https://github.com/mongoid/mongo_session_store/pull/32): Add Rails 5.1 support - [@tombruijn](https://github.com/tombruijn).
+* [#36](https://github.com/mongoid/mongo_session_store/pull/36): Add gem specific main error class - [@tombruijn](https://github.com/tombruijn).
 * Your contribution here.
 
 ## 3.1.0

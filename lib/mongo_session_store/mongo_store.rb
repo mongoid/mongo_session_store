@@ -47,7 +47,7 @@ module ActionDispatch
           end
         end
 
-        class NoMongoClientError < StandardError; end
+        class NoMongoClientError < ::MongoSessionStore::Error; end
 
         attr_accessor :_id, :data, :created_at, :updated_at
 
