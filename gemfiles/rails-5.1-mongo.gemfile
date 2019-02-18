@@ -4,6 +4,6 @@ gem "mongo"
 
 gem "rails", "~> 5.1.0"
 gem "devise", git: "https://github.com/plataformatec/devise.git", ref: "master"
-gem "sqlite3"
+gem "sqlite3", "~> 1.3.6"
 
 gemspec :path => "../"
