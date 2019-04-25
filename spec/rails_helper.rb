@@ -1,7 +1,10 @@
 ENV["RAILS_ENV"] = "test"
+rails_version = Gem.loaded_specs["rails"].version.to_s[/^\d\.\d/]
+if Gem.loaded_specs["rails"].version >= Gem::Version.new("5.2")
+  require "active_support/message_encryptor"
+end
 require "spec_helper"
 require "rails"
-rails_version = Gem.loaded_specs["rails"].version.to_s[/^\d\.\d/]
 require "support/apps/rails_#{rails_version}_app/config/environment"
 require "rspec/rails"
 
