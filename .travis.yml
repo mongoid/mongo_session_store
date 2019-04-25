@@ -22,6 +22,8 @@ gemfile:
   - gemfiles/rails-5.0-mongoid.gemfile
   - gemfiles/rails-5.1-mongo.gemfile
   - gemfiles/rails-5.1-mongoid.gemfile
+  - gemfiles/rails-5.2-mongo.gemfile
+  - gemfiles/rails-5.2-mongoid.gemfile
 
 matrix:
   fast_finish: true
@@ -49,6 +51,10 @@ matrix:
       gemfile: gemfiles/rails-5.1-mongo.gemfile
     - rvm: 2.1.10
       gemfile: gemfiles/rails-5.1-mongoid.gemfile
+    - rvm: 2.1.10
+      gemfile: gemfiles/rails-5.2-mongo.gemfile
+    - rvm: 2.1.10
+      gemfile: gemfiles/rails-5.2-mongoid.gemfile
 
 services: mongodb
 
