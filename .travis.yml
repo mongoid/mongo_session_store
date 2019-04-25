@@ -1,3 +1,7 @@
+branches:
+  only:
+  - master
+  - develop
 language: ruby
 
 cache: bundler
