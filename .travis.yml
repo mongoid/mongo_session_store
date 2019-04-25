@@ -8,8 +8,10 @@ cache: bundler
 
 rvm:
   - 2.1.10
-  - 2.3.1
-  - 2.4.1
+  - 2.3.8
+  - 2.4.5
+  - 2.5.5
+  - 2.6.3
 
 gemfile:
   - gemfiles/rails-4.0-mongo.gemfile
@@ -28,21 +30,13 @@ gemfile:
 matrix:
   fast_finish: true
   include:
-    - rvm: 2.3.1
-      gemfile: gemfiles/rails-4.2-mongo.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/rails-5.2-mongo.gemfile
       script: bundle exec rubocop
-    - rvm: 2.3.1
-      gemfile: gemfiles/rails-4.2-mongo.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/rails-5.2-mongo.gemfile
       script: bundle exec danger
   exclude:
-    - rvm: 2.4.1
-      gemfile: gemfiles/rails-4.0-mongo.gemfile
-    - rvm: 2.4.1
-      gemfile: gemfiles/rails-4.0-mongoid.gemfile
-    - rvm: 2.4.1
-      gemfile: gemfiles/rails-4.1-mongo.gemfile
-    - rvm: 2.4.1
-      gemfile: gemfiles/rails-4.1-mongoid.gemfile
     - rvm: 2.1.10
       gemfile: gemfiles/rails-5.0-mongo.gemfile
     - rvm: 2.1.10
@@ -55,6 +49,38 @@ matrix:
       gemfile: gemfiles/rails-5.2-mongo.gemfile
     - rvm: 2.1.10
       gemfile: gemfiles/rails-5.2-mongoid.gemfile
+    - rvm: 2.4.5
+      gemfile: gemfiles/rails-4.0-mongo.gemfile
+    - rvm: 2.4.5
+      gemfile: gemfiles/rails-4.0-mongoid.gemfile
+    - rvm: 2.4.5
+      gemfile: gemfiles/rails-4.1-mongo.gemfile
+    - rvm: 2.4.5
+      gemfile: gemfiles/rails-4.1-mongoid.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/rails-4.0-mongo.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/rails-4.0-mongoid.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/rails-4.1-mongo.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/rails-4.1-mongoid.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/rails-4.2-mongo.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/rails-4.2-mongoid.gemfile
+    - rvm: 2.6.3
+      gemfile: gemfiles/rails-4.0-mongo.gemfile
+    - rvm: 2.6.3
+      gemfile: gemfiles/rails-4.0-mongoid.gemfile
+    - rvm: 2.6.3
+      gemfile: gemfiles/rails-4.1-mongo.gemfile
+    - rvm: 2.6.3
+      gemfile: gemfiles/rails-4.1-mongoid.gemfile
+    - rvm: 2.6.3
+      gemfile: gemfiles/rails-4.2-mongo.gemfile
+    - rvm: 2.6.3
+      gemfile: gemfiles/rails-4.2-mongoid.gemfile
 
 services: mongodb
 
