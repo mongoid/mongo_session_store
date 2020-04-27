@@ -5,6 +5,7 @@ if Gem.loaded_specs["rails"].version >= Gem::Version.new("5.2")
 end
 require "spec_helper"
 require "rails"
+require "support/rack_app"
 require "support/apps/rails_#{rails_version}_app/config/environment"
 require "rspec/rails"
 
