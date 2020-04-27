@@ -46,7 +46,7 @@ module ActionDispatch
       end
 
       def find_or_initialize_session(id)
-        existing_session = (id && session_class.where(:_id => id).first)
+        existing_session = (id && session_class.where(:_id => id.to_s).first)
         session = existing_session if existing_session
         session ||= session_class.new(:_id => generate_sid)
         [session._id, session]
