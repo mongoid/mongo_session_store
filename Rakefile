@@ -39,10 +39,10 @@ task :release do
   raise "$EDITOR should be set" unless ENV["EDITOR"]
 
   def build_and_push_gem
-    puts '# Building gem'
-    puts `gem build #{GEMSPEC_NAME}.gemspec`
-    puts '# Publishing Gem'
-    puts `gem push #{GEM_NAME}-#{gem_version}.gem`
+    puts "# Building gem"
+    system "gem build #{GEMSPEC_NAME}.gemspec"
+    puts "# Publishing Gem"
+    system "gem push #{GEM_NAME}-#{gem_version}.gem"
   end
 
   def update_repo
