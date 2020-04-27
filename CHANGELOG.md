@@ -2,6 +2,7 @@
 
 ## (unreleased)
 
+* [#45](https://github.com/mongoid/mongo_session_store/pull/45): Add Rails 6.0 to test setup - [@tombruijn](https://github.com/tombruijn).
 * Your contribution here.
 
 ## 3.2.0
