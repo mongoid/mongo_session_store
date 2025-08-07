@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -eu
+
+export BUNDLE_GEMFILE
+export BUNDLE_PATH="/app/tmp/bundler/$RUBY_VERSION/$BUNDLE_GEMFILE"
+
+ruby_version=$(ruby -e 'puts RUBY_VERSION')
+major=$(echo "$ruby_version" | cut -d. -f1)
+minor=$(echo "$ruby_version" | cut -d. -f2)
+
+if [ "$major" -lt 2 ] || ([ "$major" -eq 2 ] && [ "$minor" -le 7 ]); then
+  gem install bundler -v 1.17.3
+else
+  gem install bundler
+fi
+
+bundle install
+bundle exec rspec

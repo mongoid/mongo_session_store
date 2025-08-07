@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -eu
+
+if [ -z "${BUNDLE_GEMFILE:-}" ]; then
+  echo "Error: BUNDLE_GEMFILE environment variable is required"
+  echo "Example: BUNDLE_GEMFILE=gemfiles/rails-6.0-mongo.gemfile script/test"
+  exit 1
+fi
+
+RUBY_VERSION=${RUBY_VERSION:-3.4}
+
+docker run --rm -it \
+  --network mongo_session_store_default \
+  -e MONGODB_HOST=mongodb \
+  -e BUNDLE_GEMFILE="${BUNDLE_GEMFILE}" \
+  -v "$(pwd):/app" \
+  -w /app \
+  "ruby:${RUBY_VERSION}" \
+  /app/script/test_inner
