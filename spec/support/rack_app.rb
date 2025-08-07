@@ -9,6 +9,8 @@ class MyApp
 end
 
 MyAppWrapped = Rack::Builder.new do |builder|
-  builder.use Rack::Session::Cookie, :secret => "Very secret secret"
+  if defined?(Rack::Session::Cookie)
+    builder.use Rack::Session::Cookie, :secret => "Very secret secret"
+  end
   builder.run MyApp.new
 end

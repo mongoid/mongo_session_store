@@ -1,9 +1,0 @@
-You are signed
-<% if user_signed_in? %>
-  in as <%= current_user.email %>.
-  <%= form_tag destroy_user_session_path, :method => :delete do %>
-    <%= button_tag "Sign out" %>
-  <% end %>
-<% else %>
-  out.  <%= link_to "Sign in", new_user_session_path %>
-<% end %>

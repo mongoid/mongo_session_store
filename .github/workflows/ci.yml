@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: "${{ !contains(github.ref, 'main')}}"
+
+jobs:
+  test:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: 
+          - "3.4"
+          - "3.3"
+        gemfile:
+          - gemfiles/rails-6.0-mongo.gemfile
+          - gemfiles/rails-6.0-mongoid.gemfile
+        include:
+          - gemfile: gemfiles/rails-5.2-mongo.gemfile
+            ruby: "2.7"
+          - gemfile: gemfiles/rails-5.2-mongoid.gemfile
+            ruby: "2.7"
+          - gemfile: gemfiles/rails-5.1-mongo.gemfile
+            ruby: "2.6"
+          - gemfile: gemfiles/rails-5.1-mongoid.gemfile
+            ruby: "2.6"
+          - gemfile: gemfiles/rails-5.0-mongo.gemfile
+            ruby: "2.6"
+          - gemfile: gemfiles/rails-5.0-mongoid.gemfile
+            ruby: "2.6"
+
+    services:
+      mongodb:
+        image: mongo:3.6
+        ports:
+          - 27017:27017
+
+    env:
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Run tests
+        run: bundle exec rake test
+
+  rubocop:
+    name: "RuboCop"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          gemfile: gemfiles/rails-6.0-mongo.gemfile
+          bundler-cache: true
+
+      - name: Run RuboCop
+        run: bundle exec rubocop

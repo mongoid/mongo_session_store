@@ -27,6 +27,7 @@ RSpec.configure do |config|
   config.before :suite do
     Mongo::Logger.logger.level = ::Logger::INFO
 
+    mongodb_host = ENV["MONGODB_HOST"] || "127.0.0.1"
     if mongo_orm == "mongoid"
       Mongoid.logger.level = Logger::INFO
       Mongoid.configure do |c|
@@ -34,14 +35,14 @@ RSpec.configure do |config|
           "clients" => {
             "default" => {
               "database" => TestDatabaseHelper.test_database_name,
-              "hosts" => ["127.0.0.1:27017"]
+              "hosts" => ["#{mongodb_host}:27017"]
             }
           }
         )
       end
     else
       MongoStore::Session.database = Mongo::Client.new(
-        ["127.0.0.1:27017"],
+        ["#{mongodb_host}:27017"],
         :database => TestDatabaseHelper.test_database_name
       )
     end

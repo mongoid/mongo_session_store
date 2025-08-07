@@ -38,6 +38,7 @@ module ActionDispatch
 
         def unpack(packed)
           return unless packed
+
           if packed.respond_to? :data
             Marshal.load(packed.data)
           else
