@@ -18,7 +18,9 @@ Gem::Specification.new do |s|
   s.add_dependency "mongo", "~> 2.0"
 
   s.add_development_dependency "capybara", "~> 2.15.0"
-  s.add_development_dependency "mongoid-danger", "~> 0.1.0"
+  s.add_development_dependency "danger"
+  s.add_development_dependency "danger-changelog"
+  s.add_development_dependency "danger-pr-comment"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec-rails", ">= 4.0"
 end
