@@ -21,6 +21,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "capybara", "~> 2.15.0"
   s.add_development_dependency "pry", "~> 0.10"
   s.add_development_dependency "rake", "~> 11"
-  s.add_development_dependency "rubocop", "0.45.0"
   s.add_development_dependency "mongoid-danger", "~> 0.1.0"
+  s.add_development_dependency "rubocop", "1.84.1"
 end
