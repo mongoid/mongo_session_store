@@ -15,7 +15,7 @@ describe Devise::SessionsController, :type => :request do
   end
 
   def create_user
-    post "/users", prepare_request_params(
+    post "/users", **prepare_request_params(
       "user[email]" => "person@example.com",
       "user[password]" => "secret",
       "user[password_confirmation]" => "secret"
@@ -23,7 +23,7 @@ describe Devise::SessionsController, :type => :request do
   end
 
   def sign_in
-    post "/users/sign_in", prepare_request_params(
+    post "/users/sign_in", **prepare_request_params(
       "user[email]" => "person@example.com",
       "user[password]" => "secret",
       "user[password_confirmation]" => "secret"

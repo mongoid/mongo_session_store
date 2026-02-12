@@ -1,4 +1,4 @@
-require File.expand_path("../lib/mongo_session_store/version", __FILE__)
+require File.expand_path("lib/mongo_session_store/version", __dir__)
 
 Gem::Specification.new do |s|
   s.name = "mongo_session_store"
@@ -17,10 +17,8 @@ Gem::Specification.new do |s|
   s.add_dependency "actionpack", ">= 4.0"
   s.add_dependency "mongo", "~> 2.0"
 
-  s.add_development_dependency "rspec-rails", "~> 3.6"
   s.add_development_dependency "capybara", "~> 2.15.0"
-  s.add_development_dependency "pry", "~> 0.10"
-  s.add_development_dependency "rake", "~> 11"
-  s.add_development_dependency "rubocop", "0.45.0"
   s.add_development_dependency "mongoid-danger", "~> 0.1.0"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rspec-rails", ">= 4.0"
 end

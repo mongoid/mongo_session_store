@@ -5,5 +5,8 @@ gem "mongo"
 gem "rails", "~> 6.0.0"
 gem "devise", "~> 4.7.0"
 gem "sqlite3", "~> 1.4.0"
+gem "bigdecimal"
+gem "mutex_m"
+gem "drb"
 
 gemspec :path => "../"

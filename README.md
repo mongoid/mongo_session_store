@@ -11,7 +11,7 @@ MongoSessionStore is a [Rails][rails]-compatible session store for
 Driver][mongo]. It also allows for custom Mongo session store that works with
 any (or no!) Mongo ODM.
 
-MongoSessionStore version 3 is compatible with Rails 4.0 through 5.2. For Rails
+MongoSessionStore version 3 is compatible with Rails 5.0+. For Rails
 3 support please check out issue [#17][issue-rails3] for options and let us
 know if you need support.
 
@@ -70,10 +70,20 @@ MongoStore::Session.where("updated_at" => { "$gt" => 2.days.ago })
 
 ## Development
 
+### Test environment
+
+Start MongoDB with this script:
+
+```
+script/testenv
+```
+
 ### Testing
 
 To run the tests for a specific store. You must first set a `BUNDLE_GEMFILE` in
 the environment.
+
+You can also use Docker, see the section below this one.
 
 ```sh
 bundle exec rake
@@ -82,12 +92,6 @@ bundle exec rake
 Examples:
 
 ```sh
-BUNDLE_GEMFILE=gemfiles/rails-4.0-mongo.gemfile bundle exec rake
-BUNDLE_GEMFILE=gemfiles/rails-4.0-mongoid.gemfile bundle exec rake
-BUNDLE_GEMFILE=gemfiles/rails-4.1-mongo.gemfile bundle exec rake
-BUNDLE_GEMFILE=gemfiles/rails-4.1-mongoid.gemfile bundle exec rake
-BUNDLE_GEMFILE=gemfiles/rails-4.2-mongo.gemfile bundle exec rake
-BUNDLE_GEMFILE=gemfiles/rails-4.2-mongoid.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-5.0-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-5.0-mongoid.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-5.1-mongo.gemfile bundle exec rake
@@ -96,6 +100,20 @@ BUNDLE_GEMFILE=gemfiles/rails-5.2-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-5.2-mongoid.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-6.0-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-6.0-mongoid.gemfile bundle exec rake
+```
+
+#### Docker testing
+
+To run tests in a Docker container with a specific Ruby version and gemfile:
+
+```sh
+BUNDLE_GEMFILE=gemfiles/rails-6.0-mongo.gemfile script/test
+```
+
+The `BUNDLE_GEMFILE` environment variable is required. Ruby version defaults to 3.4 but can be customized:
+
+```sh
+RUBY_VERSION=2.7 BUNDLE_GEMFILE=gemfiles/rails-6.0-mongo.gemfile script/test
 ```
 
 ### Performance benchmark
