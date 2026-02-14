@@ -2,6 +2,7 @@
 
 ## (unreleased)
 
+* [#48](https://github.com/mongoid/mongo_session_store/pull/48): Migrate Danger to danger-pr-comment - [@dblock](https://github.com/dblock).
 * Your contribution here.
 
 ## 3.2.1
