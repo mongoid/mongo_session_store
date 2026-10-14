@@ -1,8 +1,8 @@
 # MongoSessionStore
 
-[![Build Status](https://travis-ci.org/mongoid/mongo_session_store.svg?branch=master)](https://travis-ci.org/mongoid/mongo_session_store)
+[![CI](https://github.com/mongoid/mongo_session_store/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mongoid/mongo_session_store/actions/workflows/ci.yml?query=branch%3Amain)
 [![Gem Version](https://badge.fury.io/rb/mongo_session_store.svg)](http://badge.fury.io/rb/mongo_session_store)
-[![Code Climate](https://codeclimate.com/github/mongoid/mongo_session_store/badges/gpa.svg)](https://codeclimate.com/github/mongoid/mongo_session_store)
+[![Coverage Status](https://coveralls.io/repos/github/mongoid/mongo_session_store/badge.svg?branch=main)](https://coveralls.io/github/mongoid/mongo_session_store?branch=main)
 
 ## Description
 
@@ -162,5 +162,7 @@ Released under the MIT license. See the [LICENSE](LICENSE) file.
 
 [issue-rails3]: https://github.com/mongoid/mongo_session_store/issues/17
 ## CI compatibility
+
+CI measures both adapters with `COVERAGE=true` in one Ruby 4.0 job, runs each suite with a distinct SimpleCov command name, and uploads the actual combined result sets once through the official Coveralls action using `GITHUB_TOKEN`; the Coveralls badge reflects upstream `main` reports when the repository is enabled on Coveralls.
 
 CI retains the Rails 5.0–6.0 dependency files and exercises both Mongo and Mongoid session stores with Rails 8.1, Mongoid 9, Ruby 3.4/4.0 and MongoDB 8.0; use `BUNDLE_GEMFILE=gemfiles/rails-8.1-mongoid.gemfile bundle exec rake test` for the modern Mongoid suite, which shares the minimal Rails 6 integration app.

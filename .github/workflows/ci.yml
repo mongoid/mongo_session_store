@@ -41,6 +41,7 @@ jobs:
           - gemfile: gemfiles/rails-8.1-mongoid.gemfile
             ruby: "4.0"
             mongodb: "8.0"
+            coverage: "true"
           - gemfile: gemfiles/rails-5.2-mongo.gemfile
             ruby: "2.7"
           - gemfile: gemfiles/rails-5.2-mongoid.gemfile
@@ -67,6 +68,7 @@ jobs:
 
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      COVERAGE: ${{ matrix.coverage }}
 
     steps:
       - name: Checkout project
@@ -80,6 +82,22 @@ jobs:
 
       - name: Run tests
         run: bundle exec rake test
+
+      - name: Cover Mongo adapter
+        if: ${{ matrix.coverage == 'true' }}
+        env:
+          BUNDLE_GEMFILE: gemfiles/rails-8.1-mongo.gemfile
+        run: |
+          bundle install --jobs 4 --retry 3
+          bundle exec rake test
+
+      - name: Report coverage
+        if: ${{ matrix.coverage == 'true' }}
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: coverage/.resultset.json
+          format: simplecov
 
   rubocop:
     name: "RuboCop"

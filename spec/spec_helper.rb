@@ -1,3 +1,12 @@
+if ENV["COVERAGE"] == "true"
+  require "simplecov"
+  SimpleCov.command_name "RSpec #{Gem.loaded_specs.key?("mongoid") ? "Mongoid" : "Mongo"}"
+  SimpleCov.start do
+    track_files "lib/**/*.rb"
+    add_filter "/spec/"
+  end
+end
+
 require "logger"
 require "mongo"
 require "mongoid" if Gem.loaded_specs["mongoid"]
