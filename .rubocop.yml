@@ -1,7 +1,16 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
-  TargetRubyVersion: 2.0
+  TargetRubyVersion: 2.6
+  NewCops: enable
   Include:
-    - "Gemfile"
+    - "**/*.rb"
+    - "**/*.gemspec"
+    - "**/*.gemfile"
+    - "**/Gemfile"
+    - "**/Gemfile.danger"
+    - "**/Rakefile"
+    - "**/Dangerfile"
   Exclude:
     - "gemfiles/vendor/**/*"
     - "perf/benchmark.rb"

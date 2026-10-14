@@ -1,0 +1,3 @@
+eval_gemfile "rails-current-mongo.gemfile"
+
+gem "mongoid", ENV.fetch("MONGOID_VERSION", "~> 9.0")

@@ -4,16 +4,24 @@ on:
   pull_request:
     types: [opened, reopened, edited, synchronize]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: danger-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   danger:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     env:
       BUNDLE_GEMFILE: Gemfile.danger
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -27,8 +35,8 @@ jobs:
         id: danger
         continue-on-error: true
         env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN || github.token }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN || github.token }}
+          DANGER_GITHUB_API_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
           DANGER_REPORT_PATH: ${{ runner.temp }}/danger-report.json
         run: bundle exec danger dry_run
 
