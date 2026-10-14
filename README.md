@@ -1,8 +1,8 @@
 # MongoSessionStore
 
-[![Build Status](https://travis-ci.org/mongoid/mongo_session_store.svg?branch=master)](https://travis-ci.org/mongoid/mongo_session_store)
+[![CI](https://github.com/mongoid/mongo_session_store/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mongoid/mongo_session_store/actions/workflows/ci.yml?query=branch%3Amain)
 [![Gem Version](https://badge.fury.io/rb/mongo_session_store.svg)](http://badge.fury.io/rb/mongo_session_store)
-[![Code Climate](https://codeclimate.com/github/mongoid/mongo_session_store/badges/gpa.svg)](https://codeclimate.com/github/mongoid/mongo_session_store)
+[![Coverage Status](https://coveralls.io/repos/github/mongoid/mongo_session_store/badge.svg?branch=main)](https://coveralls.io/github/mongoid/mongo_session_store?branch=main)
 
 ## Description
 
@@ -101,6 +101,16 @@ BUNDLE_GEMFILE=gemfiles/rails-5.2-mongoid.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-6.0-mongo.gemfile bundle exec rake
 BUNDLE_GEMFILE=gemfiles/rails-6.0-mongoid.gemfile bundle exec rake
 ```
+
+For Rails 6.1 and newer, use `gemfiles/rails-current-mongo.gemfile` or `gemfiles/rails-current-mongoid.gemfile` with `RAILS_VERSION` and, for Mongoid, `MONGOID_VERSION` constraints:
+
+```sh
+RAILS_VERSION='~> 7.2.0' MONGOID_VERSION='~> 9.0' BUNDLE_GEMFILE=gemfiles/rails-current-mongoid.gemfile bundle exec rake test
+```
+
+For Rails 8.0, also set `SQLITE_VERSION='~> 2.1'`; the dedicated Rails 8.1 Gemfiles already select SQLite 2.
+
+Set `MONGODB_HOST` and `MONGODB_PORT` to use a non-default test server. The default is `127.0.0.1:27017`.
 
 #### Docker testing
 

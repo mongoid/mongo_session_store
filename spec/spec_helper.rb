@@ -1,3 +1,12 @@
+if ENV["COVERAGE"] == "true"
+  require "simplecov"
+  SimpleCov.command_name "RSpec #{Gem.loaded_specs.key?("mongoid") ? "Mongoid" : "Mongo"}"
+  SimpleCov.start do
+    track_files "lib/**/*.rb"
+    add_filter "/spec/"
+  end
+end
+
 require "logger"
 require "mongo"
 require "mongoid" if Gem.loaded_specs["mongoid"]
@@ -29,6 +38,7 @@ RSpec.configure do |config|
     Mongo::Logger.logger.level = ::Logger::INFO
 
     mongodb_host = ENV["MONGODB_HOST"] || "127.0.0.1"
+    mongodb_port = ENV["MONGODB_PORT"] || "27017"
     if mongo_orm == "mongoid"
       Mongoid.logger.level = Logger::INFO
       Mongoid.configure do |c|
@@ -36,14 +46,14 @@ RSpec.configure do |config|
           "clients" => {
             "default" => {
               "database" => TestDatabaseHelper.test_database_name,
-              "hosts" => ["#{mongodb_host}:27017"]
+              "hosts" => ["#{mongodb_host}:#{mongodb_port}"]
             }
           }
         )
       end
     else
       MongoStore::Session.database = Mongo::Client.new(
-        ["#{mongodb_host}:27017"],
+        ["#{mongodb_host}:#{mongodb_port}"],
         :database => TestDatabaseHelper.test_database_name
       )
     end

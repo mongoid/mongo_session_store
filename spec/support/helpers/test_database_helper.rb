@@ -6,9 +6,7 @@ module TestDatabaseHelper
     when "mongoid"
       MongoidStore::Session.mongo_client
     when "mongo"
-      Mongo::Client
-        .new(["127.0.0.1:27017"], :database => test_database_name)
-        .database
+      MongoStore::Session.database.database
     end
   end
 

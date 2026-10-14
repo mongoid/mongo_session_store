@@ -1,0 +1,15 @@
+source "https://rubygems.org"
+
+gem "rails", ENV.fetch("RAILS_VERSION", "~> 7.2.0")
+gem "mongo", "~> 2.0"
+gem "devise", "~> 4.9"
+gem "sqlite3", ENV.fetch("SQLITE_VERSION", "~> 1.4")
+gem "logger"
+gem "bigdecimal"
+gem "mutex_m"
+gem "drb"
+gem "base64"
+gem "benchmark"
+gem "ostruct"
+
+gemspec :path => "../"

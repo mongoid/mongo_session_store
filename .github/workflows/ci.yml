@@ -12,23 +12,37 @@ on:
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
-  cancel-in-progress: "${{ !contains(github.ref, 'main')}}"
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
 
 jobs:
   test:
-    name: "Run tests"
-    runs-on: ubuntu-latest
+    name: "Ruby ${{ matrix.ruby }} / ${{ matrix.gemfile }} / Rails ${{ matrix.rails || 'pinned' }}"
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
 
     strategy:
       fail-fast: false
       matrix:
-        ruby: 
+        ruby:
           - "3.4"
           - "3.3"
         gemfile:
           - gemfiles/rails-6.0-mongo.gemfile
           - gemfiles/rails-6.0-mongoid.gemfile
         include:
+          - { ruby: "3.1", rails: "~> 6.1.0", mongoid: "~> 8.0", mongodb: "6.0", gemfile: gemfiles/rails-current-mongo.gemfile }
+          - { ruby: "3.1", rails: "~> 6.1.0", mongoid: "~> 8.0", mongodb: "6.0", gemfile: gemfiles/rails-current-mongoid.gemfile }
+          - { ruby: "3.1", rails: "~> 7.0.0", mongoid: "~> 8.0", mongodb: "6.0", gemfile: gemfiles/rails-current-mongo.gemfile }
+          - { ruby: "3.1", rails: "~> 7.0.0", mongoid: "~> 8.0", mongodb: "6.0", gemfile: gemfiles/rails-current-mongoid.gemfile }
+          - { ruby: "3.2", rails: "~> 7.1.0", mongoid: "~> 8.0", mongodb: "6.0", gemfile: gemfiles/rails-current-mongo.gemfile }
+          - { ruby: "3.2", rails: "~> 7.1.0", mongoid: "~> 8.0", mongodb: "6.0", gemfile: gemfiles/rails-current-mongoid.gemfile }
+          - { ruby: "3.3", rails: "~> 7.2.0", mongoid: "~> 9.0", mongodb: "7.0", gemfile: gemfiles/rails-current-mongo.gemfile }
+          - { ruby: "3.3", rails: "~> 7.2.0", mongoid: "~> 9.0", mongodb: "7.0", gemfile: gemfiles/rails-current-mongoid.gemfile }
+          - { ruby: "3.4", rails: "~> 8.0.0", mongoid: "~> 9.0", mongodb: "8.0", sqlite: "~> 2.1", gemfile: gemfiles/rails-current-mongo.gemfile }
+          - { ruby: "3.4", rails: "~> 8.0.0", mongoid: "~> 9.0", mongodb: "8.0", sqlite: "~> 2.1", gemfile: gemfiles/rails-current-mongoid.gemfile }
           - gemfile: gemfiles/rails-8.1-mongo.gemfile
             ruby: "3.4"
             mongodb: "8.0"
@@ -41,6 +55,7 @@ jobs:
           - gemfile: gemfiles/rails-8.1-mongoid.gemfile
             ruby: "4.0"
             mongodb: "8.0"
+            coverage: "true"
           - gemfile: gemfiles/rails-5.2-mongo.gemfile
             ruby: "2.7"
           - gemfile: gemfiles/rails-5.2-mongoid.gemfile
@@ -60,13 +75,17 @@ jobs:
         ports:
           - 27017:27017
         options: >-
-          --health-cmd "mongosh --quiet --eval 'db.adminCommand({ping: 1})' || mongo --quiet --eval 'db.adminCommand({ping: 1})'"
+          --health-cmd "bash -c 'echo > /dev/tcp/127.0.0.1/27017'"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 10
 
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      COVERAGE: ${{ matrix.coverage }}
+      RAILS_VERSION: ${{ matrix.rails }}
+      MONGOID_VERSION: ${{ matrix.mongoid }}
+      SQLITE_VERSION: ${{ matrix.sqlite || '~> 1.4' }}
 
     steps:
       - name: Checkout project
@@ -81,9 +100,26 @@ jobs:
       - name: Run tests
         run: bundle exec rake test
 
+      - name: Cover Mongo adapter
+        if: ${{ matrix.coverage == 'true' }}
+        env:
+          BUNDLE_GEMFILE: gemfiles/rails-8.1-mongo.gemfile
+        run: |
+          bundle install --jobs 4 --retry 3
+          bundle exec rake test
+
+      - name: Report coverage
+        if: ${{ matrix.coverage == 'true' }}
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: coverage/.resultset.json
+          format: simplecov
+
   rubocop:
     name: "RuboCop"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout project

@@ -2,4 +2,4 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "rubocop", "1.84.1"
+gem "rubocop", "1.92.0"
