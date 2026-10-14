@@ -29,6 +29,18 @@ jobs:
           - gemfiles/rails-6.0-mongo.gemfile
           - gemfiles/rails-6.0-mongoid.gemfile
         include:
+          - gemfile: gemfiles/rails-8.1-mongo.gemfile
+            ruby: "3.4"
+            mongodb: "8.0"
+          - gemfile: gemfiles/rails-8.1-mongoid.gemfile
+            ruby: "3.4"
+            mongodb: "8.0"
+          - gemfile: gemfiles/rails-8.1-mongo.gemfile
+            ruby: "4.0"
+            mongodb: "8.0"
+          - gemfile: gemfiles/rails-8.1-mongoid.gemfile
+            ruby: "4.0"
+            mongodb: "8.0"
           - gemfile: gemfiles/rails-5.2-mongo.gemfile
             ruby: "2.7"
           - gemfile: gemfiles/rails-5.2-mongoid.gemfile
@@ -44,16 +56,21 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:3.6
+        image: mongo:${{ matrix.mongodb || '4.4' }}
         ports:
           - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand({ping: 1})' || mongo --quiet --eval 'db.adminCommand({ping: 1})'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
 
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
 
     steps:
       - name: Checkout project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -70,7 +87,7 @@ jobs:
 
     steps:
       - name: Checkout project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

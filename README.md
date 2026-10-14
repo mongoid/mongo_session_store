@@ -161,3 +161,6 @@ Released under the MIT license. See the [LICENSE](LICENSE) file.
 [rails]: http://rubyonrails.org/
 
 [issue-rails3]: https://github.com/mongoid/mongo_session_store/issues/17
+## CI compatibility
+
+CI retains the Rails 5.0–6.0 dependency files and exercises both Mongo and Mongoid session stores with Rails 8.1, Mongoid 9, Ruby 3.4/4.0 and MongoDB 8.0; use `BUNDLE_GEMFILE=gemfiles/rails-8.1-mongoid.gemfile bundle exec rake test` for the modern Mongoid suite, which shares the minimal Rails 6 integration app.
