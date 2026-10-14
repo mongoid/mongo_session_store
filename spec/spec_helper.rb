@@ -1,3 +1,4 @@
+require "logger"
 require "mongo"
 require "mongoid" if Gem.loaded_specs["mongoid"]
 require "mongo_session_store"

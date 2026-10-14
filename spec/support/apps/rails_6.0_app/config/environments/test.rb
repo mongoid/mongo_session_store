@@ -31,7 +31,7 @@ Rails.application.configure do
   config.action_controller.allow_forgery_protection = false
 
   # Print deprecation notices to the stderr.
-  config.active_support.deprecation = :stderr
+  config.active_support.deprecation = :stderr if Rails.gem_version < Gem::Version.new("7.1")
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true

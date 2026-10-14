@@ -1,5 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 rails_version = Gem.loaded_specs["rails"].version.to_s[/^\d\.\d/]
+# Modern Rails uses the same minimal integration app as Rails 6.
+rails_version = "6.0" if Gem.loaded_specs["rails"].version >= Gem::Version.new("7.0")
 if Gem.loaded_specs["rails"].version >= Gem::Version.new("5.2")
   require "active_support/message_encryptor"
 end

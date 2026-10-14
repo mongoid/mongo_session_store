@@ -1,3 +1,4 @@
+require "action_dispatch"
 require "action_dispatch/middleware/session/abstract_store"
 
 module ActionDispatch
