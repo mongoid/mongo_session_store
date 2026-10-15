@@ -1,5 +1,9 @@
 # Changelog
 
+## (unreleased)
+
+* Your contribution here.
+
 ## 3.2.2 (2026/10/14)
 
 * [#51](https://github.com/mongoid/mongo_session_store/pull/51): Modernize CI through Ruby 4.0, Rails 8.1, Mongoid 9 and MongoDB 8 while retaining legacy Rails combinations - [@dblock](https://github.com/dblock).
