@@ -80,6 +80,28 @@ session[:search] = params.require(:search).permit(:query, :sort).to_h
 
 This stores the permitted values without the request context. It does not make uploaded files or other non-serializable values serializable; store a durable identifier for those instead.
 
+### Deleting stale sessions
+
+Sessions are not automatically expired or deleted. To opt in to cleanup, call the store's `delete_stale_sessions` method with an explicit `Time` cutoff:
+
+```ruby
+# Mongoid
+MongoidStore.delete_stale_sessions(before: 1.week.ago)
+
+# MongoDB Ruby Driver
+MongoStore.delete_stale_sessions(before: 1.week.ago)
+```
+
+The method returns the number deleted and uses the configured session collection. It performs a bulk database deletion without loading session data or running model callbacks. Only records whose `updated_at` is strictly earlier than the cutoff are deleted; records at the cutoff or without a timestamp are retained. Invalid cutoffs raise `ArgumentError`, and database errors propagate to the caller.
+
+Run cleanup explicitly from a scheduled job or a Rails runner command, choosing a retention policy appropriate for your application:
+
+```sh
+bin/rails runner 'MongoidStore.delete_stale_sessions(before: 1.week.ago)'
+```
+
+Deleting a session signs that session out on its next request. Cleanup is not cookie expiration or a guarantee of inactivity-based logout: `updated_at` tracks session saves, and a request that does not save the session may not refresh it. No default maximum age, background job, or TTL index is installed. For large collections, consider creating an ordinary index on `updated_at` as part of your database setup.
+
 ## Development
 
 ### Test environment
