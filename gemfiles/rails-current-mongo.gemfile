@@ -11,5 +11,6 @@ gem "drb"
 gem "base64"
 gem "benchmark"
 gem "ostruct"
+gem "simplecov", "~> 0.22", :require => false if ENV["COVERAGE"] == "true"
 
 gemspec :path => "../"
