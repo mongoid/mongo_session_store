@@ -68,6 +68,18 @@ MongoidStore::Session.where(:updated_at.gt => 2.days.ago)
 MongoStore::Session.where("updated_at" => { "$gt" => 2.days.ago })
 ```
 
+### Serializable session values
+
+Both adapters serialize session data with Ruby's `Marshal`. Store serializable values such as strings, numbers, arrays, and hashes, not requests, input streams, or uploaded files. Serialization errors are raised rather than silently discarding data.
+
+Do not store `ActionController::Parameters` objects directly in the session. On Rails 7 and newer, their logging context can retain the request and its input stream, causing `TypeError: can't dump IO` (or a similar error for `StringIO`). A nested `params[:search]` object can retain that context too. Explicitly permit the values your application needs and convert them to a hash before saving:
+
+```ruby
+session[:search] = params.require(:search).permit(:query, :sort).to_h
+```
+
+This stores the permitted values without the request context. It does not make uploaded files or other non-serializable values serializable; store a durable identifier for those instead.
+
 ## Development
 
 ### Test environment
