@@ -16,6 +16,12 @@ module ActionDispatch
         self::Session
       end
 
+      def self.delete_stale_sessions(before:)
+        raise ArgumentError, "before must be a Time" unless before.is_a?(Time)
+
+        session_class.collection.find("updated_at" => { "$lt" => before.getutc }).delete_many.deleted_count
+      end
+
       private
 
       def session_class

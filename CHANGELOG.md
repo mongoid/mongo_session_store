@@ -2,6 +2,7 @@
 
 ## (unreleased)
 
+* [#55](https://github.com/mongoid/mongo_session_store/pull/55): Add explicit bulk stale-session cleanup with an application-selected cutoff for both adapters - [@dblock](https://github.com/dblock).
 * [#54](https://github.com/mongoid/mongo_session_store/pull/54): Document and test storing permitted parameter hashes rather than request-bearing Rails parameter objects in sessions - [@dblock](https://github.com/dblock).
 * [#53](https://github.com/mongoid/mongo_session_store/pull/53): Cover Rails 6.1 through 8.0 in CI, update RuboCop, isolate Danger permissions, and report both adapters' coverage to Coveralls - [@dblock](https://github.com/dblock).
 * Your contribution here.
