@@ -92,7 +92,7 @@ module ActionDispatch
         end
 
         def unpack(packed)
-          self.class.unpack(packed)
+          self.class.send(:unpack, packed)
         end
       end
     end
