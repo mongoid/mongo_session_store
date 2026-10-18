@@ -1,10 +1,9 @@
-### 3.2.3 (Next)
+### 3.3.0 (2026/10/18)
 
 * [#57](https://github.com/mongoid/mongo_session_store/pull/57): Cover legacy session decoding and fix private decoder delegation in the plain-driver adapter - [@dblock](https://github.com/dblock).
 * [#55](https://github.com/mongoid/mongo_session_store/pull/55): Add explicit bulk stale-session cleanup with an application-selected cutoff for both adapters - [@dblock](https://github.com/dblock).
 * [#54](https://github.com/mongoid/mongo_session_store/pull/54): Document and test storing permitted parameter hashes rather than request-bearing Rails parameter objects in sessions - [@dblock](https://github.com/dblock).
 * [#53](https://github.com/mongoid/mongo_session_store/pull/53): Cover Rails 6.1 through 8.0 in CI, update RuboCop, isolate Danger permissions, and report both adapters' coverage to Coveralls - [@dblock](https://github.com/dblock).
-* Your contribution here.
 
 ### 3.2.2 (2026/10/14)
 
