@@ -1,3 +1,7 @@
+### 3.3.1 (Next)
+
+* Your contribution here.
+
 ### 3.3.0 (2026/10/18)
 
 * [#57](https://github.com/mongoid/mongo_session_store/pull/57): Cover legacy session decoding and fix private decoder delegation in the plain-driver adapter - [@dblock](https://github.com/dblock).
