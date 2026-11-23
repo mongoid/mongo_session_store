@@ -1,37 +1,35 @@
-# Releasing
+# Releasing MongoSessionStore
 
-Release from a clean local checkout of the upstream repository, not a fork. You need push access, RubyGems ownership with MFA, and an authenticated GitHub CLI.
+Releases use [ruby-gem-release](https://github.com/dblock/ruby-gem-release) 0.9.0 through a manually dispatched [Release workflow](.github/workflows/release.yml). Keep the `ruby-gem-release` gem in [Gemfile](Gemfile) and the reusable workflow in `release.yml` pinned to the same version. The workflow publishes through RubyGems Trusted Publishing, so no RubyGems API key or one-time password is needed. It only runs from `main` in `mongoid/mongo_session_store`. The local Bundler `rake release`, `release:rubygem_push`, and `release:source_control_push` tasks are disabled.
+
+## One-Time Setup
+
+Before the first automated release, a maintainer must:
+
+1. Create the GitHub environment `release` in `mongoid/mongo_session_store`, for example with `gh api --method PUT repos/mongoid/mongo_session_store/environments/release`, and restrict its deployment branches to `main`. Add required reviewers to require maintainer approval before publication.
+2. At [mongo_session_store's trusted publishers](https://rubygems.org/gems/mongo_session_store/trusted_publishers), add a GitHub Actions publisher with repository owner `mongoid`, repository `mongo_session_store`, workflow filename `release.yml`, environment `release`, and the separate workflow repository owner `dblock` and repository `ruby-gem-release`.
+3. Allow GitHub Actions to push release commits and `v*` tags to `main`. See the upstream [setup and permissions guidance](https://github.com/dblock/ruby-gem-release/blob/v0.9.0/RELEASING.md#one-time-setup).
+
+Verify the setup without publishing with a [dry run](https://github.com/dblock/ruby-gem-release/blob/v0.9.0/docs/actions/release.md#dry-run), which never edits files, builds, pushes, or publishes:
+
+```sh
+gh workflow run release.yml --repo mongoid/mongo_session_store --ref main -f dry-run=true
+```
 
 ## Prepare
 
-1. Run `git switch main`, `git pull --ff-only`, and confirm that `origin` points to `mongoid/mongo_session_store`.
-2. Choose the next semantic version, update `lib/mongo_session_store/version.rb`, and replace the unreleased changelog heading with the version and release date. Remove the contribution placeholder.
-3. With MongoDB running, install dependencies and run `bundle exec rake test` using each supported adapter's `BUNDLE_GEMFILE`, for example `gemfiles/rails-6.0-mongo.gemfile` and `gemfiles/rails-6.0-mongoid.gemfile`. Run `bundle exec rubocop` with the default Gemfile.
-4. Commit the preparation, push `main`, and wait for the complete GitHub Actions matrix to pass for that commit.
+Start with a clean, up-to-date `main` and verify that the latest [CI checks](https://github.com/mongoid/mongo_session_store/actions) pass. Follow semantic versioning: patch for fixes, minor for backward-compatible features, major for breaking changes. Check `VERSION` in [lib/mongo_session_store/version.rb](lib/mongo_session_store/version.rb) and the matching `(Next)` heading in [CHANGELOG.md](CHANGELOG.md), and change both in a pull request if needed, or pass a `version` override when dispatching. The workflow dates the `(Next)` heading using `YYYY/MM/DD` and removes the `* Your contribution here.` placeholder; a section without notes cannot be released.
+
+Release automation requires MRI Ruby 3.3 or newer; the release dependency and tasks are skipped on older Ruby versions and JRuby. Release specs in [spec/release](spec/release) run the actual release tasks against a local fixture with the [ruby-gem-release RSpec helpers](https://github.com/dblock/ruby-gem-release/blob/v0.9.0/docs/testing.md), without contacting RubyGems or GitHub.
 
 ## Publish
 
-Do not use the legacy `rake release` task: it assumes `master` and performs interactive edits. Build and publish the prepared version explicitly:
-
 ```sh
-version=3.2.2 # Replace with the version being released.
-gem build mongo_session_store.gemspec
-git tag "v$version"
-git push origin "v$version"
-gem push "mongo_session_store-$version.gem"
+gh workflow run release.yml --repo mongoid/mongo_session_store --ref main
 ```
 
-Enter a fresh RubyGems MFA code when prompted. Create a GitHub release from the same tag, using the matching changelog section as the release notes:
+Pass `-f version=x.y.z` to release a different version. Dispatching starts a real release; do not merge into `main` while it runs. The workflow prepares the release commit, starts MongoDB 8.0, runs lint and specs on Ruby 3.3, builds the gem, preserves recovery artifacts, publishes to RubyGems, pushes the release commit and `v` tag, and creates a GitHub Release with the changelog notes and the gem attached. It then increments the patch version, adds a new `(Next)` section, and pushes the next development commit. Verify the published version on [RubyGems](https://rubygems.org/gems/mongo_session_store), the tag, the [GitHub Release](https://github.com/mongoid/mongo_session_store/releases), and the next development commit.
 
-```sh
-gh release create "v$version" --repo mongoid/mongo_session_store \
-  --verify-tag --title "$version" --notes-file /path/to/release-notes.md --latest
-```
+## Recover a Partial Release
 
-Verify the exact version at `https://rubygems.org/gems/mongo_session_store/versions/VERSION` and inspect `gh release view "v$version" --repo mongoid/mongo_session_store` to confirm a published, non-draft release.
-
-If publication is interrupted, check the remote tag, RubyGems version, and GitHub release first. Resume only the missing step; never move a published tag or rebuild an already published version. If the gem push needs a new code, retry that command with `--otp CODE`.
-
-## Next Development Version
-
-Increment the patch version in `lib/mongo_session_store/version.rb`, add a new `## (unreleased)` section with a contribution placeholder, and commit and push the changes to `main`. Remove the local built gem after successful publication.
+Inspect the failed run, RubyGems, remote commits and tags, and the GitHub Release before retrying. Publication may have succeeded even if a later step failed. Never move a published tag or republish a version with different contents. Use the run's retained recovery artifacts and the upstream [recovery instructions](https://github.com/dblock/ruby-gem-release/blob/v0.9.0/docs/actions/release.md#recovery-artifacts).
