@@ -115,22 +115,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file: coverage/.resultset.json
           format: simplecov
-
-  rubocop:
-    name: "RuboCop"
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v7
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.3"
-          gemfile: gemfiles/rails-6.0-mongo.gemfile
-          bundler-cache: true
-
-      - name: Run RuboCop
-        run: bundle exec rubocop

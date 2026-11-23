@@ -86,5 +86,15 @@ task :release do
   end
 end
 
-desc "Default task for Rake. Runs test suite."
-task :default => :test
+lint = RUBY_ENGINE == "ruby" && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.3") &&
+       Gem.loaded_specs.key?("rubocop")
+if lint
+  require "rubocop/rake_task"
+  RuboCop::RakeTask.new(:rubocop)
+
+  desc "Lint Ruby, Markdown, YAML, and spelling"
+  task :lint => :rubocop
+end
+
+desc "Default task for Rake. Runs lint, where available, and the test suite."
+task :default => (lint ? [:rubocop, :test] : [:test])

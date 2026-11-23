@@ -2,3 +2,9 @@ inherit_from: ../.rubocop.yml
 
 Layout/LineLength:
   Max: 100
+
+Spellcheck:
+  DictionaryFiles:
+    en:
+      - gem:rubocop-spellcheck/data/en/en.dic
+      - ../.spellcheck.txt

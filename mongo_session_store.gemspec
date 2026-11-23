@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.authors          = ["Tom de Bruijn", "Brian Hempel", "Nicolas M\303\251rouze", "Tony Pitale", "Chris Brickley"]
   s.email            = ["tom@tomdebruijn.com"]
   s.files            = `git ls-files`.split("\n")
-  s.test_files       = `git ls-files -- {spec,perf}/*`.split("\n")
   s.homepage         = "http://github.com/mongoid/mongo_session_store"
   s.license          = "MIT"
   s.require_paths    = ["lib"]
@@ -20,4 +19,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "capybara", ">= 2.15"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec-rails", ">= 4.0"
+  s.metadata["rubygems_mfa_required"] = "true"
 end
