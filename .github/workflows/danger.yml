@@ -38,7 +38,7 @@ jobs:
           DANGER_GITHUB_API_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
           DANGER_REPORT_PATH: ${{ runner.temp }}/danger-report.json
-        run: bundle exec danger dry_run
+        run: bundle exec danger dry_run --base="origin/${GITHUB_BASE_REF}"
 
       - name: Upload Danger report
         if: ${{ always() }}

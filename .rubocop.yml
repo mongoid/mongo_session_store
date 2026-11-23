@@ -1,31 +1,47 @@
-inherit_from: .rubocop_todo.yml
+plugins:
+- rubocop-md
+- rubocop-prose
+- rubocop-rake
+- rubocop-spellcheck
+- rubocop-yaml
+
+inherit_from: ".rubocop_todo.yml"
 
 AllCops:
   TargetRubyVersion: 2.6
   NewCops: enable
   Include:
-    - "**/*.rb"
-    - "**/*.gemspec"
-    - "**/*.gemfile"
-    - "**/Gemfile"
-    - "**/Gemfile.danger"
-    - "**/Rakefile"
-    - "**/Dangerfile"
+  - ".github/**/*.yml"
+  - ".rubocop.yml"
   Exclude:
-    - "gemfiles/vendor/**/*"
-    - "perf/benchmark.rb"
-    - "spec/support/apps/**/*"
-    - "tmp/**/*"
-    - "vendor/**/*"
+  - gemfiles/vendor/**/*
+  - perf/benchmark.rb
+  - spec/support/apps/**/*
+  - tmp/**/*
+  - vendor/**/*
+  - coverage/**/*
+  - pkg/**/*
   DisplayCopNames: true
   UseCache: true
-  CacheRootDirectory: ./tmp
+  CacheRootDirectory: "./tmp"
+  SuggestExtensions: false
+  inherit_mode:
+    merge:
+    - Include
 
 Style/Documentation:
   Enabled: false
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+  inherit_mode:
+    merge:
+    - Exclude
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
@@ -35,12 +51,18 @@ Layout/ParameterAlignment:
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+  inherit_mode:
+    merge:
+    - Exclude
 
 Layout/HashAlignment:
   EnforcedLastArgumentHashStyle: ignore_implicit
 
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
+  inherit_mode:
+    merge:
+    - Exclude
 
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
@@ -50,3 +72,115 @@ Style/FormatString:
 
 Metrics/MethodLength:
   Max: 15
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+YAML/Lint/InvalidSyntax:
+  Include:
+  - "**/*.yml"
+  - "**/*.yaml"
+
+YAML/Lint/DuplicateKey:
+  Include:
+  - "**/*.yml"
+  - "**/*.yaml"
+
+Naming/FileName:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+  - ".github/workflows/*.yml"
+
+Metrics/AbcSize:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+Naming/HeredocDelimiterNaming:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+Style/SafeNavigation:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+Style/OneClassPerFile:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+Lint/UselessAssignment:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+Style/MultilineBlockChain:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+Style/SymbolProc:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+Lint/Void:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - "**/*.md"
+
+Metrics/BlockLength:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - Gemfile
+
+Layout/LineLength:
+  inherit_mode:
+    merge:
+    - Exclude
+  Exclude:
+  - ".github/workflows/*.yml"
+
+Markdown/HeadingCapitalization:
+  Enabled: true
+  Style: title_case
+
+Prose/MaxLength:
+  Max: false
+  Exclude:
+  - LICENSE
+
+Spellcheck:
+  DictionaryFiles:
+    en:
+    - gem:rubocop-spellcheck/data/en/en.dic
+    - ".spellcheck.txt"
+
+Spellcheck/Spelling:
+  Exclude:
+  - LICENSE

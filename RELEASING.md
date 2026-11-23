@@ -32,6 +32,6 @@ Verify the exact version at `https://rubygems.org/gems/mongo_session_store/versi
 
 If publication is interrupted, check the remote tag, RubyGems version, and GitHub release first. Resume only the missing step; never move a published tag or rebuild an already published version. If the gem push needs a new code, retry that command with `--otp CODE`.
 
-## Next development version
+## Next Development Version
 
 Increment the patch version in `lib/mongo_session_store/version.rb`, add a new `## (unreleased)` section with a contribution placeholder, and commit and push the changes to `main`. Remove the local built gem after successful publication.
