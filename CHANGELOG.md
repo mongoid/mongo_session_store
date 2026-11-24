@@ -5,6 +5,7 @@
 * [#60](https://github.com/mongoid/mongo_session_store/pull/60): Run CI pushes only on the default branch, cancel superseded pull request runs, skip duplicate lint in the test matrix, and bound job times - [@dblock](https://github.com/dblock).
 * [#61](https://github.com/mongoid/mongo_session_store/pull/61): Release with ruby-gem-release from a manually dispatched GitHub Actions workflow using RubyGems Trusted Publishing, with dry runs - [@dblock](https://github.com/dblock).
 * [#63](https://github.com/mongoid/mongo_session_store/pull/63): Upgrade danger-pr-comment to 0.3.0 from the `danger` organization and skip empty Danger report comments - [@dblock](https://github.com/dblock).
+* [#64](https://github.com/mongoid/mongo_session_store/pull/64): Ignore `.bundle` in every directory so the release workflow's clean-checkout check passes when Bundler writes `gemfiles/.bundle/config` - [@dblock](https://github.com/dblock).
 
 ### 3.3.0 (2026/10/18)
 

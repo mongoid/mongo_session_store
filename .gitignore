@@ -9,4 +9,4 @@ spec/support/apps/rails_*/log/
 *.gem
 /tmp/
 /vendor/bundle
-/.bundle
+.bundle
