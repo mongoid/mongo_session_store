@@ -1,3 +1,7 @@
+### 3.3.2 (Next)
+
+* Your contribution here.
+
 ### 3.3.1 (2026/11/24)
 
 * [#59](https://github.com/mongoid/mongo_session_store/pull/59): Lint Markdown, YAML, and spelling with rubocop-md, rubocop-prose, rubocop-spellcheck, and rubocop-yaml in a separate Lint workflow, and clean up documentation - [@dblock](https://github.com/dblock).
