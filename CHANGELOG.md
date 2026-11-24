@@ -1,6 +1,5 @@
-### 3.3.1 (Next)
+### 3.3.1 (2026/11/24)
 
-* Your contribution here.
 * [#59](https://github.com/mongoid/mongo_session_store/pull/59): Lint Markdown, YAML, and spelling with rubocop-md, rubocop-prose, rubocop-spellcheck, and rubocop-yaml in a separate Lint workflow, and clean up documentation - [@dblock](https://github.com/dblock).
 * [#60](https://github.com/mongoid/mongo_session_store/pull/60): Run CI pushes only on the default branch, cancel superseded pull request runs, skip duplicate lint in the test matrix, and bound job times - [@dblock](https://github.com/dblock).
 * [#61](https://github.com/mongoid/mongo_session_store/pull/61): Release with ruby-gem-release from a manually dispatched GitHub Actions workflow using RubyGems Trusted Publishing, with dry runs - [@dblock](https://github.com/dblock).
